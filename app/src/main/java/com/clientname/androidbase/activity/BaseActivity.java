@@ -1,7 +1,9 @@
-package com.clientname.androidbase;
+package com.clientname.androidbase.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.clientname.androidbase.R;
 
 public class BaseActivity extends AppCompatActivity {
 
