@@ -9,8 +9,6 @@ import android.telephony.SmsMessage;
 import android.util.Log;
 
 import com.clientname.androidbase.utils.AppConstant;
-import com.pytwo.consumer.utils.AppConstant;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
