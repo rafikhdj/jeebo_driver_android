@@ -11,4 +11,8 @@ public class AppConstant {
 
         public static final String USERNAME = "username";
     }
+
+    public interface INTENT_EXTRAS {
+        String SMS_RECEIVED = "sms_received";
+    }
 }
