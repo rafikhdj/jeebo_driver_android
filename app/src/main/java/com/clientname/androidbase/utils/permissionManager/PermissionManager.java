@@ -42,7 +42,14 @@ public class PermissionManager {
     }
 
     /**
-     * Check the API Level & Permission
+     * Check the API Level & Permission..
+     * Will check the permissions passed in an arrayList as an argument..
+     *
+     * If permissions already granted:
+     *      -Will call the "PermissionGranted" callback of IPermissionManagerCallback
+     *
+     * If permissions not granted:
+     *      -Will call "checkAndRequestPermissions" method to ask for permissions..
      *
      * @param permissions
      * @param dialog_content
@@ -83,7 +90,7 @@ public class PermissionManager {
      * @return
      */
 
-    private  boolean checkAndRequestPermissions(ArrayList<String> permissions,int request_code)
+    private  boolean checkAndRequestPermissions(ArrayList<String> permissions, int request_code)
     {
 
         if(permissions.size() > 0)
@@ -111,7 +118,8 @@ public class PermissionManager {
     }
 
     /**
-     *
+     * Will check the permissions and their results as granted or denied..
+     *      -If result is denied, will display a dialog stating the requirement for permissions.
      *
      * @param requestCode
      * @param permissions
@@ -132,6 +140,7 @@ public class PermissionManager {
                     }
 
                     final ArrayList<String> pending_permissions = new ArrayList<>();
+                    final ArrayList<String> allowed_permissions = new ArrayList<>();
 
                     for (int i = 0; i < listPermissionsNeeded.size(); i++)
                     {
@@ -146,6 +155,9 @@ public class PermissionManager {
                                 Toast.makeText(current_activity, "Go to settings and enable permissions", Toast.LENGTH_LONG).show();
                                 return;
                             }
+                        }
+                        else {
+                            allowed_permissions.add(listPermissionsNeeded.get(i));
                         }
 
                     }
@@ -166,7 +178,7 @@ public class PermissionManager {
                                                 if(permission_list.size() == pending_permissions.size())
                                                     iPermissionCallback.PermissionDenied(req_code);
                                                 else
-                                                    iPermissionCallback.PartialPermissionGranted(req_code,pending_permissions);
+                                                    iPermissionCallback.PartialPermissionGranted(req_code, pending_permissions, allowed_permissions);
                                                 break;
                                         }
 
