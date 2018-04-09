@@ -1,3 +1,21 @@
+
+/**
+ * Steps to use:
+ *
+ * 1) Call the constructor with context passed as an argument.
+ * 2) Call the check permission method with following arguments..
+ *      -> Array of permission list
+ *      -> String message to be shown on dialog that will appear if user rejects the permission.
+ *      -> Request code as "1".
+ * 3) Call the onRequestPermissionResult method of this util class in onRequestPermissionResult
+ *    of respective activity or fragment..
+ * 4) A callback from one of the methods written in IPermissionCallback will be recieved
+ *    according to the permissions granted or rejected
+ *
+ */
+
+
+
 package com.clientname.androidbase.utils.permissionManager;
 
 import android.app.Activity;
@@ -15,10 +33,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by himanshu on 14/3/18.
- */
-
 public class PermissionManager {
 
     Context context;
@@ -30,6 +44,7 @@ public class PermissionManager {
     ArrayList<String> listPermissionsNeeded = new ArrayList<>();
     String dialog_content = "";
     int req_code;
+
 
     public PermissionManager(Context context)
     {
