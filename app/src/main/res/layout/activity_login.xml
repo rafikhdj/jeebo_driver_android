@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/login_rl_basic"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="vertical">
+
+        <RelativeLayout
+            android:id="@+id/login_scrollView_rl"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/login_qopius_image"
+                android:layout_width="@dimen/dp_200"
+                android:layout_height="@dimen/dp_90"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/dp_65"
+                 />
+
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_250"
+                android:layout_below="@id/login_qopius_image"
+                android:layout_marginLeft="@dimen/dp_16"
+                android:layout_marginRight="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_48">
+
+                <RelativeLayout
+                    android:id="@+id/login_rl_credentials"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                            <RelativeLayout
+                            android:id="@+id/login_cardview_rl_credentials"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="@dimen/_10sdp">
+
+                            <RelativeLayout
+                                android:id="@+id/rlUserName"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_40sdp"
+                                android:layout_marginTop="@dimen/dp_30">
+
+
+                                <ImageView
+                                    android:id="@+id/login_cardview_rl_iv_usernameIcon"
+                                    android:layout_width="@dimen/dp_20"
+                                    android:layout_height="@dimen/dp_20"
+                                    android:layout_centerVertical="true"
+                                    />
+
+                                <EditText
+                                    android:id="@+id/login_cardview_rl_et_username"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginLeft="@dimen/dp_10"
+                                    android:layout_toRightOf="@+id/login_cardview_rl_iv_usernameIcon"
+                                    android:background="@null"
+                                    android:fontFamily="sans-serif"
+                                    android:hint="@string/username"
+                                    android:letterSpacing="-0.02"
+                                    android:lineSpacingExtra="-2sp"
+                                    android:lines="1"
+                                    android:maxLines="1"
+                                    android:singleLine="true"
+                                    android:textColor="@color/sm_store"
+                                    android:textSize="@dimen/sp_14"
+                                    android:textStyle="normal" />
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/dp_1"
+                                    android:layout_below="@id/login_cardview_rl_et_username"
+                                    android:layout_marginLeft="@dimen/dp_10"
+                                    android:layout_marginRight="@dimen/dp_10"
+                                    android:layout_marginTop="@dimen/dp_5"
+                                    android:layout_toRightOf="@id/login_cardview_rl_iv_usernameIcon"
+                                    android:background="#d2d2d2" />
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:id="@+id/rlPassword"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_40sdp"
+                                android:layout_below="@+id/rlUserName"
+                                android:layout_marginTop="@dimen/dp_25">
+
+
+                                <ImageView
+                                    android:id="@+id/login_cardview_rl_iv_passwordIcon"
+                                    android:layout_width="@dimen/dp_20"
+                                    android:layout_height="@dimen/dp_20"
+                                    android:layout_centerVertical="true"
+                                     />
+
+                                <EditText
+                                    android:id="@+id/login_cardview_rl_et_password"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginLeft="@dimen/dp_10"
+                                    android:layout_toRightOf="@+id/login_cardview_rl_iv_passwordIcon"
+                                    android:background="@null"
+                                    android:fontFamily="sans-serif"
+                                    android:hint="@string/password"
+                                    android:inputType="textPassword"
+                                    android:letterSpacing="-0.02"
+                                    android:lineSpacingExtra="-2sp"
+                                    android:lines="1"
+                                    android:maxLines="1"
+                                    android:singleLine="true"
+                                    android:textColor="@color/sm_store"
+                                    android:textSize="@dimen/sp_14"
+                                    android:textStyle="normal" />
+
+                                <ImageView
+                                    android:id="@+id/login_cardview_rl_iv_eye_icon"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginRight="@dimen/dp_20"
+                                    />
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/dp_1"
+                                    android:layout_below="@id/login_cardview_rl_et_password"
+                                    android:layout_marginLeft="@dimen/dp_10"
+                                    android:layout_marginRight="@dimen/dp_10"
+                                    android:layout_marginTop="@dimen/dp_5"
+                                    android:layout_toRightOf="@id/login_cardview_rl_iv_passwordIcon"
+                                    android:background="@color/view_line" />
+
+                            </RelativeLayout>
+                        </RelativeLayout>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/login_rl_button"
+                    android:layout_width="@dimen/dp_200"
+                    android:layout_height="@dimen/dp_60"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/dp_50"
+                    >
+
+                    <TextView
+                        android:id="@+id/login_tv_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="@string/login"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp_19"
+                        android:fontFamily="sans-serif"
+                        android:textStyle="normal"
+                        android:gravity="center_horizontal" />
+
+                </RelativeLayout>
+            </RelativeLayout>
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>
