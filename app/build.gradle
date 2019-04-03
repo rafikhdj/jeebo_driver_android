@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 26
     defaultConfig {
-        applicationId "com.clientname.androidbase"
+        applicationId "com.app" // need to change app package name
         minSdkVersion 15
         targetSdkVersion 26
         versionCode 1
@@ -24,7 +24,7 @@ android {
 
     productFlavors {
         dev {
-            buildConfigField 'String', 'URL', '""'
+            buildConfigField 'String', 'URL', '""' // need to define app base url
         }
     }
 }
@@ -36,12 +36,11 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'net.hockeyapp.android:HockeySDK:5.0.4'
-
-    compile 'com.squareup.retrofit2:retrofit:2.0.2'
-    compile 'com.squareup.retrofit2:converter-gson:2.0.2'
-    compile 'com.squareup.okhttp3:logging-interceptor:3.2.0'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'net.hockeyapp.android:HockeySDK:5.0.4'
+    implementation 'com.squareup.retrofit2:retrofit:2.0.2'
+    implementation 'com.squareup.retrofit2:converter-gson:2.0.2'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.2.0'
+    implementation 'com.intuit.sdp:sdp-android:1.0.5'
 
 }
