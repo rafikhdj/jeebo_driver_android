@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@drawable/bg"
+    android:layout_height="wrap_content"
+    tools:context="com.app.modules.activity.OtpVerificationActivity">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:padding="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_25sdp"
+        android:src="@drawable/back_icon_white"
+        android:id="@+id/iv_back"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:padding="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_height="wrap_content">
+
+        <com.app.view.CustomTextView
+            android:layout_width="wrap_content"
+            android:textSize="@dimen/_20ssp"
+            app:ctypeface="@string/adineue_pro_bold"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/tv_email_verification"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="@string/phone_verification"
+            />
+
+        <com.app.view.CustomTextView
+            android:layout_width="match_parent"
+            android:textColor="@color/white"
+            android:id="@+id/tv_otp_verify_text"
+            android:layout_marginTop="@dimen/_20sdp"
+            app:ctypeface="@string/adineue_pro_regular"
+            android:layout_marginLeft="@dimen/_9sdp"
+            android:gravity="center"
+            android:lineSpacingExtra="@dimen/_5sdp"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:textSize="@dimen/_11ssp"
+            android:text="@string/otp_sent_msg"
+            android:layout_below="@+id/tv_email_verification"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:id="@+id/ll_otp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/_20sdp"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_below="@+id/tv_otp_verify_text"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:orientation="horizontal">
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_marginRight="@dimen/_5sdp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                >
+
+                <com.app.view.CustomEditText
+                    android:id="@+id/edt_otp1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textCursorDrawable="@null"
+                    android:backgroundTint="@color/color_dbdbdb"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    app:ctypeface="@string/adineue_pro_regular"
+                    android:padding="@dimen/_8sdp"
+                    android:singleLine="true"
+                    android:textColorHint="@color/color_hint_808080"
+                    android:textColor="@color/color_292929"
+                    android:textSize="@dimen/_17ssp"
+                    android:textStyle="bold" />
+
+
+            </FrameLayout>
+
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_marginRight="@dimen/_5sdp"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                >
+
+                <com.app.view.CustomEditText
+                    android:id="@+id/edt_otp2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:textCursorDrawable="@null"
+                    app:ctypeface="@string/adineue_pro_regular"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:padding="@dimen/_8sdp"
+                    android:singleLine="true"
+                    android:textColorHint="@color/color_hint_808080"
+                    android:textColor="@color/color_292929"
+                    android:backgroundTint="@color/color_dbdbdb"
+                    android:textSize="@dimen/_17ssp"
+                    android:textStyle="bold" />
+
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_marginRight="@dimen/_5sdp"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                >
+
+                <com.app.view.CustomEditText
+                    android:id="@+id/edt_otp3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:inputType="number"
+                    app:ctypeface="@string/adineue_pro_regular"
+                    android:maxLength="1"
+                    android:textCursorDrawable="@null"
+                    android:padding="@dimen/_8sdp"
+                    android:singleLine="true"
+                    android:textColorHint="@color/color_hint_808080"
+                    android:textColor="@color/color_292929"
+                    android:backgroundTint="@color/color_dbdbdb"
+                    android:textSize="@dimen/_17ssp"
+                    android:textStyle="bold" />
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                >
+
+                <com.app.view.CustomEditText
+                    android:id="@+id/edt_otp4"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    app:ctypeface="@string/adineue_pro_regular"
+                    android:padding="@dimen/_8sdp"
+                    android:singleLine="true"
+                    android:textCursorDrawable="@null"
+                    android:textColorHint="@color/color_hint_808080"
+                    android:textColor="@color/color_292929"
+                    android:backgroundTint="@color/color_dbdbdb"
+                    android:textSize="@dimen/_17ssp"
+                    android:textStyle="bold" />
+
+            </FrameLayout>
+
+        </LinearLayout>
+
+        <com.app.view.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/tv_timer"
+            android:textColor="@color/white"
+            android:text="1:00"
+            app:ctypeface="@string/adineue_pro_regular"
+            android:textSize="@dimen/_20ssp"
+            android:layout_below="@+id/ll_otp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_height="wrap_content" />
+
+        <com.app.view.CustomTextView
+            android:layout_width="@dimen/_140sdp"
+            android:layout_below="@+id/tv_timer"
+            android:id="@+id/tv_verify"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:text="@string/verify"
+            app:ctypeface="@string/adineue_pro_regular"
+            android:textColor="@color/color_0B94C7"
+            android:textSize="@dimen/_15ssp"
+            android:gravity="center"
+            android:layout_marginRight="@dimen/_20sdp"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:background="@drawable/bg_button"
+            android:layout_height="@dimen/_40sdp" />
+
+        <com.app.view.CustomTextView
+            android:layout_width="match_parent"
+            android:layout_below="@+id/tv_verify"
+            android:id="@+id/tv_resend_otp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:text="@string/resend_otp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_13ssp"
+            android:gravity="center"
+            android:layout_marginRight="@dimen/_20sdp"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_height="@dimen/_40sdp" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

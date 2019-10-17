@@ -109,24 +109,6 @@ public class BitmapUtils {
         return bitmap;
     }
 
-    public static Uri onOpenCameraImage(Activity context , int requestCode) {
-        Uri mCapturedImageURI = null;
-        try {
-            ContentValues values = new ContentValues();
-            values.put(MediaStore.MediaColumns.TITLE, context.getPackageName());
-            mCapturedImageURI = context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-            Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            cameraIntent.putExtra(MediaStore.EXTRA_SCREEN_ORIENTATION, ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-            cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, mCapturedImageURI);
-
-//            context.startActivityForResult(cameraIntent, AppConstant.REQUEST_CODE.CAPTURE_IMAGE);
-            context.startActivityForResult(cameraIntent, requestCode);
-
-        } catch (ActivityNotFoundException e) {
-        }
-
-        return mCapturedImageURI;
-    }
 
 
     public static Bitmap getScaledBitmap(Bitmap myBitmap) {
@@ -169,5 +151,43 @@ public class BitmapUtils {
         }
 
         return file;
+    }
+
+    public static Uri onOpenCameraImage(Activity context, int requestCode) {
+        Uri mCapturedImageURI = null;
+        try {
+            ContentValues values = new ContentValues();
+            values.put(MediaStore.MediaColumns.TITLE, context.getPackageName());
+            mCapturedImageURI = context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+            Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            cameraIntent.putExtra(MediaStore.EXTRA_SCREEN_ORIENTATION, ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+            cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, mCapturedImageURI);
+
+//            context.startActivityForResult(cameraIntent, AppConstant.REQUEST_CODE.CAPTURE_IMAGE);
+            context.startActivityForResult(cameraIntent, requestCode);
+
+        } catch (ActivityNotFoundException e) {
+        }
+
+        return mCapturedImageURI;
+    }
+
+
+    public static Uri onOpenGallaryImage(Activity context, int requestCode) {
+        Uri mCapturedImageURI = null;
+        if (Environment.getExternalStorageState().equals("mounted")) {
+
+            ContentValues values = new ContentValues();
+            values.put(MediaStore.MediaColumns.TITLE, context.getPackageName());
+            mCapturedImageURI = context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+
+            Intent pickImageIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            pickImageIntent.setType("image/*");
+            pickImageIntent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
+            // context.startActivityForResult(pickImageIntent, AppConstant.REQUEST_CODE.GALLARY_IMAGE);
+            context.startActivityForResult(pickImageIntent, requestCode);
+        }
+
+        return mCapturedImageURI;
     }
 }

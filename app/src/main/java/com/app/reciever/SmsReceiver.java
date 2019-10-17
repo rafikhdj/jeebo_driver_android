@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.content.LocalBroadcastManager;
 import android.telephony.SmsMessage;
 import android.util.Log;
 
@@ -45,7 +44,7 @@ public class SmsReceiver extends BroadcastReceiver {
                                 Intent msgIntent = new Intent(AppConstant.INTENT_EXTRAS.SMS_RECEIVED);
                                 // add data
                                 msgIntent.putExtra("message", otp);
-                                LocalBroadcastManager.getInstance(context).sendBroadcast(msgIntent);
+                              //  LocalBroadcastManager.getInstance(context).sendBroadcast(msgIntent);
 
                             }
 

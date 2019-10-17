@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/_20sdp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/bg_dialog">
+
+    <RelativeLayout
+        android:layout_width="@dimen/_220sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:padding="@dimen/_10sdp"
+        android:id="@+id/rl_top"
+        android:layout_height="wrap_content">
+
+        <com.app.view.CustomTextView
+            android:layout_width="wrap_content"
+            android:id="@+id/tv_title"
+            android:textSize="@dimen/_15ssp"
+            android:text="@string/app_name"
+            android:textColor="@color/color_black"
+            app:ctypeface="@string/adineue_pro_bold"
+            android:layout_centerHorizontal="true"
+            android:layout_height="wrap_content" />
+
+        <com.app.view.CustomTextView
+            android:layout_width="wrap_content"
+            android:id="@+id/tv_message"
+            android:text=""
+            android:textSize="@dimen/_12ssp"
+            android:gravity="center"
+            app:ctypeface="@string/adineue_pro_regular"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:textColor="@color/color_black"
+            android:layout_below="@+id/tv_title"
+            android:layout_centerHorizontal="true"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="@dimen/_220sdp"
+        android:layout_height="@dimen/_1sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:id="@+id/view_line"
+        android:background="@color/view_line"
+        android:layout_below="@+id/rl_top"/>
+
+    <LinearLayout
+        android:layout_width="@dimen/_220sdp"
+        android:layout_below="@+id/view_line"
+        android:layout_height="wrap_content">
+
+        <com.app.view.CustomTextView
+            android:layout_width="wrap_content"
+            android:id="@+id/tv_cancel"
+            android:textSize="@dimen/_15ssp"
+            android:gravity="center"
+            android:visibility="gone"
+            android:text="@string/cancel"
+            android:textColor="@color/color_0B94C7"
+            app:ctypeface="@string/adineue_pro_regular"
+            android:layout_weight="1"
+            android:layout_height="wrap_content" />
+
+        <com.app.view.CustomTextView
+            android:layout_width="wrap_content"
+            android:id="@+id/tv_ok"
+            android:text="@string/ok"
+            android:gravity="center"
+            android:textSize="@dimen/_15ssp"
+            android:layout_weight="1"
+            app:ctypeface="@string/adineue_pro_regular"
+            android:textColor="@color/color_0B94C7"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+</RelativeLayout>

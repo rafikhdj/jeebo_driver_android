@@ -3,11 +3,12 @@ package com.app.base;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import java.io.Serializable;
 
@@ -40,7 +41,7 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onAttach(Context activity) {
         super.onAttach(activity);
-        this.baseActivity = (BaseActivity) activity;
+        //this.baseActivity = (BaseActivity) activity;
     }
 
     public void onTabSelected() {
@@ -49,7 +50,7 @@ public abstract class BaseFragment extends Fragment {
 
     public void showProgressBar(String msg) {
         if (progressDialog == null) {
-            progressDialog = new ProgressDialog(baseActivity);
+          //  progressDialog = new ProgressDialog(baseActivity);
         }
         progressDialog.setTitle(msg);
         if (isVisible()) {
