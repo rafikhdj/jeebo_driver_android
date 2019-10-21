@@ -10,6 +10,7 @@
         tools:remove="android:maxSdkVersion" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
+
     <application
         android:name=".application.JeeboApplication"
         android:allowBackup="true"
@@ -18,7 +19,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".modules.activity.ForgotPasswordActivity"></activity>
+        <activity android:name=".modules.home.activity.OrderDeatilsActivity"></activity>
+        <activity android:name=".modules.home.activity.HomeActivity" />
+        <activity android:name=".modules.activity.MainActivity" />
+        <activity android:name=".modules.activity.ForgotPasswordActivity" />
         <activity android:name=".modules.activity.OtpVerificationActivity" />
         <activity android:name=".modules.activity.SignupActivity" />
         <activity android:name=".modules.activity.LoginActivity" />
@@ -35,8 +39,8 @@
 
         <activity
             android:name=".modules.activity.SplashActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

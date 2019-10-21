@@ -5,6 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import com.app.jeebo.driver.R
+import com.app.jeebo.driver.modules.home.activity.HomeActivity
+import com.app.jeebo.driver.modules.home.activity.OrderDeatilsActivity
 import com.app.jeebo.driver.utils.AppUtils
 
 class SplashActivity : Activity() {
@@ -23,7 +25,7 @@ class SplashActivity : Activity() {
         runnable = Runnable {
             if (AppUtils.isNetworkAvailable(this@SplashActivity)) {
                 var intent: Intent? = null
-                intent = Intent(this, LoginActivity::class.java)
+                intent = Intent(this, OrderDeatilsActivity::class.java)
                 startActivity(intent)
                 finish()
             }

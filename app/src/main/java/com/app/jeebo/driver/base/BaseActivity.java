@@ -19,6 +19,8 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.app.jeebo.driver.R;
 
@@ -26,6 +28,8 @@ public class BaseActivity extends AppCompatActivity {
 
     private Dialog alertDialog;
     public static ProgressDialog progressDialog;
+    private BaseFragment currentFragment;
+    private String fragmentTag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,5 +135,112 @@ public class BaseActivity extends AppCompatActivity {
             alertDialog = null;
         }
     }
+
+
+
+    public void replaceFragment(int containerId, BaseFragment fragment) {
+        replaceFragment(containerId, fragment, null);
+    }
+
+    public void replaceFragment(int containerId, BaseFragment fragment, Bundle bundle) {
+        replaceFragment(containerId, fragment, false, bundle);
+    }
+
+    public void replaceFragment(int containerId, BaseFragment fragment, boolean isNextFragmentNeedsTobeAdded) {
+        replaceFragment(containerId, fragment, isNextFragmentNeedsTobeAdded, null);
+    }
+
+    public void replaceFragment(int containerId, BaseFragment fragment, boolean isNextFragmentNeedsTobeAdded, Bundle bundle) {
+        replaceFragment(containerId, fragment, 0, 0, 0, 0, isNextFragmentNeedsTobeAdded, bundle);
+    }
+
+    public void replaceFragment(int containerId, BaseFragment fragment, int enter, int exit, int enterPop, int exitPop, boolean isNextFragmentNeedsTobeAdded, Bundle bundle) {
+        FragmentManager manager = getSupportFragmentManager();
+        if (manager != null) {
+            FragmentTransaction fragmentTransaction = manager.beginTransaction();
+            if (fragment == null) {
+                return;
+            }
+
+            fragmentTransaction.setCustomAnimations(enter, exit, enterPop, exitPop);
+
+            fragmentTag = fragment.getClass().getSimpleName();
+
+            if (isNextFragmentNeedsTobeAdded) {
+                fragmentTransaction.addToBackStack(fragmentTag);
+            }else{
+                fragmentTransaction.addToBackStack(null);
+            }
+            if (bundle != null) {
+                fragment.setArguments(bundle);
+            }
+
+            if (fragment.isAdded()) {
+                return;
+            }
+
+            currentFragment = fragment;
+
+            fragmentTransaction.replace(containerId, fragment, fragmentTag);
+            fragmentTransaction.commit();
+
+        }
+    }
+
+
+    public void addFragment(int containerId, BaseFragment fragment) {
+        FragmentManager fm=getSupportFragmentManager();
+        FragmentTransaction ft=fm.beginTransaction();
+        ft.add(containerId,fragment,"TAG");
+        ft.commit();
+        //addFragment(containerId, fragment);
+    }
+    public void removeFragment(int containerId, BaseFragment fragment) {
+        FragmentManager fm=getSupportFragmentManager();
+        FragmentTransaction ft=fm.beginTransaction();
+        ft.remove(fragment);
+        ft.commit();
+        fm.popBackStack();
+    }
+    public void addFragment(int containerId, BaseFragment fragment, boolean isNextFragmentNeedsTobeAdded, Bundle bundle) {
+        addFragment(containerId, fragment, 0, 0, 0, 0,isNextFragmentNeedsTobeAdded, bundle);
+    }
+
+    public void addFragment(int containerId, BaseFragment fragment, int enter, int exit, int enterPop, int exitPop, boolean isNextFragmentNeedsTobeAdded, Bundle bundle) {
+        FragmentManager manager = getSupportFragmentManager();
+        if (manager != null) {
+            FragmentTransaction fragmentTransaction = manager.beginTransaction();
+            if (fragment == null) {
+                return;
+            }
+
+           /* if(enterPop == 0 && exitPop ==0)
+                fragmentTransaction.setCustomAnimations(enter,exit);
+            else*/
+            fragmentTransaction.setCustomAnimations(enter, exit, enterPop, exitPop);
+
+            fragmentTag = fragment.getClass().getSimpleName();
+
+            if (isNextFragmentNeedsTobeAdded) {
+                fragmentTransaction.addToBackStack(fragmentTag);
+            }
+
+            if (bundle != null) {
+                fragment.setArguments(bundle);
+            }
+
+            if (fragment.isAdded()) {
+                return;
+            }
+
+            currentFragment = fragment;
+
+            fragmentTransaction.add(containerId, fragment, fragmentTag);
+            fragmentTransaction.commit();
+
+        }
+    }
+
+
 
 }
