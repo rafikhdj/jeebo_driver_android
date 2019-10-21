@@ -13,7 +13,7 @@
         android:id="@+id/rl_top"
         android:layout_height="wrap_content">
 
-        <com.app.view.CustomTextView
+        <com.app.jeebo.driver.view.CustomTextView
             android:layout_width="wrap_content"
             android:id="@+id/tv_title"
             android:textSize="@dimen/_15ssp"
@@ -23,7 +23,7 @@
             android:layout_centerHorizontal="true"
             android:layout_height="wrap_content" />
 
-        <com.app.view.CustomTextView
+        <com.app.jeebo.driver.view.CustomTextView
             android:layout_width="wrap_content"
             android:id="@+id/tv_message"
             android:text=""
@@ -52,7 +52,7 @@
         android:layout_below="@+id/view_line"
         android:layout_height="wrap_content">
 
-        <com.app.view.CustomTextView
+        <com.app.jeebo.driver.view.CustomTextView
             android:layout_width="wrap_content"
             android:id="@+id/tv_cancel"
             android:textSize="@dimen/_15ssp"
@@ -64,7 +64,7 @@
             android:layout_weight="1"
             android:layout_height="wrap_content" />
 
-        <com.app.view.CustomTextView
+        <com.app.jeebo.driver.view.CustomTextView
             android:layout_width="wrap_content"
             android:id="@+id/tv_ok"
             android:text="@string/ok"

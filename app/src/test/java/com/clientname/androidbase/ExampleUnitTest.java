@@ -1,4 +1,4 @@
-package com.app;
+package com.app.jeebo.driver;
 
 import org.junit.Test;
 

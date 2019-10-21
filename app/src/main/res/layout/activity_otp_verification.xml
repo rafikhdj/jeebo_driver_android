@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:background="@drawable/bg"
     android:layout_height="wrap_content"
-    tools:context="com.app.modules.activity.OtpVerificationActivity">
+    tools:context="com.app.jeebo.driver.modules.activity.OtpVerificationActivity">
 
     <ImageView
         android:layout_width="wrap_content"
@@ -21,7 +21,7 @@
         android:layout_marginTop="@dimen/dp_10"
         android:layout_height="wrap_content">
 
-        <com.app.view.CustomTextView
+        <com.app.jeebo.driver.view.CustomTextView
             android:layout_width="wrap_content"
             android:textSize="@dimen/_20ssp"
             app:ctypeface="@string/adineue_pro_bold"
@@ -32,7 +32,7 @@
             android:text="@string/phone_verification"
             />
 
-        <com.app.view.CustomTextView
+        <com.app.jeebo.driver.view.CustomTextView
             android:layout_width="match_parent"
             android:textColor="@color/white"
             android:id="@+id/tv_otp_verify_text"
@@ -64,7 +64,7 @@
                 android:layout_weight="1"
                 >
 
-                <com.app.view.CustomEditText
+                <com.app.jeebo.driver.view.CustomEditText
                     android:id="@+id/edt_otp1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -77,7 +77,7 @@
                     android:padding="@dimen/_8sdp"
                     android:singleLine="true"
                     android:textColorHint="@color/color_hint_808080"
-                    android:textColor="@color/color_292929"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/_17ssp"
                     android:textStyle="bold" />
 
@@ -93,7 +93,7 @@
                 android:layout_weight="1"
                 >
 
-                <com.app.view.CustomEditText
+                <com.app.jeebo.driver.view.CustomEditText
                     android:id="@+id/edt_otp2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -105,7 +105,7 @@
                     android:padding="@dimen/_8sdp"
                     android:singleLine="true"
                     android:textColorHint="@color/color_hint_808080"
-                    android:textColor="@color/color_292929"
+                    android:textColor="@color/white"
                     android:backgroundTint="@color/color_dbdbdb"
                     android:textSize="@dimen/_17ssp"
                     android:textStyle="bold" />
@@ -121,7 +121,7 @@
                 android:layout_weight="1"
                 >
 
-                <com.app.view.CustomEditText
+                <com.app.jeebo.driver.view.CustomEditText
                     android:id="@+id/edt_otp3"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -133,7 +133,7 @@
                     android:padding="@dimen/_8sdp"
                     android:singleLine="true"
                     android:textColorHint="@color/color_hint_808080"
-                    android:textColor="@color/color_292929"
+                    android:textColor="@color/white"
                     android:backgroundTint="@color/color_dbdbdb"
                     android:textSize="@dimen/_17ssp"
                     android:textStyle="bold" />
@@ -147,7 +147,7 @@
                 android:layout_weight="1"
                 >
 
-                <com.app.view.CustomEditText
+                <com.app.jeebo.driver.view.CustomEditText
                     android:id="@+id/edt_otp4"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -159,7 +159,7 @@
                     android:singleLine="true"
                     android:textCursorDrawable="@null"
                     android:textColorHint="@color/color_hint_808080"
-                    android:textColor="@color/color_292929"
+                    android:textColor="@color/white"
                     android:backgroundTint="@color/color_dbdbdb"
                     android:textSize="@dimen/_17ssp"
                     android:textStyle="bold" />
@@ -168,7 +168,7 @@
 
         </LinearLayout>
 
-        <com.app.view.CustomTextView
+        <com.app.jeebo.driver.view.CustomTextView
             android:layout_width="wrap_content"
             android:layout_centerHorizontal="true"
             android:id="@+id/tv_timer"
@@ -180,7 +180,7 @@
             android:layout_marginTop="@dimen/_20sdp"
             android:layout_height="wrap_content" />
 
-        <com.app.view.CustomTextView
+        <com.app.jeebo.driver.view.CustomTextView
             android:layout_width="@dimen/_140sdp"
             android:layout_below="@+id/tv_timer"
             android:id="@+id/tv_verify"
@@ -196,7 +196,7 @@
             android:background="@drawable/bg_button"
             android:layout_height="@dimen/_40sdp" />
 
-        <com.app.view.CustomTextView
+        <com.app.jeebo.driver.view.CustomTextView
             android:layout_width="match_parent"
             android:layout_below="@+id/tv_verify"
             android:id="@+id/tv_resend_otp"

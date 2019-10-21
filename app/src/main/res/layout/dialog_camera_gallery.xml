@@ -14,7 +14,7 @@
         android:layout_centerHorizontal="true"
         android:padding="@dimen/_15sdp">
 
-        <com.app.view.CustomTextView
+        <com.app.jeebo.driver.view.CustomTextView
             android:id="@+id/tv_camera"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -41,7 +41,7 @@
         android:layout_centerHorizontal="true"
         android:padding="@dimen/_15sdp">
 
-        <com.app.view.CustomTextView
+        <com.app.jeebo.driver.view.CustomTextView
             android:id="@+id/tv_gallery"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -70,7 +70,7 @@
         android:layout_centerHorizontal="true"
         android:padding="@dimen/_15sdp">
 
-        <com.app.view.CustomTextView
+        <com.app.jeebo.driver.view.CustomTextView
             android:id="@+id/tv_remove"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -1,4 +1,4 @@
-package com.app;
+package com.app.jeebo.driver;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.app", appContext.getPackageName());
+        assertEquals("com.app.jeebo.driver", appContext.getPackageName());
     }
 }

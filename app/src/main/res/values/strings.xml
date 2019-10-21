@@ -7,7 +7,7 @@
     <string name="adineue_pro_bold">adineuePRO-Bold.otf</string>
     <!--font-->
 
-    <string name="app_name">JeeboDriver</string>
+    <string name="app_name">JeeboDelivery</string>
     <string name="login">LOGIN</string>
     <string name="login_small">Login</string>
     <string name="username">Username</string>
@@ -46,6 +46,8 @@
     <string name="name_missing_error">Please enter name</string>
     <string name="surname_missing_error">Please enter surname</string>
     <string name="phone_missing_error">Please enter phone number</string>
-    <string name="phone_invalid_error">Please enter 9 or 10 digit correct phone number.r</string>
-
+    <string name="phone_invalid_error">Please enter 9 or 10 digit correct phone number</string>
+    <string name="your_email_with_pass_reset_link_send">An email with password reset link has been sent to
+        your registered email address.
+    </string>
 </resources>

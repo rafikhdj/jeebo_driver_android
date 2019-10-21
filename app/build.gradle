@@ -5,7 +5,7 @@ apply plugin: 'kotlin-android-extensions'
 android {
     compileSdkVersion 29
     defaultConfig {
-        applicationId "com.app" // need to change app package name
+        applicationId "com.app.jeebo.driver" // need to change app package name
         minSdkVersion 16
         targetSdkVersion 29
         versionCode 1
@@ -26,7 +26,8 @@ android {
 
     productFlavors {
         dev {
-            buildConfigField 'String', 'URL', '""' // need to define app base url
+            buildConfigField 'String', 'URL', '"http://52.20.166.153/"'
+
         }
     }
 }
