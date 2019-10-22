@@ -4,9 +4,11 @@ import com.app.jeebo.driver.model.BaseResponse;
 import com.app.jeebo.driver.model.LoginResponse;
 import com.app.jeebo.driver.modules.model.ForgotPassRequest;
 import com.app.jeebo.driver.modules.model.LoginRequest;
+import com.app.jeebo.driver.modules.model.ResendOtpRequest;
 import com.app.jeebo.driver.modules.model.ResultModel;
 import com.app.jeebo.driver.modules.model.SignupRequest;
 import com.app.jeebo.driver.modules.model.UserModel;
+import com.app.jeebo.driver.modules.model.VerifyOtpResponse;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;
@@ -56,9 +58,8 @@ public interface IApiRequest {
     @POST("session")
     Call<LoginResponse> login(@Field("name") String name, @Field("password") String pwd);*/
 
-    @FormUrlEncoded
     @POST("user/resend_otp")
-    Call<ResultModel> resendOtp(@Field("phone_number") String phone_number);
+    Call<ResultModel> resendOtp(@Body ResendOtpRequest resendOtpRequest);
 
     @POST("user/emaillogin")
     Call<UserModel> login(@Header("Authorization") String authorization,
@@ -68,7 +69,7 @@ public interface IApiRequest {
     Call<BaseResponse<UserModel>> signup(@Body SignupRequest signupRequest);
 
     @POST("user/verify_otp")
-    Call<ResultModel> verifyOtp(@Header("x-access-token") String authorization,@Body UserModel userModel);
+    Call<VerifyOtpResponse> verifyOtp(@Body ResendOtpRequest resendOtpRequest);
 
     @Multipart
     @POST("user/upload_file")

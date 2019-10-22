@@ -11,9 +11,12 @@ import com.app.jeebo.driver.api.ApiCallback
 import com.app.jeebo.driver.api.ApiClient
 import com.app.jeebo.driver.api.IApiRequest
 import com.app.jeebo.driver.base.BaseActivity
+import com.app.jeebo.driver.model.BaseResponse
 import com.app.jeebo.driver.model.Error
+import com.app.jeebo.driver.modules.model.ResendOtpRequest
 import com.app.jeebo.driver.modules.model.ResultModel
 import com.app.jeebo.driver.modules.model.UserModel
+import com.app.jeebo.driver.modules.model.VerifyOtpResponse
 import com.app.jeebo.driver.utils.AppConstant
 import com.app.jeebo.driver.utils.DialogManager
 import com.app.jeebo.driver.utils.OtpTextWatcher
@@ -52,9 +55,10 @@ class OtpVerificationActivity : BaseActivity() {
         }
 
         tv_resend_otp.setOnClickListener {
-            if(isTimerEnded){
+           /* if(isTimerEnded){
                 resendOtp()
-            }
+            }*/
+            resendOtp()
         }
 
         edt_otp1.addTextChangedListener(object: TextWatcher{
@@ -175,11 +179,12 @@ class OtpVerificationActivity : BaseActivity() {
         showProgressBar(this)
         var otp:String = edt_otp1.text.toString().trim()+edt_otp2.text.toString().trim()+edt_otp3.text.toString().trim()+edt_otp4.text.toString().trim()
         val request=ApiClient.getRequest()
-        var userModel=UserModel()
-        userModel.otp=otp.toInt()
-        val call=request.verifyOtp(token,userModel)
-        call.enqueue(object : ApiCallback<ResultModel>(){
-            override fun onSuccess(t: ResultModel?) {
+        var verifyReq=ResendOtpRequest()
+        verifyReq.otp=otp
+        verifyReq.phone_number=phoneNum
+        val call=request.verifyOtp(verifyReq)
+        call.enqueue(object : ApiCallback<VerifyOtpResponse>(){
+            override fun onSuccess(t: VerifyOtpResponse?) {
                 dismissProgressBar()
                 showToast("Success")
             }
@@ -189,13 +194,27 @@ class OtpVerificationActivity : BaseActivity() {
                 DialogManager.showValidationDialog(this@OtpVerificationActivity,error?.errMsg)
             }
 
+
         })
     }
+
+
+    /*override fun onSuccess(t: ResultModel?) {
+        dismissProgressBar()
+        showToast("Success")
+    }
+
+    override fun onError(error: Error?) {
+        dismissProgressBar()
+        DialogManager.showValidationDialog(this@OtpVerificationActivity,error?.errMsg)
+    }*/
 
     private fun resendOtp(){
         showProgressBar(this)
         val request:IApiRequest=ApiClient.getRequest();
-        val call= request.resendOtp(phoneNum)
+        var resendOtpReq=ResendOtpRequest()
+        resendOtpReq.phone_number=phoneNum
+        val call= request.resendOtp(resendOtpReq)
         call.enqueue(object : ApiCallback<ResultModel>(){
             override fun onSuccess(t: ResultModel?) {
                 dismissProgressBar()

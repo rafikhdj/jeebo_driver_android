@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "734841435481",
+    "firebase_url": "https://jeebo-driver.firebaseio.com",
+    "project_id": "jeebo-driver",
+    "storage_bucket": "jeebo-driver.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:734841435481:android:fab9bff77aa749b3aac848",
+        "android_client_info": {
+          "package_name": "com.app.jeebo.driver"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "734841435481-nf7u699c5me2a6dqgj8tbthsela6pob4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.jeebo.driver",
+            "certificate_hash": "65bd629f2ee9008f3edb85914ef63e95a1dee9bc"
+          }
+        },
+        {
+          "client_id": "734841435481-pm11k20bdvtrsrl8qmu6l64iq9lg5o5r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAnG78SElkUd3fdt3bLfcOH6sV8SUn8yC4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "734841435481-pm11k20bdvtrsrl8qmu6l64iq9lg5o5r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

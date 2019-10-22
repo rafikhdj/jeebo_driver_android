@@ -2,7 +2,6 @@ package com.app.jeebo.driver.api;
 
 import android.util.Log;
 
-import com.app.jeebo.driver.model.BaseResponse;
 import com.app.jeebo.driver.model.Error;
 import com.app.jeebo.driver.utils.GsonUtils;
 import com.google.gson.JsonSyntaxException;
