@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:background="@drawable/bg"
     android:layout_height="wrap_content"
-    tools:context="com.app.jeebo.driver.modules.activity.OtpVerificationActivity">
+    tools:context=".modules.auth.activity.OtpVerificationActivity">
 
     <ImageView
         android:layout_width="wrap_content"

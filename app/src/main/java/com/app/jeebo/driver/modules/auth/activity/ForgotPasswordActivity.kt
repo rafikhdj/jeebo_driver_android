@@ -1,4 +1,4 @@
-package com.app.jeebo.driver.modules.activity
+package com.app.jeebo.driver.modules.auth.activity
 
 import android.os.Bundle
 import android.text.TextUtils
@@ -8,8 +8,8 @@ import com.app.jeebo.driver.api.ApiCallback
 import com.app.jeebo.driver.api.ApiClient
 import com.app.jeebo.driver.base.BaseActivity
 import com.app.jeebo.driver.model.Error
-import com.app.jeebo.driver.modules.model.ForgotPassRequest
-import com.app.jeebo.driver.modules.model.ResultModel
+import com.app.jeebo.driver.modules.auth.model.ForgotPassRequest
+import com.app.jeebo.driver.modules.auth.model.ResultModel
 import com.app.jeebo.driver.utils.DialogManager
 import com.app.jeebo.driver.utils.Validator
 import kotlinx.android.synthetic.main.activity_forgot_password.*
@@ -50,5 +50,11 @@ class ForgotPasswordActivity : BaseActivity() {
                 })
             }
         }
+
+        iv_back.setOnClickListener { finish() }
+        tv_login.setOnClickListener { finish()
+        launchActivity(LoginActivity::class.java)
+        }
+
     }
 }

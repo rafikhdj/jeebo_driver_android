@@ -1,6 +1,7 @@
 <resources>
     <!-- Need to change App Name Here -->
-
+    <string name="facebook_app_id">2236402436650575</string>
+    <string name="fb_login_protocol_scheme">fb2236402436650575</string>
     <!--font-->
     <string name="adineue_pro_light">adineuePRO-Light.otf</string>
     <string name="adineue_pro_regular">adineuePRO-Regular.otf</string>
@@ -62,6 +63,10 @@
     <string name="orders_in_process">Orders in Process</string>
     <string name="terminated_orders">Terminated Orders</string>
 
+    <string name="location_permission_alert">Please provide Location Permission in Setting</string>
+    <string name="enable_gps">Please enable GPS</string>
+
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="take_in_charge">Take in Charge</string>
@@ -72,4 +77,7 @@
     <string name="client_details">Client Details</string>
     <string name="delivery_time">Delivery Time</string>
     <string name="payment_methods">Payment Method</string>
+    <string name="logout">Logout</string>
+    <string name="i_am_available">I am Available</string>
+    <string name="edit_profile">Edit Profile</string>
 </resources>

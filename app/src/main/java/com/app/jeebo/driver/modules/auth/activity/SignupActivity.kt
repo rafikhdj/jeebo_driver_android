@@ -1,4 +1,4 @@
-package com.app.jeebo.driver.modules.activity
+package com.app.jeebo.driver.modules.auth.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,8 +9,8 @@ import com.app.jeebo.driver.api.ApiClient
 import com.app.jeebo.driver.base.BaseActivity
 import com.app.jeebo.driver.model.BaseResponse
 import com.app.jeebo.driver.model.Error
-import com.app.jeebo.driver.modules.model.SignupRequest
-import com.app.jeebo.driver.modules.model.UserModel
+import com.app.jeebo.driver.modules.auth.model.SignupRequest
+import com.app.jeebo.driver.modules.auth.model.UserModel
 import com.app.jeebo.driver.utils.*
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -27,6 +27,7 @@ class SignupActivity : BaseActivity(), IDialogUploadListener {
 
     private lateinit var mSelectedFile:File
     private var filePath:String?=null
+    private var userModel:UserModel?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +36,18 @@ class SignupActivity : BaseActivity(), IDialogUploadListener {
     }
 
     private fun init(){
+
+        userModel= intent.extras?.getSerializable(AppConstant.INTENT_EXTRAS.USER_MODEL) as UserModel?
+
+        if(userModel != null){
+            setSocialData()
+        }
+
+        tv_signup_login.setOnClickListener {
+            launchActivity(LoginActivity::class.java)
+            finish()
+        }
+
         tv_sign_up.setOnClickListener {
           /* val bundle=Bundle()
             bundle.putString(AppConstant.INTENT_EXTRAS.PHONE_NUMBER,"+213 "+et_signup_phone.text.toString().trim())
@@ -48,6 +61,25 @@ class SignupActivity : BaseActivity(), IDialogUploadListener {
         }
     }
 
+    private fun setSocialData(){
+        if(!TextUtils.isEmpty(userModel?.name)){
+            if(userModel!!.name.contains(" ")){
+                var name= userModel!!.name.split(" ")
+                et_signup_name.setText(name[0])
+                et_sur_name.setText(name[1])
+            }
+        }
+
+        if(!TextUtils.isEmpty(userModel?.file_url)){
+            Glide.with(this@SignupActivity).load(userModel?.file_url).apply(RequestOptions.circleCropTransform()).into(iv_profile)
+        }
+
+        if(!TextUtils.isEmpty(userModel?.email)){
+            et_signup_email.setText(userModel?.email)
+        }
+
+    }
+
     private fun callSignupApi(){
         showProgressBar(this)
         var signUpRequest=SignupRequest()
@@ -56,6 +88,8 @@ class SignupActivity : BaseActivity(), IDialogUploadListener {
         signUpRequest.phone_number="+213 "+et_signup_phone.text.toString().trim()
         signUpRequest.email=et_signup_email.text.toString().trim()
         signUpRequest.password=et_signup_password.text.toString().trim()
+        if(userModel != null)
+            signUpRequest.user_id= userModel!!.id.toString()
         val request = ApiClient.getRequest()
         val call=request.signup(signUpRequest)
         call.enqueue(object : ApiCallback<BaseResponse<UserModel>>(){
@@ -160,7 +194,7 @@ class SignupActivity : BaseActivity(), IDialogUploadListener {
             et_signup_password.requestFocus()
             DialogManager.showValidationDialog(this,getString(R.string.confirm_password_invalid_error))
             return false
-        }else if(!et_signup_confirm_password.text.toString().trim().equals(et_signup_confirm_password.text.toString().trim()) ){
+        }else if(!et_signup_password.text.toString().trim().equals(et_signup_confirm_password.text.toString().trim()) ){
             et_signup_password.requestFocus()
             DialogManager.showValidationDialog(this,getString(R.string.password_mismatch_error))
             return false

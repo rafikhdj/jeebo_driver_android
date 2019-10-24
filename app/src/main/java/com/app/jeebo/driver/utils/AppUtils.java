@@ -1,16 +1,24 @@
 package com.app.jeebo.driver.utils;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.content.res.AssetManager;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Environment;
+import android.util.Base64;
+import android.util.Log;
 import android.util.TypedValue;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 
 /**
@@ -31,6 +39,20 @@ public final class AppUtils {
             // context.showToast(context.getResources().getString(R.string.network_not_available));
         }
         return isNetwork;
+    }
+
+    public static void getKey(Activity activity) {
+        try {
+            PackageInfo info = activity.getPackageManager().getPackageInfo(activity.getApplicationContext().getPackageName(), PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            }
+        } catch (PackageManager.NameNotFoundException | NoSuchAlgorithmException e) {
+            e.printStackTrace();
+
+        }
     }
 
     public static Typeface findTypeface(Context context, String initPath,

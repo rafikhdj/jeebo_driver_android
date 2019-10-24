@@ -1,4 +1,4 @@
-package com.app.jeebo.driver.modules.model;
+package com.app.jeebo.driver.modules.auth.model;
 
 public class ResendOtpRequest {
     private String phone_number;

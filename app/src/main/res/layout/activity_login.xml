@@ -21,11 +21,11 @@
             android:layout_marginTop="@dimen/dp_12"
             android:orientation="vertical">
 
-            <!--<com.facebook.login.widget.LoginButton
+            <com.facebook.login.widget.LoginButton
                 android:id="@+id/login_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="gone" />-->
+                android:visibility="gone" />
 
             <com.app.jeebo.driver.view.CustomTextView
                 android:layout_width="wrap_content"
@@ -68,7 +68,7 @@
                             android:layout_alignParentLeft="true"
                             android:layout_centerVertical="true"
                             android:layout_marginRight="@dimen/dp_5"
-                            android:src="@drawable/phone" />
+                            android:src="@drawable/email" />
 
                         <com.app.jeebo.driver.view.CustomEditText
                             android:id="@+id/et_signin_email"
@@ -78,7 +78,7 @@
                             android:layout_gravity="center"
                             android:layout_toRightOf="@+id/iv_name"
                             android:backgroundTint="@color/color_dbdbdb"
-                            android:hint="@string/phone_number"
+                            android:hint="@string/email"
                             android:imeOptions="actionNext"
                             android:inputType="textEmailAddress"
                             android:maxLength="40"
@@ -171,6 +171,7 @@
                     <ImageView
                         android:id="@+id/iv_google"
                         android:layout_marginTop="@dimen/dp_3"
+                        android:visibility="gone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/gmail" />

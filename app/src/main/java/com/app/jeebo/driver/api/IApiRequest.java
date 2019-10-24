@@ -1,25 +1,22 @@
 package com.app.jeebo.driver.api;
 
 import com.app.jeebo.driver.model.BaseResponse;
-import com.app.jeebo.driver.model.LoginResponse;
-import com.app.jeebo.driver.modules.model.ForgotPassRequest;
-import com.app.jeebo.driver.modules.model.LoginRequest;
-import com.app.jeebo.driver.modules.model.ResendOtpRequest;
-import com.app.jeebo.driver.modules.model.ResultModel;
-import com.app.jeebo.driver.modules.model.SignupRequest;
-import com.app.jeebo.driver.modules.model.UserModel;
-import com.app.jeebo.driver.modules.model.VerifyOtpResponse;
+import com.app.jeebo.driver.modules.auth.model.ForgotPassRequest;
+import com.app.jeebo.driver.modules.auth.model.LoginRequest;
+import com.app.jeebo.driver.modules.auth.model.ResendOtpRequest;
+import com.app.jeebo.driver.modules.auth.model.ResultModel;
+import com.app.jeebo.driver.modules.auth.model.SignupRequest;
+import com.app.jeebo.driver.modules.auth.model.SocialLoginReq;
+import com.app.jeebo.driver.modules.auth.model.UserModel;
+import com.app.jeebo.driver.modules.auth.model.VerifyOtpResponse;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
-import retrofit2.http.Url;
 
 public interface IApiRequest {
 
@@ -64,6 +61,9 @@ public interface IApiRequest {
     @POST("user/emaillogin")
     Call<UserModel> login(@Header("Authorization") String authorization,
                           @Body LoginRequest loginRequest);
+
+    @POST("user/facebook_login")
+    Call<UserModel> socialLogin(@Body SocialLoginReq loginRequest);
 
     @POST("user/driver_signup")
     Call<BaseResponse<UserModel>> signup(@Body SignupRequest signupRequest);

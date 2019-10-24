@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg"
-    tools:context=".modules.activity.SplashActivity">
+    tools:context=".modules.auth.activity.SplashActivity">
 
 <RelativeLayout
     android:layout_width="match_parent"

@@ -1,4 +1,4 @@
-package com.app.jeebo.driver.modules.activity
+package com.app.jeebo.driver.modules.auth.activity
 
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -11,19 +11,18 @@ import com.app.jeebo.driver.api.ApiCallback
 import com.app.jeebo.driver.api.ApiClient
 import com.app.jeebo.driver.api.IApiRequest
 import com.app.jeebo.driver.base.BaseActivity
-import com.app.jeebo.driver.model.BaseResponse
 import com.app.jeebo.driver.model.Error
-import com.app.jeebo.driver.modules.model.ResendOtpRequest
-import com.app.jeebo.driver.modules.model.ResultModel
-import com.app.jeebo.driver.modules.model.UserModel
-import com.app.jeebo.driver.modules.model.VerifyOtpResponse
+import com.app.jeebo.driver.modules.home.activity.HomeActivity
+import com.app.jeebo.driver.modules.auth.model.ResendOtpRequest
+import com.app.jeebo.driver.modules.auth.model.ResultModel
+import com.app.jeebo.driver.modules.auth.model.UserModel
+import com.app.jeebo.driver.modules.auth.model.VerifyOtpResponse
 import com.app.jeebo.driver.utils.AppConstant
 import com.app.jeebo.driver.utils.DialogManager
 import com.app.jeebo.driver.utils.OtpTextWatcher
+import com.app.jeebo.driver.utils.PreferenceKeeper
 import com.app.jeebo.driver.view.CustomEditText
 import kotlinx.android.synthetic.main.activity_otp_verification.*
-import retrofit2.Call
-import retrofit2.Callback
 import java.util.ArrayList
 import java.util.concurrent.TimeUnit
 
@@ -47,6 +46,8 @@ class OtpVerificationActivity : BaseActivity() {
         token=intent.extras?.getString(AppConstant.INTENT_EXTRAS.ACCESS_TOKEN)
 
         tv_resend_otp.setTextColor(resources.getColor(R.color.color_50292929))
+
+        iv_back.setOnClickListener { finish() }
 
         tv_verify.setOnClickListener {
             if(isVerifyEnabled){
@@ -186,7 +187,17 @@ class OtpVerificationActivity : BaseActivity() {
         call.enqueue(object : ApiCallback<VerifyOtpResponse>(){
             override fun onSuccess(t: VerifyOtpResponse?) {
                 dismissProgressBar()
-                showToast("Success")
+                var userModel= t?.result
+                //showToast("Success")
+                PreferenceKeeper.getInstance().email=userModel?.email
+                PreferenceKeeper.getInstance().image=userModel?.file_url
+                PreferenceKeeper.getInstance().name=userModel?.name
+                PreferenceKeeper.getInstance().accessToken=userModel?.token
+                PreferenceKeeper.getInstance().userPhone=userModel?.phone_number
+                PreferenceKeeper.getInstance().userId= userModel?.userId.toString()
+                PreferenceKeeper.getInstance().isLogin=true
+                launchActivity(HomeActivity::class.java)
+                finish()
             }
 
             override fun onError(error: Error?) {

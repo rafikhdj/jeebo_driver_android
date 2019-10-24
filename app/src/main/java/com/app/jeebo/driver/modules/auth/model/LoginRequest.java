@@ -1,4 +1,4 @@
-package com.app.jeebo.driver.modules.model;
+package com.app.jeebo.driver.modules.auth.model;
 
 public class LoginRequest {
     private String device_token;

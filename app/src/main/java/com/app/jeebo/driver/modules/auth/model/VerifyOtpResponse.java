@@ -1,18 +1,18 @@
-package com.app.jeebo.driver.modules.model;
+package com.app.jeebo.driver.modules.auth.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ResultModel {
+public class VerifyOtpResponse {
     @SerializedName("result")
     @Expose
-    private String result;
+    private UserModel result;
 
-    public String getResult() {
+    public UserModel getResult() {
         return result;
     }
 
-    public void setResult(String result) {
+    public void setResult(UserModel result) {
         this.result = result;
     }
 }

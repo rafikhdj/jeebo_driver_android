@@ -9,17 +9,27 @@ import android.Manifest;
 public class AppConstant {
     public static final String DEVICE_OS = "ANDROID";
     public static final String APPID = "pFgqwuroTq";
+    public static final String SCOPES = "https://www.googleapis.com/auth/plus.login "
+            + "https://www.googleapis.com/auth/drive.file";
 
     public class PrefsName {
 
         public static final String USERNAME = "username";
         public static final String ACCESS_TOKEN = "access_token";
+        public static final String NAME = "name";
+        public static final String IMAGE = "image";
+        public static final String EMAIL = "email";
+        public static final String USER_ID = "user_id";
+        public static final String USER_PHONE = "user_phone";
+        public static final String IS_LOGIN = "is_login";
     }
 
     public interface INTENT_EXTRAS {
         String SMS_RECEIVED = "sms_received";
         String PHONE_NUMBER = "phone_number";
         String ACCESS_TOKEN = "access_token";
+        String USER_MODEL = "user_model";
+        String USER_ADDRESS = "user_address";
     }
 
     public interface REQUEST_CODE {

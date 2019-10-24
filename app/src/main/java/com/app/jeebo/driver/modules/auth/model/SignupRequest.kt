@@ -1,4 +1,4 @@
-package com.app.jeebo.driver.modules.model
+package com.app.jeebo.driver.modules.auth.model
 
 class SignupRequest {
      var name:String=""
@@ -6,4 +6,5 @@ class SignupRequest {
      var email:String=""
      var password:String=""
      var image_url:String=""
+     var user_id:String=""
 }

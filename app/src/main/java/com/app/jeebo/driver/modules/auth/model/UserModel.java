@@ -1,9 +1,11 @@
-package com.app.jeebo.driver.modules.model;
+package com.app.jeebo.driver.modules.auth.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class UserModel {
+import java.io.Serializable;
+
+public class UserModel implements Serializable {
     @SerializedName("current_role")
     @Expose
     private String currentRole;
@@ -37,6 +39,18 @@ public class UserModel {
     @SerializedName("user_id")
     @Expose
     private Integer userId;
+    @SerializedName("id")
+    @Expose
+    private Integer id;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     @SerializedName("otp")
     @Expose
     private Integer otp;
@@ -49,7 +63,7 @@ public class UserModel {
         this.otp = otp;
     }
 
-    @SerializedName("file_url")
+    @SerializedName("driver_image_url")
     @Expose
     private String file_url;
 
