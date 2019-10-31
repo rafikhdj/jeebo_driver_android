@@ -1,8 +1,13 @@
 package com.app.jeebo.driver.api;
 
+import android.app.Application;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.app.jeebo.driver.BuildConfig;
+import com.app.jeebo.driver.R;
+import com.app.jeebo.driver.application.JeeboApplication;
+import com.app.jeebo.driver.utils.AppUtils;
 
 import java.util.concurrent.TimeUnit;
 
@@ -35,6 +40,12 @@ public class ApiClient {
 
     }
     public static IApiRequest getRequest() {
+        if(AppUtils.isNetworkAvailable(JeeboApplication.getContext()))
+            return apiRequest;
+        else{
+            Toast.makeText(JeeboApplication.getContext(),JeeboApplication.getContext().getResources().getString(R.string.network_error) , Toast.LENGTH_LONG).show();
+        }
         return apiRequest;
+        //return apiRequest;
     }
 }

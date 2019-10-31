@@ -190,7 +190,7 @@ class OtpVerificationActivity : BaseActivity() {
                 var userModel= t?.result
                 //showToast("Success")
                 PreferenceKeeper.getInstance().email=userModel?.email
-                PreferenceKeeper.getInstance().image=userModel?.file_url
+                PreferenceKeeper.getInstance().image=userModel?.driver_image_url
                 PreferenceKeeper.getInstance().name=userModel?.name
                 PreferenceKeeper.getInstance().accessToken=userModel?.token
                 PreferenceKeeper.getInstance().userPhone=userModel?.phone_number

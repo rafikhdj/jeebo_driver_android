@@ -84,7 +84,7 @@ class SignupActivity : BaseActivity(), IDialogUploadListener {
         showProgressBar(this)
         var signUpRequest=SignupRequest()
         signUpRequest.name=et_signup_name.text.toString().trim()+" "+et_sur_name.text.toString().trim()
-        signUpRequest.image_url= filePath.toString()
+        signUpRequest.driver_image_url= filePath.toString()
         signUpRequest.phone_number="+213 "+et_signup_phone.text.toString().trim()
         signUpRequest.email=et_signup_email.text.toString().trim()
         signUpRequest.password=et_signup_password.text.toString().trim()
@@ -102,7 +102,7 @@ class SignupActivity : BaseActivity(), IDialogUploadListener {
                 bundle.putString(AppConstant.INTENT_EXTRAS.PHONE_NUMBER,"+213 "+et_signup_phone.text.toString().trim())
                 bundle.putString(AppConstant.INTENT_EXTRAS.ACCESS_TOKEN,userModel.token)
                 launchActivity(OtpVerificationActivity::class.java,bundle)
-
+                finish()
             }
 
             override fun onError(error: Error?) {

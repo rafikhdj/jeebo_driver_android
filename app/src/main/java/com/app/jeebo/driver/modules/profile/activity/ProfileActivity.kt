@@ -10,6 +10,8 @@ import com.app.jeebo.driver.api.ApiClient
 import com.app.jeebo.driver.base.BaseActivity
 import com.app.jeebo.driver.model.Error
 import com.app.jeebo.driver.modules.auth.model.UserModel
+import com.app.jeebo.driver.modules.profile.model.EditProfileReq
+import com.app.jeebo.driver.modules.profile.model.UserResultModel
 import com.app.jeebo.driver.utils.*
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -44,8 +46,11 @@ class ProfileActivity : BaseActivity(), IDialogUploadListener {
             tv_address.setText(address)
 
         iv_user.setOnClickListener {
+            if(isEditProfile!!)
             DialogManager.openDialogCameraGallary(false,this,this)
         }
+
+        iv_back.setOnClickListener { finish() }
 
         tv_edit.setOnClickListener {
             if(isEditProfile!!){
@@ -74,16 +79,45 @@ class ProfileActivity : BaseActivity(), IDialogUploadListener {
                 tv_surname_value.visibility=View.GONE
                 tv_phone_value.visibility=View.GONE
                 tv_email_value.visibility=View.GONE
+                tv_edit.text=getString(R.string.save)
             }
         }
     }
 
     private fun callEditProfileApi(){
+        if(validate()){
+            showProgressBar(this)
+            var editProfileReq=EditProfileReq()
+            editProfileReq.email=et_email.text.toString().trim()
+            editProfileReq.name=et_name.text.toString().trim()+" "+et_sur_name.text.toString().trim()
+            if(!TextUtils.isEmpty(filePath))
+            editProfileReq.image_url=filePath
+            val request=ApiClient.getRequest()
+            val call=request.editProfile(editProfileReq)
+            call.enqueue(object : ApiCallback<UserResultModel>(){
+                override fun onSuccess(userResult: UserResultModel?) {
+                    var t=userResult?.result
+                    PreferenceKeeper.getInstance().email=t?.email
+                    PreferenceKeeper.getInstance().image=t?.driver_image_url
+                    PreferenceKeeper.getInstance().name=t?.name
+                    PreferenceKeeper.getInstance().accessToken=t?.token
+                    dismissProgressBar()
+                    showToast("Profile Updated Successfully")
+                    finish()
+                }
 
+                override fun onError(error: Error?) {
+                    dismissProgressBar()
+                    tv_edit.setText(getString(R.string.edit_profile))
+                }
+
+            })
+
+        }
     }
 
     private fun validate():Boolean{
-        if(TextUtils.isEmpty(et_signup_name.text.toString().trim())){
+        if(TextUtils.isEmpty(et_name.text.toString().trim())){
             et_name.requestFocus()
             DialogManager.showValidationDialog(this,getString(R.string.name_missing_error))
             return false
@@ -91,11 +125,11 @@ class ProfileActivity : BaseActivity(), IDialogUploadListener {
             et_sur_name.requestFocus()
             DialogManager.showValidationDialog(this,getString(R.string.surname_missing_error))
             return false
-        }else if(TextUtils.isEmpty(et_signup_email.text.toString().trim())){
+        }else if(TextUtils.isEmpty(et_email.text.toString().trim())){
             et_email.requestFocus()
             DialogManager.showValidationDialog(this,getString(R.string.email_missing_error))
             return false
-        }else if(!Validator.isValidEmail(et_signup_email.text.toString().trim())){
+        }else if(!Validator.isValidEmail(et_email.text.toString().trim())){
             et_email.requestFocus()
             DialogManager.showValidationDialog(this,getString(R.string.email_invalid_error))
             return false
@@ -115,6 +149,9 @@ class ProfileActivity : BaseActivity(), IDialogUploadListener {
                 mSelectedFile= File(imagepath.toString())
                 var size: Long =mSelectedFile.length()/1024
                 if(size>0){
+                    /*var requestOptions = RequestOptions()
+                    requestOptions.placeholder(R.drawable.placeholder)
+                    requestOptions.error(R.drawable.placeholder)*/
                     Glide.with(this@ProfileActivity).load(imagepath).apply(RequestOptions.circleCropTransform()).into(iv_user)
                     try {
                         mSelectedFile = Compressor(this@ProfileActivity).compressToFile(mSelectedFile)
@@ -173,16 +210,25 @@ class ProfileActivity : BaseActivity(), IDialogUploadListener {
 
     private fun setUserDetails(){
         if(!TextUtils.isEmpty(PreferenceKeeper.getInstance().image)){
-            Glide.with(this@ProfileActivity).load(PreferenceKeeper.getInstance().image).into(iv_user)
+            var requestOptions = RequestOptions()
+            requestOptions.placeholder(R.drawable.placeholder)
+            requestOptions.error(R.drawable.placeholder)
+            Glide.with(this@ProfileActivity).setDefaultRequestOptions(requestOptions).load(PreferenceKeeper.getInstance().image).into(iv_user)
         }
 
         if(!TextUtils.isEmpty(PreferenceKeeper.getInstance().name)){
             tv_name_head.setText(PreferenceKeeper.getInstance().name)
-            var name=PreferenceKeeper.getInstance().name.split(" ")
-            tv_name_value.setText(name[0])
-            et_name.setText(name[0])
-            tv_surname_value.setText(name[1])
-            et_sur_name.setText(name[1])
+            if(PreferenceKeeper.getInstance().name.contains(" ")){
+                var name=PreferenceKeeper.getInstance().name.split(" ")
+                tv_name_value.setText(name[0])
+                et_name.setText(name[0])
+                tv_surname_value.setText(name[1])
+                et_sur_name.setText(name[1])
+            }else{
+                tv_name_value.setText(PreferenceKeeper.getInstance().name)
+                et_name.setText(PreferenceKeeper.getInstance().name)
+            }
+
         }
 
         if(!TextUtils.isEmpty(PreferenceKeeper.getInstance().email)){

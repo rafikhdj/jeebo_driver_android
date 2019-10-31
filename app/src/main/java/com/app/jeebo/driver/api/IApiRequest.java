@@ -9,6 +9,8 @@ import com.app.jeebo.driver.modules.auth.model.SignupRequest;
 import com.app.jeebo.driver.modules.auth.model.SocialLoginReq;
 import com.app.jeebo.driver.modules.auth.model.UserModel;
 import com.app.jeebo.driver.modules.auth.model.VerifyOtpResponse;
+import com.app.jeebo.driver.modules.profile.model.EditProfileReq;
+import com.app.jeebo.driver.modules.profile.model.UserResultModel;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;
@@ -77,5 +79,8 @@ public interface IApiRequest {
 
     @POST("user/forgot_password")
     Call<ResultModel> forgotPassword(@Body ForgotPassRequest passRequest);
+
+    @POST("user/edit_driver_profile")
+    Call<UserResultModel> editProfile(@Body EditProfileReq editProfileReq);
 
 }

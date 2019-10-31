@@ -5,12 +5,12 @@
     android:layout_height="match_parent"
     tools:context=".modules.home.fragment.OrdersProcessFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <com.app.jeebo.driver.view.CustomTextView
         android:layout_width="match_parent"
-        android:layout_gravity="center"
         android:gravity="center"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:textSize="@dimen/sp_16"
+        android:textColor="@color/color_black"
+        android:text="Will be available in next build"
+        android:layout_height="match_parent" />
 
 </FrameLayout>

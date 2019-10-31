@@ -10,6 +10,7 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.text.TextUtils
+import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -30,7 +31,9 @@ import com.app.jeebo.driver.modules.auth.activity.LoginActivity
 import com.app.jeebo.driver.modules.profile.activity.ProfileActivity
 import com.app.jeebo.driver.utils.AppConstant
 import com.app.jeebo.driver.utils.PreferenceKeeper
+import com.app.jeebo.driver.view.CustomTextView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import java.io.IOException
 import java.util.*
 
@@ -40,6 +43,9 @@ class HomeActivity : BaseActivity(), LocationListener {
     var fragment: Fragment? = null
     private val RECORD_REQUEST_CODE = 101
     private var locationManager: LocationManager? = null
+    private var tvTabSelected:CustomTextView?=null
+    private var tvTabUnselected:CustomTextView?=null
+    private var tvTabUnselected2:CustomTextView?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,14 +58,6 @@ class HomeActivity : BaseActivity(), LocationListener {
         locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
         slideDrawer()
-
-        if(!TextUtils.isEmpty(PreferenceKeeper.getInstance().image)){
-            Glide.with(this@HomeActivity).load(PreferenceKeeper.getInstance().image).into(iv_user)
-        }
-
-        if(!TextUtils.isEmpty(PreferenceKeeper.getInstance().name)){
-            tv_user_name.setText(PreferenceKeeper.getInstance().name)
-        }
 
         tv_logout.setOnClickListener {
             PreferenceKeeper.getInstance().clearData()
@@ -78,12 +76,12 @@ class HomeActivity : BaseActivity(), LocationListener {
         menu_icon.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 drawerLayout.openDrawer(GravityCompat.START)
-                if (Build.VERSION.SDK_INT >= 21) {
+                /*if (Build.VERSION.SDK_INT >= 21) {
                     val window = window
                     window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
                     window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
                     window.statusBarColor = resources.getColor(R.color.color_0b95c7)
-                }
+                }*/
 
             }
         })
@@ -91,27 +89,7 @@ class HomeActivity : BaseActivity(), LocationListener {
 
         setCurrentFragment(EScreenType.PENDING_ORDERS_SCREEN.ordinal)
 
-        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabUnselected(p0: TabLayout.Tab?) {
-
-            }
-
-            override fun onTabReselected(p0: TabLayout.Tab?) {
-
-            }
-
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-               if(tabLayout.selectedTabPosition==0){
-                   setCurrentFragment(EScreenType.PENDING_ORDERS_SCREEN.ordinal)
-               }else if(tabLayout.selectedTabPosition==1){
-                   setCurrentFragment(EScreenType.ORDERS_PROCESSED_SCREEN.ordinal)
-               }else{
-                   setCurrentFragment(EScreenType.TERMINATED_ORDERS_SCREEN.ordinal)
-               }
-
-            }
-
-        })
+        setUpTabs()
     }
 
 
@@ -132,21 +110,6 @@ class HomeActivity : BaseActivity(), LocationListener {
                 content.translationX = slideX
                 content.scaleX = 1 - slideOffset / scaleFactor
                 content.scaleY = 1 - slideOffset / scaleFactor
-                if(slideOffset > 0){
-                    if (Build.VERSION.SDK_INT >= 21) {
-                        val window = window
-                        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-                        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-                        window.statusBarColor = resources.getColor(R.color.color_0b95c7)
-                    }
-                }else{
-                    if (Build.VERSION.SDK_INT >= 21) {
-                        val window = window
-                        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-                        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-                        window.statusBarColor = resources.getColor(com.app.jeebo.driver.R.color.color_0B94C7)
-                    }
-                }
             }
         }
 
@@ -158,13 +121,86 @@ class HomeActivity : BaseActivity(), LocationListener {
 
     override fun onResume() {
         super.onResume()
-        if (Build.VERSION.SDK_INT >= 21) {
+        /*if (Build.VERSION.SDK_INT >= 21) {
             val window = window
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
             window.statusBarColor = resources.getColor(R.color.color_0B94C7)
-        }
+        }*/
         setupPermissions()
+        setData()
+    }
+
+    private fun setUpTabs() {
+        tab_layout.addTab(tab_layout.newTab().setText(getString(R.string.pending_orders)))
+        tab_layout.addTab(tab_layout.newTab().setText(getString(R.string.orders_in_process)))
+        tab_layout.addTab(tab_layout.newTab().setText(getString(R.string.terminated_orders)))
+        tab_layout.setTabGravity(TabLayout.GRAVITY_FILL)
+        tab_layout.setClickable(true)
+
+        tvTabSelected = LayoutInflater.from(this).inflate(R.layout.tab_layout_selected, null) as CustomTextView
+        tvTabUnselected = LayoutInflater.from(this).inflate(R.layout.tab_layout_unselected, null) as CustomTextView
+        tvTabUnselected2 = LayoutInflater.from(this).inflate(R.layout.tab_unselected, null) as CustomTextView
+        tab_layout.getTabAt(0)?.setCustomView(tvTabSelected)
+        tab_layout.getTabAt(1)?.setCustomView(tvTabUnselected)
+        tab_layout.getTabAt(2)?.setCustomView(tvTabUnselected2)
+
+        tab_layout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+               // tab?.setCustomView(tvTabUnselected)
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+               // tab?.setCustomView(tvTabSelected)
+            }
+
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                tab?.setCustomView(tvTabSelected)
+                if(tab_layout.selectedTabPosition==0){
+                    tab_layout.getTabAt(1)?.setCustomView(tvTabUnselected)
+                    tab_layout.getTabAt(2)?.setCustomView(tvTabUnselected2)
+                    setCurrentFragment(EScreenType.PENDING_ORDERS_SCREEN.ordinal)
+                }else if(tab_layout.selectedTabPosition==1){
+                    tab_layout.getTabAt(0)?.setCustomView(tvTabUnselected)
+                    tab_layout.getTabAt(2)?.setCustomView(tvTabUnselected2)
+                    setCurrentFragment(EScreenType.ORDERS_PROCESSED_SCREEN.ordinal)
+                }else{
+                    tab_layout.getTabAt(1)?.setCustomView(tvTabUnselected2)
+                    tab_layout.getTabAt(0)?.setCustomView(tvTabUnselected)
+                    setCurrentFragment(EScreenType.TERMINATED_ORDERS_SCREEN.ordinal)
+                }
+
+            }
+
+        })
+
+
+        /*tab_layout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener() {
+            fun onTabSelected(tab: TabLayout.Tab) {
+                tab.setCustomView(tvTabSelected)
+                if (tab_layout.getSelectedTabPosition() === 0) {
+                    setCurrentFragment(EScreenType.FRIEND_LIST_SCREEN.ordinal())
+                } else {
+                    setCurrentFragment(EScreenType.FRIEND_REQUEST_SCREEN.ordinal())
+                }
+
+            }
+
+            fun onTabUnselected(tab: TabLayout.Tab) {
+                tab.setCustomView(tvTabUnselected)
+                if (tab_layout.getSelectedTabPosition() === 0) {
+                    setCurrentFragment(EScreenType.FRIEND_LIST_SCREEN.ordinal())
+                } else {
+                    setCurrentFragment(EScreenType.FRIEND_REQUEST_SCREEN.ordinal())
+                }
+                // setCurrentFragment(EScreenType.FRIEND_REQUEST_SCREEN.ordinal());
+            }
+
+            fun onTabReselected(tab: TabLayout.Tab) {
+                tab.setCustomView(tvTabSelected)
+            }
+        })*/
+
     }
 
     private fun setupPermissions() {
@@ -283,6 +319,20 @@ class HomeActivity : BaseActivity(), LocationListener {
 
     override fun onProviderDisabled(p0: String?) {
 
+    }
+
+
+    private fun setData(){
+        var requestOptions = RequestOptions()
+        requestOptions.placeholder(R.drawable.placeholder)
+        requestOptions.error(R.drawable.placeholder)
+        if(!TextUtils.isEmpty(PreferenceKeeper.getInstance().image)){
+            Glide.with(this@HomeActivity).setDefaultRequestOptions(requestOptions).load(PreferenceKeeper.getInstance().image).into(iv_user)
+        }
+
+        if(!TextUtils.isEmpty(PreferenceKeeper.getInstance().name)){
+            tv_user_name.setText(PreferenceKeeper.getInstance().name)
+        }
     }
 
 }

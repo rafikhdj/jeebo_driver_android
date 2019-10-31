@@ -201,6 +201,7 @@
             android:layout_below="@+id/tv_verify"
             android:id="@+id/tv_resend_otp"
             android:layout_marginTop="@dimen/_20sdp"
+            app:ctypeface="@string/adineue_pro_regular"
             android:text="@string/resend_otp"
             android:textColor="@color/white"
             android:textSize="@dimen/_13ssp"

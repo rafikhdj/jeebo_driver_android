@@ -17,7 +17,7 @@ public class PendingOrderAdapter extends RecyclerView.Adapter<PendingOrderAdapte
     public PendingOrderAdapter.MyHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.pending_order_list, null, false);
+        View view = inflater.inflate(R.layout.inflater_pending_order_item, null, false);
 
         return new PendingOrderAdapter.MyHolder(view);
     }
@@ -29,7 +29,7 @@ public class PendingOrderAdapter extends RecyclerView.Adapter<PendingOrderAdapte
 
     @Override
     public int getItemCount() {
-        return 0;
+        return 10;
     }
 
     public class MyHolder extends RecyclerView.ViewHolder {

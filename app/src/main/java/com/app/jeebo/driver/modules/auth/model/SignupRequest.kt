@@ -5,6 +5,6 @@ class SignupRequest {
      var phone_number:String=""
      var email:String=""
      var password:String=""
-     var image_url:String=""
+     var driver_image_url:String=""
      var user_id:String=""
 }

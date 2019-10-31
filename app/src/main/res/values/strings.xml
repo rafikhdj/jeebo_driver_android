@@ -65,6 +65,7 @@
 
     <string name="location_permission_alert">Please provide Location Permission in Setting</string>
     <string name="enable_gps">Please enable GPS</string>
+    <string name="save">Save</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->
@@ -80,4 +81,8 @@
     <string name="logout">Logout</string>
     <string name="i_am_available">I am Available</string>
     <string name="edit_profile">Edit Profile</string>
+    <string name="merchant">Merchant:</string>
+    <string name="client">Client:</string>
+    <string name="network_error">Seems like you are not connected to the internet, please check your network settings and try again</string>
+
 </resources>

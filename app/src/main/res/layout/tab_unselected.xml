@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.app.jeebo.driver.view.CustomTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@android:id/text1"
+    android:layout_width="match_parent"
+    android:textSize="@dimen/_13ssp"
+    android:textColor="@color/white"
+    android:gravity="center"
+    app:ctypeface="@string/adineue_pro_regular"
+    android:layout_height="match_parent" />

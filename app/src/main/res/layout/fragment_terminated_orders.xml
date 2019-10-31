@@ -6,10 +6,12 @@
     tools:context=".modules.home.fragment.TerminatedOrdersFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <com.app.jeebo.driver.view.CustomTextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textSize="@dimen/sp_16"
         android:textColor="@color/color_black"
-        android:text="@string/hello_blank_fragment" />
+        android:text="Will be available in next build"
+        android:layout_height="match_parent" />
 
 </FrameLayout>

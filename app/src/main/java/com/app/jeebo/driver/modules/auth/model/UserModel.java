@@ -63,9 +63,20 @@ public class UserModel implements Serializable {
         this.otp = otp;
     }
 
-    @SerializedName("driver_image_url")
+    @SerializedName("file_url")
     @Expose
     private String file_url;
+    @SerializedName("driver_image_url")
+    @Expose
+    private String driver_image_url;
+
+    public String getDriver_image_url() {
+        return driver_image_url;
+    }
+
+    public void setDriver_image_url(String driver_image_url) {
+        this.driver_image_url = driver_image_url;
+    }
 
     public String getFile_url() {
         return file_url;

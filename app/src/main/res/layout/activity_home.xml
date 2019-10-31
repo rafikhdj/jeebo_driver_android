@@ -32,6 +32,9 @@
                 <ImageView
                     android:id="@+id/menu_icon"
                     android:layout_width="wrap_content"
+                    android:paddingRight="@dimen/dp_10"
+                    android:paddingBottom="@dimen/dp_10"
+                    android:paddingTop="@dimen/dp_10"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dp_20"
                     android:layout_marginTop="@dimen/dp_20"
@@ -49,7 +52,7 @@
                     android:textSize="@dimen/sp_18"
                     app:ctypeface="@string/adineue_pro_regular" />
 
-                <com.google.android.material.tabs.TabLayout
+                <!--<com.google.android.material.tabs.TabLayout
                     android:id="@+id/tabLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -77,8 +80,16 @@
                         android:text="@string/terminated_orders"
                         app:ctypeface="@string/adineue_pro_regular" />
 
-                </com.google.android.material.tabs.TabLayout>
+                </com.google.android.material.tabs.TabLayout>-->
 
+
+                <com.google.android.material.tabs.TabLayout
+                    android:layout_width="match_parent"
+                    android:id="@+id/tab_layout"
+                    android:layout_below="@id/tv_head"
+                    android:layout_marginTop="@dimen/dp_20"
+                    app:tabIndicatorColor="@color/white"
+                    android:layout_height="wrap_content"/>
 
             </RelativeLayout>
 
@@ -118,7 +129,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dp_200"
 
-                        android:background="@color/color_0b95c7">
+                        android:background="@color/color_0B94C7">
 
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:id="@+id/iv_user"

@@ -32,7 +32,7 @@ private static final String TAG = ApiInterceptor.class.getSimpleName();
             return chain.proceed(originalRequest);
         }
 
-        Request newRequest = originalRequest.newBuilder().addHeader("authorization", token).addHeader("deviceId",PreferenceKeeper.getInstance().getFCMToken())
+        Request newRequest = originalRequest.newBuilder().addHeader("x-access-token", token).addHeader("deviceId",PreferenceKeeper.getInstance().getFCMToken())
                 .addHeader("deviceOS", AppConstant.DEVICE_OS).build();
 
 

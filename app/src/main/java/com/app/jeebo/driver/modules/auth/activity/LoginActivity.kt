@@ -85,7 +85,7 @@ class LoginActivity : BaseActivity() {
                        if(t!!.isPhoneVerified){
                            //showToast("succes")
                            PreferenceKeeper.getInstance().email=t.email
-                           PreferenceKeeper.getInstance().image=t.file_url
+                           PreferenceKeeper.getInstance().image=t.driver_image_url
                            PreferenceKeeper.getInstance().name=t.name
                            PreferenceKeeper.getInstance().accessToken=t.token
                            PreferenceKeeper.getInstance().userPhone=t.phone_number
@@ -152,6 +152,7 @@ class LoginActivity : BaseActivity() {
 
             override fun onError(error: FacebookException) {
                 Log.d("fb", error.toString())
+                showToast("Some error occurred, Please try again")
             }
         })
 
@@ -170,6 +171,14 @@ class LoginActivity : BaseActivity() {
                 dismissProgressBar()
                 if(t!!.isPhoneVerified) {
                     //showToast("succes")
+                    PreferenceKeeper.getInstance().email=t.email
+                    PreferenceKeeper.getInstance().image=t.driver_image_url
+                    PreferenceKeeper.getInstance().name=t.name
+                    PreferenceKeeper.getInstance().accessToken=t.token
+                    PreferenceKeeper.getInstance().userPhone=t.phone_number
+                    if(t.id != null)
+                    PreferenceKeeper.getInstance().userId= t.id.toString()
+                    PreferenceKeeper.getInstance().isLogin=true
                     launchActivity(HomeActivity::class.java)
                 }
                 else if(TextUtils.isEmpty(t!!.phone_number)){
@@ -181,6 +190,7 @@ class LoginActivity : BaseActivity() {
                     bundle.putString(AppConstant.INTENT_EXTRAS.PHONE_NUMBER,t.phone_number)
                     bundle.putString(AppConstant.INTENT_EXTRAS.ACCESS_TOKEN,t.token)
                     launchActivity(OtpVerificationActivity::class.java,bundle)
+                    if(t.otp != null)
                     showToast(t.otp.toString())
                 }
             }
