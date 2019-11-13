@@ -14,6 +14,13 @@ import android.util.Base64;
 import android.util.Log;
 import android.util.TypedValue;
 
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
+
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
@@ -125,5 +132,15 @@ public final class AppUtils {
         int dia = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.getResources().getDisplayMetrics());
         return dia;
 
+    }
+
+    public static void getDeviceToken(){
+        FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+            @Override
+            public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                if(task.isSuccessful())
+                PreferenceKeeper.getInstance().setDeviceToken(task.getResult().getToken());
+            }
+        });
     }
 }

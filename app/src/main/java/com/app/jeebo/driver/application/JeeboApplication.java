@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.app.jeebo.driver.api.ApiClient;
 import com.app.jeebo.driver.api.IApiRequest;
+import com.app.jeebo.driver.utils.AppUtils;
 import com.app.jeebo.driver.utils.PreferenceKeeper;
 
 import java.util.Locale;
@@ -19,6 +20,7 @@ public class JeeboApplication extends Application {
         context=this;
         ApiClient.init(IApiRequest.class);
         PreferenceKeeper.setContext(getApplicationContext());
+        AppUtils.getDeviceToken();
        // PreferenceKeeper.getInstance().setLanguage(Locale.getDefault().getDisplayLanguage());
     }
     //FacebookSdk.InitializeCallback

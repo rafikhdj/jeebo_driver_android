@@ -85,6 +85,8 @@ class SignupActivity : BaseActivity(), IDialogUploadListener {
         var signUpRequest=SignupRequest()
         signUpRequest.name=et_signup_name.text.toString().trim()+" "+et_sur_name.text.toString().trim()
         signUpRequest.driver_image_url= filePath.toString()
+        signUpRequest.platform=3
+        signUpRequest.device_token=PreferenceKeeper.getInstance().deviceToken
         signUpRequest.phone_number="+213 "+et_signup_phone.text.toString().trim()
         signUpRequest.email=et_signup_email.text.toString().trim()
         signUpRequest.password=et_signup_password.text.toString().trim()

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:padding="@dimen/dp_5"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+   >
+
+    <com.app.jeebo.driver.view.CustomTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:id="@+id/tv_product_name"
+        android:layout_toLeftOf="@+id/tv_product_price"
+        android:layout_marginRight="@dimen/dp_10"
+        android:text=""
+        android:textSize="@dimen/sp_11"
+        android:textColor="@color/color_707070"
+        app:ctypeface="@string/adineue_pro_regular" />
+
+    <com.app.jeebo.driver.view.CustomTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:id="@+id/tv_product_price"
+        android:text=""
+        android:textSize="@dimen/sp_11"
+        android:textColor="@color/color_black"
+        app:ctypeface="@string/adineue_pro_regular" />
+
+
+</RelativeLayout>

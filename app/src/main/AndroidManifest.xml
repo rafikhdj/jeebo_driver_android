@@ -5,6 +5,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         tools:remove="android:maxSdkVersion" />
@@ -21,7 +22,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".modules.profile.activity.ProfileActivity"></activity>
+        <activity android:name=".modules.home.activity.StatsActivity"></activity>
+        <activity android:name=".modules.home.activity.CancelledOrdersActivity" />
+        <activity android:name=".modules.profile.activity.ProfileActivity" />
         <activity android:name=".modules.home.activity.OrderDeatilsActivity" />
         <activity android:name=".modules.home.activity.HomeActivity" />
         <activity android:name=".modules.auth.activity.ForgotPasswordActivity" />
@@ -58,6 +61,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
+        <service android:name=".modules.home.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

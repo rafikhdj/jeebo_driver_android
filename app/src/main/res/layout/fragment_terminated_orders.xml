@@ -1,17 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".modules.home.fragment.TerminatedOrdersFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".modules.home.fragment.PendingOrdersFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:id="@+id/rv_terminated_order"
+        android:layout_height="wrap_content">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
     <com.app.jeebo.driver.view.CustomTextView
         android:layout_width="match_parent"
         android:gravity="center"
+        android:id="@+id/tv_no_record"
         android:textSize="@dimen/sp_16"
+        android:visibility="gone"
+        app:ctypeface="@string/adineue_pro_regular"
         android:textColor="@color/color_black"
-        android:text="Will be available in next build"
+        android:text="@string/no_current_order"
         android:layout_height="match_parent" />
 
-</FrameLayout>
+
+
+</RelativeLayout>

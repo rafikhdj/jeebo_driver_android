@@ -9,16 +9,31 @@ import com.app.jeebo.driver.modules.auth.model.SignupRequest;
 import com.app.jeebo.driver.modules.auth.model.SocialLoginReq;
 import com.app.jeebo.driver.modules.auth.model.UserModel;
 import com.app.jeebo.driver.modules.auth.model.VerifyOtpResponse;
+import com.app.jeebo.driver.modules.home.model.AcceptOrderReq;
+import com.app.jeebo.driver.modules.home.model.AcceptOrderResponse;
+import com.app.jeebo.driver.modules.home.model.CancelCategoriesResponse;
+import com.app.jeebo.driver.modules.home.model.CancelOrderRequest;
+import com.app.jeebo.driver.modules.home.model.ChangeDeliveryStageReq;
+import com.app.jeebo.driver.modules.home.model.ChangeDriverStatusReq;
+import com.app.jeebo.driver.modules.home.model.DriverStatsReq;
+import com.app.jeebo.driver.modules.home.model.DriverStatsResponse;
+import com.app.jeebo.driver.modules.home.model.OrderDetailResponse;
+import com.app.jeebo.driver.modules.home.model.OrderListResponse;
 import com.app.jeebo.driver.modules.profile.model.EditProfileReq;
 import com.app.jeebo.driver.modules.profile.model.UserResultModel;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface IApiRequest {
 
@@ -82,5 +97,33 @@ public interface IApiRequest {
 
     @POST("user/edit_driver_profile")
     Call<UserResultModel> editProfile(@Body EditProfileReq editProfileReq);
+
+    @GET("user/orders_list")
+    Call<OrderListResponse> getOrderList(@Query("order_type") String orderType,@Query("page") String page,
+                                         @Query("page_size") String pageSize);
+
+    @POST("user/accept_order")
+    Call<AcceptOrderResponse> acceptOrder(@Body AcceptOrderReq acceptOrderReq);
+
+    @POST("user/change_delivery_stage")
+    Call<AcceptOrderResponse> changeDeliveryStage(@Body ChangeDeliveryStageReq changeDeliveryStageReq);
+
+    @GET("user/cancel_categories")
+    Call<CancelCategoriesResponse> getCancelCategories();
+
+    @GET("user/cancel_subcategories")
+    Call<CancelCategoriesResponse> getCancelSubCategories(@Query("cancel_category_id") int cancelCategoryId);
+
+    @GET("user/order_details/{id}")
+    Call<OrderDetailResponse> getOrderDetails(@Path("id") String id);
+
+    @POST("user/cancel_delivery")
+    Call<AcceptOrderResponse> cancelOrder(@Body CancelOrderRequest cancelOrderRequest);
+
+    @POST("user/change_status")
+    Call<AcceptOrderResponse> changeDriverStatus(@Body ChangeDriverStatusReq changeDriverStatusReq);
+
+    @POST("user/statistics")
+    Call<DriverStatsResponse> getDriverStats(@Body DriverStatsReq driverStatsReq);
 
 }

@@ -1,29 +1,120 @@
 package com.app.jeebo.driver.modules.home.fragment
 
-import android.content.Context
-import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 import com.app.jeebo.driver.R
+import com.app.jeebo.driver.api.ApiCallback
+import com.app.jeebo.driver.api.ApiClient
 import com.app.jeebo.driver.base.BaseFragment
+import com.app.jeebo.driver.model.Error
+import com.app.jeebo.driver.modules.home.adapter.AdapterCompletedOrders
+import com.app.jeebo.driver.modules.home.adapter.PendingOrderAdapter
+import com.app.jeebo.driver.modules.home.model.OrderListResponse
+import com.app.jeebo.driver.modules.home.model.OrderListResult
+import com.app.jeebo.driver.utils.AppConstant
+import com.app.jeebo.driver.utils.EndlessRecyclerViewScrollListener
+import com.app.jeebo.driver.utils.ItemClickListener
+import kotlinx.android.synthetic.main.fragment_terminated_orders.*
 
-open class TerminatedOrdersFragment : BaseFragment() {
+class TerminatedOrdersFragment : BaseFragment(), ItemClickListener {
+
+    private  var AdapterCompletedOrders:AdapterCompletedOrders?=null
+    private lateinit var rvTerminatedOrder:RecyclerView
+    private var pageNo:Int=1
+    private var adapterPos:Int=0
+    private var mLayoutManager:LinearLayoutManager?=null
+    private var orderList=ArrayList<OrderListResult>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_terminated_orders, container, false)
+        val view = inflater.inflate(R.layout.fragment_terminated_orders, container, false)
+        inIt(view)
+        return view
     }
+
+    private fun inIt(view: View) {
+        rvTerminatedOrder = view.findViewById(R.id.rv_terminated_order) as RecyclerView
+    }
+
+    private fun getPendingOrderList(){
+        baseActivity.showProgressBar(baseActivity)
+        val request= ApiClient.getRequest()
+        val call=request.getOrderList(AppConstant.COMPLETED_ORDER,pageNo.toString(),"10")
+        call.enqueue(object : ApiCallback<OrderListResponse>(){
+            override fun onSuccess(t: OrderListResponse?) {
+                baseActivity.dismissProgressBar()
+                if(pageNo==1){
+                    orderList.clear()
+                }
+                if(t != null && t.results.size>0){
+                    tv_no_record.visibility=View.GONE
+                    orderList.addAll(t.results)
+                }
+                else{
+                    if(pageNo==1){
+                        tv_no_record.visibility=View.VISIBLE
+                    }
+                }
+                setAdapter()
+            }
+
+            override fun onError(error: Error?) {
+                baseActivity.dismissProgressBar()
+            }
+
+        })
+    }
+
+    private fun paginationScrollListner() {
+        mLayoutManager = LinearLayoutManager(baseActivity)
+        rvTerminatedOrder.setLayoutManager(mLayoutManager)
+        rvTerminatedOrder.setItemAnimator(DefaultItemAnimator())
+        rvTerminatedOrder.addOnScrollListener(object : EndlessRecyclerViewScrollListener(mLayoutManager){
+            override fun onLoadMore(page: Int, totalItemsCount: Int) {
+                pageNo = page
+                getPendingOrderList()
+            }
+
+        })
+    }
+
+    private fun setAdapter(){
+        if(AdapterCompletedOrders != null && pageNo>1){
+            AdapterCompletedOrders!!.notifyDataSetChanged()
+        }else{
+            AdapterCompletedOrders= AdapterCompletedOrders(baseActivity,orderList,this)
+            rvTerminatedOrder.adapter=AdapterCompletedOrders
+        }
+    }
+
     override fun getLayoutId(): Int {
-        return 2
+        return 0
     }
 
     override fun onLayoutCreated(view: View?) {
 
     }
+
+    override fun onResume() {
+        super.onResume()
+        pageNo=1
+        paginationScrollListner()
+        getPendingOrderList()
+    }
+    override fun onItemClickListener(view: View?, pos: Int) {
+        adapterPos=pos
+        when(view?.id){
+            R.id.tv_take_incharge->{
+              //  showAcceptDialog()
+            }
+        }
+    }
+
 
 }

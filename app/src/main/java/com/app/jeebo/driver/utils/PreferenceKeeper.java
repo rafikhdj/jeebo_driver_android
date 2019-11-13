@@ -52,6 +52,22 @@ public class PreferenceKeeper {
         prefs.edit().putString(AppConstant.PrefsName.ACCESS_TOKEN, token).commit();
     }
 
+    public int getDriverStatus() {
+        return prefs.getInt(AppConstant.PrefsName.DRIVER_STATUS, 3);
+    }
+
+    public void setDriverStatus(int status) {
+        prefs.edit().putInt(AppConstant.PrefsName.DRIVER_STATUS, status).commit();
+    }
+
+    public String getDeviceToken() {
+        return prefs.getString(AppConstant.PrefsName.DEVICE_TOKEN, "");
+    }
+
+    public void setDeviceToken(String token) {
+        prefs.edit().putString(AppConstant.PrefsName.DEVICE_TOKEN, token).commit();
+    }
+
     public String getFCMToken() {
         return "";
     }

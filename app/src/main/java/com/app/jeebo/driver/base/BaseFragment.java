@@ -41,7 +41,7 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onAttach(Context activity) {
         super.onAttach(activity);
-        //this.baseActivity = (BaseActivity) activity;
+        this.baseActivity = (BaseActivity) activity;
     }
 
     public void onTabSelected() {

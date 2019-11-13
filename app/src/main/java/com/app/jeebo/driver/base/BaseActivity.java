@@ -10,12 +10,15 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +26,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.app.jeebo.driver.R;
+import com.app.jeebo.driver.view.CustomTextView;
 
 public class BaseActivity extends AppCompatActivity {
 
@@ -66,7 +70,7 @@ public class BaseActivity extends AppCompatActivity {
 
     }
 
-    public void showProgressBar( Context context) {
+    public void showProgressBar(Context context) {
         try {
             if (progressDialog != null && progressDialog.isShowing()) {
                 dismissProgressBar();
@@ -104,6 +108,17 @@ public class BaseActivity extends AppCompatActivity {
             Toast.makeText(BaseActivity.this, message, Toast.LENGTH_LONG).show();
     }
 
+    public void showCustomToast(String message) {
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.inflater_custom_toast, (ViewGroup) findViewById(R.id.custom_toast_container));
+        CustomTextView tv = (CustomTextView) layout.findViewById(R.id.tv_msg);
+        tv.setText(message);
+        Toast toast = new Toast(getApplicationContext());
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(layout);
+        toast.show();
+    }
+
 
     public void launchActivity(Class<? extends BaseActivity> activityClass, Bundle bundle) {
         Intent intent = new Intent(this, activityClass);
@@ -137,7 +152,6 @@ public class BaseActivity extends AppCompatActivity {
     }
 
 
-
     public void replaceFragment(int containerId, BaseFragment fragment) {
         replaceFragment(containerId, fragment, null);
     }
@@ -168,7 +182,7 @@ public class BaseActivity extends AppCompatActivity {
 
             if (isNextFragmentNeedsTobeAdded) {
                 fragmentTransaction.addToBackStack(fragmentTag);
-            }else{
+            } else {
                 fragmentTransaction.addToBackStack(null);
             }
             if (bundle != null) {
@@ -189,21 +203,23 @@ public class BaseActivity extends AppCompatActivity {
 
 
     public void addFragment(int containerId, BaseFragment fragment) {
-        FragmentManager fm=getSupportFragmentManager();
-        FragmentTransaction ft=fm.beginTransaction();
-        ft.add(containerId,fragment,"TAG");
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.add(containerId, fragment, "TAG");
         ft.commit();
         //addFragment(containerId, fragment);
     }
+
     public void removeFragment(int containerId, BaseFragment fragment) {
-        FragmentManager fm=getSupportFragmentManager();
-        FragmentTransaction ft=fm.beginTransaction();
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
         ft.remove(fragment);
         ft.commit();
         fm.popBackStack();
     }
+
     public void addFragment(int containerId, BaseFragment fragment, boolean isNextFragmentNeedsTobeAdded, Bundle bundle) {
-        addFragment(containerId, fragment, 0, 0, 0, 0,isNextFragmentNeedsTobeAdded, bundle);
+        addFragment(containerId, fragment, 0, 0, 0, 0, isNextFragmentNeedsTobeAdded, bundle);
     }
 
     public void addFragment(int containerId, BaseFragment fragment, int enter, int exit, int enterPop, int exitPop, boolean isNextFragmentNeedsTobeAdded, Bundle bundle) {
@@ -240,7 +256,6 @@ public class BaseActivity extends AppCompatActivity {
 
         }
     }
-
 
 
 }

@@ -12,10 +12,18 @@ public class AppConstant {
     public static final String SCOPES = "https://www.googleapis.com/auth/plus.login "
             + "https://www.googleapis.com/auth/drive.file";
 
+    public static final String PENDING_ORDER = "pending";
+    public static final String CANCELLED_ORDER = "cancelled";
+    public static final String COMPLETED_ORDER = "completed";
+    public static final String IN_PROCESS_ORDER = "in_process";
+    public static final String CONTACT_URL = "https://www.jeeboapp.dz/consumer/contactus";
+
     public class PrefsName {
 
         public static final String USERNAME = "username";
         public static final String ACCESS_TOKEN = "access_token";
+        public static final String DRIVER_STATUS = "driver_status";
+        public static final String DEVICE_TOKEN = "device_token";
         public static final String NAME = "name";
         public static final String IMAGE = "image";
         public static final String EMAIL = "email";
@@ -27,9 +35,12 @@ public class AppConstant {
     public interface INTENT_EXTRAS {
         String SMS_RECEIVED = "sms_received";
         String PHONE_NUMBER = "phone_number";
+        String ORDER_ID = "order_id";
         String ACCESS_TOKEN = "access_token";
+        String CAME_FROM = "came_from";
         String USER_MODEL = "user_model";
         String USER_ADDRESS = "user_address";
+        String NOTIFICATION_TYPE = "notification_type";
     }
 
     public interface REQUEST_CODE {

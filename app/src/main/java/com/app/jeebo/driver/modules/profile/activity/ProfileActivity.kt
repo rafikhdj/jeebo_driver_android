@@ -9,6 +9,7 @@ import com.app.jeebo.driver.api.ApiCallback
 import com.app.jeebo.driver.api.ApiClient
 import com.app.jeebo.driver.base.BaseActivity
 import com.app.jeebo.driver.model.Error
+import com.app.jeebo.driver.modules.auth.activity.OtpVerificationActivity
 import com.app.jeebo.driver.modules.auth.model.UserModel
 import com.app.jeebo.driver.modules.profile.model.EditProfileReq
 import com.app.jeebo.driver.modules.profile.model.UserResultModel
@@ -89,6 +90,11 @@ class ProfileActivity : BaseActivity(), IDialogUploadListener {
             showProgressBar(this)
             var editProfileReq=EditProfileReq()
             editProfileReq.email=et_email.text.toString().trim()
+            if(et_phone.text.toString().trim().contains("+213"))
+                editProfileReq.phone=et_phone.text.toString().trim()
+            else
+                editProfileReq.phone="+213 "+et_phone.text.toString().trim()
+
             editProfileReq.name=et_name.text.toString().trim()+" "+et_sur_name.text.toString().trim()
             if(!TextUtils.isEmpty(filePath))
             editProfileReq.image_url=filePath
@@ -102,8 +108,19 @@ class ProfileActivity : BaseActivity(), IDialogUploadListener {
                     PreferenceKeeper.getInstance().name=t?.name
                     PreferenceKeeper.getInstance().accessToken=t?.token
                     dismissProgressBar()
-                    showToast("Profile Updated Successfully")
-                    finish()
+                    if(t!!.isPhoneVerified){
+                        showToast(getString(R.string.profile_updated_successfully))
+                        finish()
+                    }else{
+                        showToast(t.otp.toString())
+                        val bundle=Bundle()
+                        bundle.putString(AppConstant.INTENT_EXTRAS.PHONE_NUMBER,"+213 "+et_phone.text.toString().trim())
+                        bundle.putString(AppConstant.INTENT_EXTRAS.CAME_FROM,"PROFILE")
+                        bundle.putString(AppConstant.INTENT_EXTRAS.ACCESS_TOKEN,t.token)
+                        launchActivity(OtpVerificationActivity::class.java,bundle)
+                        finish()
+                    }
+
                 }
 
                 override fun onError(error: Error?) {

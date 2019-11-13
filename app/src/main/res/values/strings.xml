@@ -74,6 +74,7 @@
     <string name="order_no">Order No:</string>
     <string name="time_estimation">Time Estimation:</string>
     <string name="confirm">confirm</string>
+    <string name="confirm_caps">Confirm</string>
     <string name="e_shop_details">E-Shop Details</string>
     <string name="client_details">Client Details</string>
     <string name="delivery_time">Delivery Time</string>
@@ -83,6 +84,29 @@
     <string name="edit_profile">Edit Profile</string>
     <string name="merchant">Merchant:</string>
     <string name="client">Client:</string>
+    <string name="client_request">Client Request:</string>
+    <string name="special_instructions">Special Instructions:</string>
     <string name="network_error">Seems like you are not connected to the internet, please check your network settings and try again</string>
+    <string name="payment_method">Payment Method</string>
+    <string name="total_price">Total Price</string>
+    <string name="pay_to_merchant">Pay to Merchant</string>
+    <string name="collect_from_client">Collect from Client</string>
+    <string name="accept_order_warning">Are you sure want to accept this order?</string>
+    <string name="no_current_order">No current order</string>
+    <string name="change_status">Change Status</string>
+    <string name="view_on_map">Direction</string>
+    <string name="select_cancel_reason">Select Cancel Reason</string>
+    <string name="select_cat">Select Category</string>
+    <string name="select_sub_cat">Select Sub Category</string>
+    <string name="order_details">Order Details</string>
+    <string name="order_ends">Order Ends</string>
+    <string name="money_statistics">Money and Statistics</string>
+    <string name="call">Call</string>
+    <string name="phone_not_available">Phone not available</string>
+    <string name="call_permission_msg">Please provide permission to call in setting</string>
+    <string name="reason_for_cancellation">Reason for Cancellation:</string>
+    <string name="earnings">Earnings</string>
+    <string name="return_to_jeebo">Refund to Jeebo</string>
+    <string name="profile_updated_successfully">Profile Updated Successfully</string>
 
 </resources>

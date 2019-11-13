@@ -2,17 +2,20 @@ package com.app.jeebo.driver.modules.home.activity
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.location.*
-import android.os.Build
+import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
-import android.view.WindowManager
+import android.widget.CompoundButton
+import android.widget.RadioGroup
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
@@ -24,16 +27,24 @@ import kotlinx.android.synthetic.main.activity_home.*
 import androidx.fragment.app.Fragment
 
 import com.app.jeebo.driver.R
+import com.app.jeebo.driver.api.ApiCallback
+import com.app.jeebo.driver.api.ApiClient
 import com.app.jeebo.driver.base.BaseActivity
 import com.app.jeebo.driver.enums.EScreenType
 import com.app.jeebo.driver.fragment.FragmentFactory
+import com.app.jeebo.driver.model.Error
 import com.app.jeebo.driver.modules.auth.activity.LoginActivity
+import com.app.jeebo.driver.modules.home.model.AcceptOrderResponse
+import com.app.jeebo.driver.modules.home.model.ChangeDriverStatusReq
 import com.app.jeebo.driver.modules.profile.activity.ProfileActivity
 import com.app.jeebo.driver.utils.AppConstant
+import com.app.jeebo.driver.utils.DialogManager
+import com.app.jeebo.driver.utils.MyIntentService
 import com.app.jeebo.driver.utils.PreferenceKeeper
 import com.app.jeebo.driver.view.CustomTextView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.material.snackbar.Snackbar
 import java.io.IOException
 import java.util.*
 
@@ -41,6 +52,7 @@ import java.util.*
 class HomeActivity : BaseActivity(), LocationListener {
 
     var fragment: Fragment? = null
+    private val REQUEST_PHONE_CALL = 1000
     private val RECORD_REQUEST_CODE = 101
     private var locationManager: LocationManager? = null
     private var tvTabSelected:CustomTextView?=null
@@ -65,11 +77,33 @@ class HomeActivity : BaseActivity(), LocationListener {
             launchActivity(LoginActivity::class.java)
         }
 
+        switch_driver.setOnCheckedChangeListener(object : CompoundButton.OnCheckedChangeListener{
+            override fun onCheckedChanged(p0: CompoundButton?, p1: Boolean) {
+                if(p1)
+               changeDriverStatus(1)
+                else
+                    changeDriverStatus(3)
+            }
+        })
+
+        tv_stats.setOnClickListener {
+            launchActivity(StatsActivity::class.java)
+        }
+
         tv_profile.setOnClickListener {
             var bundle=Bundle()
             if(!TextUtils.isEmpty(tv_current_loc.text.toString()))
             bundle.putString(AppConstant.INTENT_EXTRAS.USER_ADDRESS,tv_current_loc.text.toString())
             launchActivity(ProfileActivity::class.java,bundle)
+        }
+
+        tv_order_ends.setOnClickListener {
+            launchActivity(CancelledOrdersActivity::class.java)
+        }
+
+        tv_contact.setOnClickListener {
+            var browserIntent =  Intent(Intent.ACTION_VIEW, Uri.parse(AppConstant.CONTACT_URL));
+            startActivity(browserIntent);
         }
 
         setCurrentFragment(EScreenType.PENDING_ORDERS_SCREEN.ordinal)
@@ -90,6 +124,29 @@ class HomeActivity : BaseActivity(), LocationListener {
         setCurrentFragment(EScreenType.PENDING_ORDERS_SCREEN.ordinal)
 
         setUpTabs()
+    }
+
+    private fun changeDriverStatus(status:Int){
+        showProgressBar(this)
+        val request=ApiClient.getRequest()
+        var changeDriverStatusReq=ChangeDriverStatusReq()
+        changeDriverStatusReq.status=status
+        val call=request.changeDriverStatus(changeDriverStatusReq)
+        call.enqueue(object:ApiCallback<AcceptOrderResponse>(){
+            override fun onSuccess(t: AcceptOrderResponse?) {
+                dismissProgressBar()
+                PreferenceKeeper.getInstance().driverStatus=status
+               if(t != null && !TextUtils.isEmpty(t.result))
+                   DialogManager.showValidationDialog(this@HomeActivity,t.result)
+            }
+
+            override fun onError(error: Error?) {
+                dismissProgressBar()
+                if(error != null && !TextUtils.isEmpty(error.errMsg))
+                    DialogManager.showValidationDialog(this@HomeActivity,error.errMsg)
+            }
+
+        })
     }
 
 
@@ -129,6 +186,7 @@ class HomeActivity : BaseActivity(), LocationListener {
         }*/
         setupPermissions()
         setData()
+        registerBroadCastReceiver()
     }
 
     private fun setUpTabs() {
@@ -263,6 +321,9 @@ class HomeActivity : BaseActivity(), LocationListener {
                     }
                 }
             }
+            REQUEST_PHONE_CALL->{
+            FragmentFactory.getInstance().currentFragment.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        }
         }
     }
 
@@ -333,8 +394,33 @@ class HomeActivity : BaseActivity(), LocationListener {
         if(!TextUtils.isEmpty(PreferenceKeeper.getInstance().name)){
             tv_user_name.setText(PreferenceKeeper.getInstance().name)
         }
+       /* if(PreferenceKeeper.getInstance().driverStatus==1)
+        switch_driver.isChecked=true*/
+
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+
+        if(tab_layout.selectedTabPosition!=0)
+        tab_layout.getTabAt(0)?.select()
+        else{
+            finish()
+        }
+    }
+    private fun registerBroadCastReceiver() {
+        val intentFilter1 = IntentFilter(MyIntentService.CUSTOM_ACTION)
+
+        val broadcastReceiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context, intent: Intent) {
+                setCurrentFragment(EScreenType.PENDING_ORDERS_SCREEN.ordinal)
+                tab_layout.getTabAt(0)?.select()
+                if(intent.hasExtra(AppConstant.INTENT_EXTRAS.NOTIFICATION_TYPE))
+                showCustomToast(intent.getStringExtra(AppConstant.INTENT_EXTRAS.NOTIFICATION_TYPE))
+            }
+        }
+        registerReceiver(broadcastReceiver, intentFilter1)
+    }
 }
 
 

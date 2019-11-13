@@ -3,7 +3,17 @@ package com.app.jeebo.driver.modules.profile.model;
 public class EditProfileReq {
     private String name;
     private String email;
-    private String driver_image_url;
+    private String phone_number;
+
+    public String getPhone() {
+        return phone_number;
+    }
+
+    public void setPhone(String phone) {
+        this.phone_number = phone;
+    }
+
+    private String image_url;
 
     public String getName() {
         return name;
@@ -22,10 +32,10 @@ public class EditProfileReq {
     }
 
     public String getImage_url() {
-        return driver_image_url;
+        return image_url;
     }
 
     public void setImage_url(String image_url) {
-        this.driver_image_url = image_url;
+        this.image_url = image_url;
     }
 }

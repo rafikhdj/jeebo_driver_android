@@ -5,21 +5,29 @@
     android:layout_height="match_parent"
     tools:context=".modules.home.fragment.PendingOrdersFragment">
 
-  <androidx.recyclerview.widget.RecyclerView
+  <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
       android:layout_width="match_parent"
-      android:id="@+id/rv_pending_order"
+      android:id="@+id/swipe_refresh"
       android:layout_height="wrap_content">
 
-  </androidx.recyclerview.widget.RecyclerView>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:id="@+id/rv_pending_order"
+        android:layout_height="wrap_content"/>
 
-    <com.app.jeebo.driver.view.CustomTextView
+
+  </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
+
+    <!--<com.app.jeebo.driver.view.CustomTextView
         android:layout_width="match_parent"
         android:gravity="center"
         android:textSize="@dimen/sp_16"
         android:visibility="visible"
         android:textColor="@color/color_black"
         android:text="Will be available in next build"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent" />-->
 
 
 

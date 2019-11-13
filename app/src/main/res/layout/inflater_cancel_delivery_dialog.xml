@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:padding="@dimen/dp_10"
+    android:background="@drawable/bg_dialog"
+    android:layout_height="wrap_content">
+
+    <com.app.jeebo.driver.view.CustomTextView
+        android:layout_width="wrap_content"
+        android:text="@string/select_cancel_reason"
+        android:id="@+id/tv_select"
+        android:textColor="@color/color_0B94C7"
+        android:textSize="@dimen/sp_15"
+        android:layout_centerHorizontal="true"
+        app:ctypeface="@string/adineue_pro_bold"
+        android:layout_height="wrap_content" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:id="@+id/spinner_cat"
+        android:layout_below="@+id/tv_select"
+        android:layout_marginTop="@dimen/dp_30"
+        android:layout_height="wrap_content"/>
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:id="@+id/spinner_sub_cat"
+        android:layout_below="@+id/spinner_cat"
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_height="wrap_content"/>
+
+    <com.app.jeebo.driver.view.CustomTextView
+        android:layout_width="@dimen/dp_140"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/dp_30"
+        android:id="@+id/tv_submit"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/white"
+        app:ctypeface="@string/adineue_pro_regular"
+        android:text="@string/submit"
+        android:layout_below="@+id/spinner_sub_cat"
+        android:background="@drawable/bg_button_filled"
+        android:layout_height="@dimen/dp_40" />
+
+</RelativeLayout>

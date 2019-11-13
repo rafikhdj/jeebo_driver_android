@@ -32,6 +32,11 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.OnSuccessListener
+import com.google.android.gms.tasks.Task
+import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.iid.InstanceIdResult
 import kotlinx.android.synthetic.main.activity_login.*
 import okhttp3.Credentials
 import java.io.IOException
@@ -49,6 +54,15 @@ class LoginActivity : BaseActivity() {
     }
 
     private fun init(){
+
+        /*FirebaseInstanceId.getInstance().instanceId.addOnCompleteListener() { object : OnCompleteListener<InstanceIdResult>{
+            override fun onComplete(p0: Task<InstanceIdResult>) {
+                if(p0.isSuccessful){
+                    PreferenceKeeper.getInstance().deviceToken=p0.result?.token
+                }
+            }
+
+        } }*/
 
         iv_facebook.setOnClickListener {
             login_button.performClick()
@@ -70,8 +84,8 @@ class LoginActivity : BaseActivity() {
                 showProgressBar(this)
                 val authToken = Credentials.basic(et_signin_email.text.toString().trim(), et_signin_password.text.toString().trim())
                 val loginRequest = LoginRequest()
-                loginRequest.setPlatform(2)
-                loginRequest.setDevice_token("sfsfsfsf")
+                loginRequest.setPlatform(3)
+                loginRequest.setDevice_token(PreferenceKeeper.getInstance().deviceToken)
                 val request=ApiClient.getRequest()
                 val call=request.login(authToken,loginRequest)
                 call.enqueue(object : ApiCallback<UserModel>(){
@@ -161,9 +175,9 @@ class LoginActivity : BaseActivity() {
     private fun callSocialLoginApi(token:String){
         showProgressBar(this)
         var socialLoginReq=SocialLoginReq()
-        socialLoginReq.platform=2
+        socialLoginReq.platform=3
         socialLoginReq.access_token=token
-        socialLoginReq.device_token="eebgeg"
+        socialLoginReq.device_token= PreferenceKeeper.getInstance().deviceToken
         val request=ApiClient.getRequest()
         val call=request.socialLogin(socialLoginReq)
         call.enqueue(object : ApiCallback<UserModel>(){
@@ -199,7 +213,6 @@ class LoginActivity : BaseActivity() {
                 dismissProgressBar()
                 DialogManager.showValidationDialog(this@LoginActivity,error?.errMsg)
             }
-
         })
     }
 
