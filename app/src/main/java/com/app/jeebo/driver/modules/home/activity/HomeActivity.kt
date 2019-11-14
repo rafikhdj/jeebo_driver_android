@@ -2,6 +2,7 @@ package com.app.jeebo.driver.modules.home.activity
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -12,8 +13,10 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
 import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.Window
 import android.widget.CompoundButton
 import android.widget.RadioGroup
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -36,6 +39,7 @@ import com.app.jeebo.driver.model.Error
 import com.app.jeebo.driver.modules.auth.activity.LoginActivity
 import com.app.jeebo.driver.modules.home.model.AcceptOrderResponse
 import com.app.jeebo.driver.modules.home.model.ChangeDriverStatusReq
+import com.app.jeebo.driver.modules.home.model.UserTokenRequest
 import com.app.jeebo.driver.modules.profile.activity.ProfileActivity
 import com.app.jeebo.driver.utils.AppConstant
 import com.app.jeebo.driver.utils.DialogManager
@@ -44,7 +48,11 @@ import com.app.jeebo.driver.utils.PreferenceKeeper
 import com.app.jeebo.driver.view.CustomTextView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.Task
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.iid.InstanceIdResult
 import java.io.IOException
 import java.util.*
 
@@ -68,13 +76,11 @@ class HomeActivity : BaseActivity(), LocationListener {
 
     private fun init() {
         locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
-
+        setupPermissions()
         slideDrawer()
-
+        setUserToken()
         tv_logout.setOnClickListener {
-            PreferenceKeeper.getInstance().clearData()
-            finish()
-            launchActivity(LoginActivity::class.java)
+            showWarningDialog(0)
         }
 
         switch_driver.setOnCheckedChangeListener(object : CompoundButton.OnCheckedChangeListener{
@@ -136,8 +142,8 @@ class HomeActivity : BaseActivity(), LocationListener {
             override fun onSuccess(t: AcceptOrderResponse?) {
                 dismissProgressBar()
                 PreferenceKeeper.getInstance().driverStatus=status
-               if(t != null && !TextUtils.isEmpty(t.result))
-                   DialogManager.showValidationDialog(this@HomeActivity,t.result)
+               /*if(t != null && !TextUtils.isEmpty(t.result))
+                   DialogManager.showValidationDialog(this@HomeActivity,t.result)*/
             }
 
             override fun onError(error: Error?) {
@@ -184,7 +190,7 @@ class HomeActivity : BaseActivity(), LocationListener {
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
             window.statusBarColor = resources.getColor(R.color.color_0B94C7)
         }*/
-        setupPermissions()
+
         setData()
         registerBroadCastReceiver()
     }
@@ -394,8 +400,8 @@ class HomeActivity : BaseActivity(), LocationListener {
         if(!TextUtils.isEmpty(PreferenceKeeper.getInstance().name)){
             tv_user_name.setText(PreferenceKeeper.getInstance().name)
         }
-       /* if(PreferenceKeeper.getInstance().driverStatus==1)
-        switch_driver.isChecked=true*/
+        if(PreferenceKeeper.getInstance().driverStatus==1)
+        switch_driver.isChecked=true
 
     }
 
@@ -405,7 +411,7 @@ class HomeActivity : BaseActivity(), LocationListener {
         if(tab_layout.selectedTabPosition!=0)
         tab_layout.getTabAt(0)?.select()
         else{
-            finish()
+            showWarningDialog(1)
         }
     }
     private fun registerBroadCastReceiver() {
@@ -421,6 +427,60 @@ class HomeActivity : BaseActivity(), LocationListener {
         }
         registerReceiver(broadcastReceiver, intentFilter1)
     }
+
+    private fun showWarningDialog(type:Int){
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(true)
+        dialog.setContentView(R.layout.inflater_dialog)
+        if (!dialog.isShowing)
+            dialog.show()
+
+        val tvMsg: CustomTextView = dialog.findViewById<View>(R.id.tv_message) as CustomTextView
+        val tvOk = dialog.findViewById<View>(R.id.tv_ok)
+        val tvCancel = dialog.findViewById<View>(R.id.tv_cancel)
+        tvCancel.visibility = View.VISIBLE
+        if(type==0)
+        tvMsg.setText(getString(R.string.logout_warning))
+        else
+            tvMsg.setText(getString(R.string.exit_warning))
+        tvOk.setOnClickListener{view->
+            run {
+                if(type==0){
+                    PreferenceKeeper.getInstance().clearData()
+                    finish()
+                    launchActivity(LoginActivity::class.java)
+                }else{
+                    finish()
+                }
+
+            }
+        }
+        tvCancel.setOnClickListener { view -> dialog.dismiss() }
+    }
+
+    private fun setUserToken(){
+        FirebaseInstanceId.getInstance().instanceId.addOnCompleteListener { task ->
+            if (task.isSuccessful){
+                PreferenceKeeper.getInstance().deviceToken = task.result!!.token
+                val request=ApiClient.getRequest()
+                var userTokenReq=UserTokenRequest()
+                userTokenReq.device_token=task.result?.token
+                val call=request.setUserToken(userTokenReq)
+                call.enqueue(object:ApiCallback<AcceptOrderResponse>(){
+                    override fun onSuccess(t: AcceptOrderResponse?) {
+                        Log.d("DEVICE_TOKEN",PreferenceKeeper.getInstance().deviceToken)
+                    }
+
+                    override fun onError(error: Error?) {
+                        if(error != null && !TextUtils.isEmpty(error.errMsg))
+                            Log.d("DEVICE_TOKEN_ERROR",error.errMsg)
+                    }
+                })
+            }
+        }
+    }
+
 }
 
 

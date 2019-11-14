@@ -70,8 +70,8 @@
 
             <ImageView
                 android:id="@+id/iv_item"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/_12sdp"
+                android:layout_height="@dimen/_12sdp"
                 android:layout_below="@id/tv_order_no"
                 android:layout_marginLeft="@dimen/dp_10"
                 android:layout_marginTop="@dimen/dp_5"
@@ -93,6 +93,7 @@
                 android:id="@+id/tv_phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/_10sdp"
                 android:drawableLeft="@drawable/phone"
                 android:drawablePadding="@dimen/dp_5"
                 android:layout_below="@id/tv_orderno_head"

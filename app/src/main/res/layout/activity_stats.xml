@@ -92,9 +92,9 @@
                    android:text=""
                    android:id="@+id/tv_earning"
                    android:layout_alignParentRight="true"
-                   android:textColor="@color/color_black"
-                   android:textSize="@dimen/sp_20"
-                   app:ctypeface="@string/adineue_pro_bold"
+                   android:textColor="@color/color_707070"
+                   android:textSize="@dimen/sp_14"
+                   app:ctypeface="@string/adineue_pro_regular"
                    android:layout_height="wrap_content" />
 
            </RelativeLayout>
@@ -134,9 +134,9 @@
                    android:layout_alignParentRight="true"
                    android:id="@+id/tv_return"
                    android:layout_centerHorizontal="true"
-                   android:textColor="@color/color_black"
-                   android:textSize="@dimen/sp_20"
-                   app:ctypeface="@string/adineue_pro_bold"
+                   android:textColor="@color/color_707070"
+                   android:textSize="@dimen/sp_14"
+                   app:ctypeface="@string/adineue_pro_regular"
                    android:layout_height="wrap_content" />
 
            </RelativeLayout>

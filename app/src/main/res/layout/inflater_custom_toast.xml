@@ -19,7 +19,7 @@
         android:textSize="@dimen/sp_14"
         android:gravity="center"
         android:textColor="@color/white"
-        app:ctypeface="@string/adineue_pro_bold"
+        app:ctypeface="@string/adineue_pro_regular"
         android:layout_height="wrap_content" />
 
 </RelativeLayout>

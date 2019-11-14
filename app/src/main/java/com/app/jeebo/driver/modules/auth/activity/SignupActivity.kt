@@ -104,7 +104,7 @@ class SignupActivity : BaseActivity(), IDialogUploadListener {
                 bundle.putString(AppConstant.INTENT_EXTRAS.PHONE_NUMBER,"+213 "+et_signup_phone.text.toString().trim())
                 bundle.putString(AppConstant.INTENT_EXTRAS.ACCESS_TOKEN,userModel.token)
                 launchActivity(OtpVerificationActivity::class.java,bundle)
-                finish()
+                //finish()
             }
 
             override fun onError(error: Error?) {

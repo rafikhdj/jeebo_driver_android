@@ -112,9 +112,10 @@ class ProfileActivity : BaseActivity(), IDialogUploadListener {
                         showToast(getString(R.string.profile_updated_successfully))
                         finish()
                     }else{
+                        if(t.otp != null)
                         showToast(t.otp.toString())
                         val bundle=Bundle()
-                        bundle.putString(AppConstant.INTENT_EXTRAS.PHONE_NUMBER,"+213 "+et_phone.text.toString().trim())
+                        bundle.putString(AppConstant.INTENT_EXTRAS.PHONE_NUMBER,t.phone_number)
                         bundle.putString(AppConstant.INTENT_EXTRAS.CAME_FROM,"PROFILE")
                         bundle.putString(AppConstant.INTENT_EXTRAS.ACCESS_TOKEN,t.token)
                         launchActivity(OtpVerificationActivity::class.java,bundle)

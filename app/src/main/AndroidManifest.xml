@@ -22,7 +22,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".modules.home.activity.StatsActivity"></activity>
+        <activity android:name=".modules.home.activity.StatsActivity"
+            android:screenOrientation="portrait"></activity>
         <activity android:name=".modules.home.activity.CancelledOrdersActivity" />
         <activity android:name=".modules.profile.activity.ProfileActivity" />
         <activity android:name=".modules.home.activity.OrderDeatilsActivity" />

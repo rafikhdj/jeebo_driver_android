@@ -4,6 +4,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,6 +14,8 @@ import com.app.jeebo.driver.base.BaseActivity;
 import com.app.jeebo.driver.modules.home.model.OrderListResult;
 import com.app.jeebo.driver.utils.ItemClickListener;
 import com.app.jeebo.driver.view.CustomTextView;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.util.List;
 
@@ -70,6 +73,31 @@ public class AdapterCompletedOrders extends RecyclerView.Adapter<AdapterComplete
                 itemClickListener.onItemClickListener(view,position);
             }
         });
+
+        try{
+
+            if(!TextUtils.isEmpty(orderListResult.getCustomerOrderDetails().get(0).getProductOrder().getParent_category_url())){
+                Glide.with(mContext).load(orderListResult.getCustomerOrderDetails().get(0).getProductOrder().getParent_category_url())
+                        .apply(RequestOptions.circleCropTransform()).into(holder.ivItem);
+            }
+
+            if(orderListResult.getCustomerOrderDetails().get(0).getProductOrder().getParent_category_id()==1){
+                holder.tvItem.setText("Food");
+            }else if(orderListResult.getCustomerOrderDetails().get(0).getProductOrder().getParent_category_id()==2){
+                holder.tvItem.setText("Home");
+            }else if(orderListResult.getCustomerOrderDetails().get(0).getProductOrder().getParent_category_id()==3){
+                holder.tvItem.setText("Beauty");
+            }else if(orderListResult.getCustomerOrderDetails().get(0).getProductOrder().getParent_category_id()==4){
+                holder.tvItem.setText("Healthcare");
+            }else if(orderListResult.getCustomerOrderDetails().get(0).getProductOrder().getParent_category_id()==5){
+                holder.tvItem.setText("Fashion");
+            }else{
+                holder.tvItem.setText("Grocery");
+            }
+        }catch (Exception e){
+
+        }
+
     }
 
     @Override
@@ -85,7 +113,7 @@ public class AdapterCompletedOrders extends RecyclerView.Adapter<AdapterComplete
     private String getMerchantAddress(int i) {
         try {
             if (!TextUtils.isEmpty(orderList.get(i).getCustomerOrderDetails().get(0).getMerchantProductOrderDetails().getMerchantProfile().getBusinessDetails().getMerchantAddress().get(0).getFullAddress()))
-                address = orderList.get(i).getUserOrderDetails().getDeliveryAddress().get(0).getFullAddress() + ", ";
+                address = orderList.get(i).getCustomerOrderDetails().get(0).getMerchantProductOrderDetails().getMerchantProfile().getBusinessDetails().getMerchantAddress().get(0).getFullAddress() + ", ";
 
         } catch (Exception e) {
 
@@ -95,7 +123,7 @@ public class AdapterCompletedOrders extends RecyclerView.Adapter<AdapterComplete
 
     private String getClientAddress(int i){
         try{
-            if(!TextUtils.isEmpty(orderList.get(i).getUserOrderDetails().getDeliveryAddress().get(0).getHouse_no()))
+           /* if(!TextUtils.isEmpty(orderList.get(i).getUserOrderDetails().getDeliveryAddress().get(0).getHouse_no()))
                 address=orderList.get(i).getUserOrderDetails().getDeliveryAddress().get(0).getHouse_no()+", ";
 
             if(!TextUtils.isEmpty(orderList.get(i).getUserOrderDetails().getDeliveryAddress().get(0).getLocality()))
@@ -111,7 +139,10 @@ public class AdapterCompletedOrders extends RecyclerView.Adapter<AdapterComplete
                 address=address+orderList.get(i).getUserOrderDetails().getDeliveryAddress().get(0).getCountry()+", ";
 
             if(!TextUtils.isEmpty(orderList.get(i).getUserOrderDetails().getDeliveryAddress().get(0).getZipcode()))
-                address=address+orderList.get(i).getUserOrderDetails().getDeliveryAddress().get(0).getZipcode();
+                address=address+orderList.get(i).getUserOrderDetails().getDeliveryAddress().get(0).getZipcode();*/
+
+           address=orderList.get(i).getDelivery_address();
+
         }catch (Exception e){
 
         }
@@ -139,6 +170,8 @@ public class AdapterCompletedOrders extends RecyclerView.Adapter<AdapterComplete
         CustomTextView tvClientAddress;
         CustomTextView tvTakeIncharge;
         CustomTextView tvPhone;
+        CustomTextView tvItem;
+        ImageView ivItem;
 
         CustomViewHolder(View itemView, int viewType) {
             super(itemView);
@@ -150,6 +183,8 @@ public class AdapterCompletedOrders extends RecyclerView.Adapter<AdapterComplete
             tvClientAddress=itemView.findViewById(R.id.tv_client_address);
             tvTakeIncharge=itemView.findViewById(R.id.tv_take_incharge);
             tvPhone=itemView.findViewById(R.id.tv_phone);
+            ivItem=itemView.findViewById(R.id.iv_item);
+            tvItem=itemView.findViewById(R.id.tv_item);
         }
 
     }

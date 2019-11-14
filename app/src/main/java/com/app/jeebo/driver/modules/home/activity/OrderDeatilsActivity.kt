@@ -79,8 +79,8 @@ class OrderDeatilsActivity : BaseActivity() {
 
         try{
             tv_map_client.setOnClickListener {
-                var destinationLat=orderList[0].userOrderDetails.deliveryAddress[0].lat
-                var destinationLng=orderList[0].userOrderDetails.deliveryAddress[0].lng
+                var destinationLat=orderList[0].latitude
+                var destinationLng=orderList[0].longitude
                 val uri = "geo:0,0?q=" + destinationLat + "," + destinationLng + " (" + orderList[0].userOrderDetails.name + ")"
 
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
@@ -282,7 +282,7 @@ class OrderDeatilsActivity : BaseActivity() {
 
     private fun getClientAddress(i: Int): String {
         try {
-            if (!TextUtils.isEmpty(orderList[i].userOrderDetails.deliveryAddress[0].house_no))
+           /* if (!TextUtils.isEmpty(orderList[i].userOrderDetails.deliveryAddress[0].house_no))
                 address = orderList[i].userOrderDetails.deliveryAddress[0].house_no + ", "
 
             if (!TextUtils.isEmpty(orderList[i].userOrderDetails.deliveryAddress[0].locality))
@@ -298,7 +298,10 @@ class OrderDeatilsActivity : BaseActivity() {
                 address = address + orderList[i].userOrderDetails.deliveryAddress[0].country + ", "
 
             if (!TextUtils.isEmpty(orderList[i].userOrderDetails.deliveryAddress[0].zipcode))
-                address = address + orderList[i].userOrderDetails.deliveryAddress[0].zipcode
+                address = address + orderList[i].userOrderDetails.deliveryAddress[0].zipcode*/
+
+            address = orderList[i].delivery_address
+
         } catch (e: Exception) {
 
         }

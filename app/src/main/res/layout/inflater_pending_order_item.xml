@@ -38,7 +38,7 @@
                 android:letterSpacing="0.01"
                 android:lineSpacingExtra="4sp"
                 android:text="@string/take_in_charge"
-                android:textColor="@color/color_0b95c7"
+                android:textColor="@color/color_0B94C7"
                 android:textSize="@dimen/sp_14"
                 app:ctypeface="@string/adineue_pro_regular" />
 
@@ -69,8 +69,8 @@
 
             <ImageView
                 android:id="@+id/iv_item"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/_12sdp"
+                android:layout_height="@dimen/_12sdp"
                 android:layout_below="@id/tv_order_no"
                 android:layout_marginLeft="@dimen/dp_46"
                 android:layout_marginTop="@dimen/dp_5"

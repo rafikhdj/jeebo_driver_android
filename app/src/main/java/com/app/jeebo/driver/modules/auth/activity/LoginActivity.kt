@@ -1,11 +1,14 @@
 package com.app.jeebo.driver.modules.auth.activity
 
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
+import android.view.View
+import android.view.Window
 import com.app.jeebo.driver.R
 import com.app.jeebo.driver.api.ApiCallback
 import com.app.jeebo.driver.api.ApiClient
@@ -19,6 +22,7 @@ import com.app.jeebo.driver.utils.AppConstant
 import com.app.jeebo.driver.utils.DialogManager
 import com.app.jeebo.driver.utils.PreferenceKeeper
 import com.app.jeebo.driver.utils.Validator
+import com.app.jeebo.driver.view.CustomTextView
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException

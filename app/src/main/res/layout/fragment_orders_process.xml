@@ -9,6 +9,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:id="@+id/nested_scroll_view"
+        android:visibility="gone"
         android:layout_height="wrap_content">
 
         <androidx.cardview.widget.CardView
@@ -191,7 +192,7 @@
                             android:layout_weight="1"
                             android:id="@+id/tv_call_eshop"
                             android:layout_centerHorizontal="true"
-                            android:textColor="@color/color_0b95c7"
+                            android:textColor="@color/color_0B94C7"
                             android:textSize="@dimen/sp_14"
                             app:ctypeface="@string/adineue_pro_regular"
                             android:layout_height="wrap_content" />
@@ -203,7 +204,7 @@
                             android:text="@string/view_on_map"
                             android:id="@+id/tv_map_eshop"
                             android:layout_centerHorizontal="true"
-                            android:textColor="@color/color_0b95c7"
+                            android:textColor="@color/color_0B94C7"
                             android:textSize="@dimen/sp_14"
                             app:ctypeface="@string/adineue_pro_regular"
                             android:layout_height="wrap_content" />
@@ -278,7 +279,7 @@
                                 android:layout_weight="1"
                                 android:id="@+id/tv_call_client"
                                 android:layout_centerHorizontal="true"
-                                android:textColor="@color/color_0b95c7"
+                                android:textColor="@color/color_0B94C7"
                                 android:textSize="@dimen/sp_14"
                                 app:ctypeface="@string/adineue_pro_regular"
                                 android:layout_height="wrap_content" />
@@ -290,7 +291,7 @@
                                 android:text="@string/view_on_map"
                                 android:id="@+id/tv_map_client"
                                 android:layout_centerHorizontal="true"
-                                android:textColor="@color/color_0b95c7"
+                                android:textColor="@color/color_0B94C7"
                                 android:textSize="@dimen/sp_14"
                                 app:ctypeface="@string/adineue_pro_regular"
                                 android:layout_height="wrap_content" />
@@ -418,7 +419,7 @@
                             android:layout_weight="1"
                             android:id="@+id/iv_stage_1"
                             android:layout_gravity="center_vertical"
-                            android:src="@drawable/blue_line_filled"
+                            android:src="@drawable/green_line_filled"
                             android:layout_height="wrap_content" />
 
                         <com.app.jeebo.driver.view.CustomTextView
@@ -427,7 +428,7 @@
                             android:id="@+id/tv_stage_1"
                             android:text="1"
                             android:gravity="center"
-                            android:background="@drawable/blue_circle_filled"
+                            android:background="@drawable/green_circle_filled"
                             android:layout_height="wrap_content" />
 
                         <!--<ImageView
@@ -441,7 +442,7 @@
                             android:layout_weight="1"
                             android:id="@+id/iv_stage_2"
                             android:layout_gravity="center_vertical"
-                            android:src="@drawable/blue_line_filled"
+                            android:src="@drawable/green_line_filled"
                             android:layout_height="wrap_content" />
 
                         <!--<ImageView
@@ -452,11 +453,11 @@
 
                         <com.app.jeebo.driver.view.CustomTextView
                             android:layout_width="wrap_content"
-                            android:textColor="@color/color_0b95c7"
+                            android:textColor="@color/color_0B94C7"
                             android:text="2"
                             android:id="@+id/tv_stage_2"
                             android:gravity="center"
-                            android:background="@drawable/blue_circle_filled"
+                            android:background="@drawable/green_circle_filled"
                             android:layout_height="wrap_content" />
 
                         <ImageView
@@ -475,11 +476,11 @@
 
                         <com.app.jeebo.driver.view.CustomTextView
                             android:layout_width="wrap_content"
-                            android:textColor="@color/color_0b95c7"
+                            android:textColor="@color/color_0B94C7"
                             android:id="@+id/tv_stage_3"
                             android:text="3"
                             android:gravity="center"
-                            android:background="@drawable/blue_circle_unfilled"
+                            android:background="@drawable/green_circle_unfilled"
                             android:layout_height="wrap_content" />
 
                     </LinearLayout>
@@ -499,7 +500,7 @@
                         android:gravity="center"
                         android:padding="@dimen/dp_5"
                         android:text="Arrived at Store"
-                        android:textColor="@color/color_0b95c7"
+                        android:textColor="@color/color_0B94C7"
                         android:textSize="@dimen/sp_10"
                         app:ctypeface="@string/adineue_pro_regular" />
 
@@ -513,7 +514,7 @@
                         android:layout_marginLeft="@dimen/dp_10"
                         android:gravity="center"
                         android:text="Order Picked Up"
-                        android:textColor="@color/color_0b95c7"
+                        android:textColor="@color/color_0B94C7"
                         android:textSize="@dimen/sp_10"
                         app:ctypeface="@string/adineue_pro_regular" />
 
@@ -625,7 +626,7 @@
                     android:textColor="@color/white"
                     app:ctypeface="@string/adineue_pro_regular"
                     android:textSize="@dimen/sp_14"
-                    android:background="@drawable/rectangle_confirm"
+                    android:background="@drawable/bg_rounded"
                     android:layout_height="@dimen/dp_40" />
 
             </RelativeLayout>

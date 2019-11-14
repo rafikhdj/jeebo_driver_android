@@ -80,8 +80,8 @@ class OrdersProcessFragment : BaseFragment() {
 
         try{
             tvClientDirections.setOnClickListener {
-                var destinationLat=orderList[0].userOrderDetails.deliveryAddress[0].lat
-                var destinationLng=orderList[0].userOrderDetails.deliveryAddress[0].lng
+                var destinationLat=orderList[0].latitude
+                var destinationLng=orderList[0].longitude
                 val uri = "geo:0,0?q=" + destinationLat + "," + destinationLng + " (" + orderList[0].userOrderDetails.name + ")"
 
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
@@ -312,6 +312,7 @@ class OrdersProcessFragment : BaseFragment() {
     }
 
     private fun setOrderDetails(){
+        nested_scroll_view.visibility=View.VISIBLE
         if(orderList.size>0){
             nested_scroll_view.visibility=View.VISIBLE
             tv_no_record.visibility=View.GONE
@@ -432,7 +433,7 @@ class OrdersProcessFragment : BaseFragment() {
 
     private fun getClientAddress(i: Int): String {
         try {
-            if (!TextUtils.isEmpty(orderList[i].userOrderDetails.deliveryAddress[0].house_no))
+            /*if (!TextUtils.isEmpty(orderList[i].userOrderDetails.deliveryAddress[0].house_no))
                 address = orderList[i].userOrderDetails.deliveryAddress[0].house_no + ", "
 
             if (!TextUtils.isEmpty(orderList[i].userOrderDetails.deliveryAddress[0].locality))
@@ -448,7 +449,10 @@ class OrdersProcessFragment : BaseFragment() {
                 address = address + orderList[i].userOrderDetails.deliveryAddress[0].country + ", "
 
             if (!TextUtils.isEmpty(orderList[i].userOrderDetails.deliveryAddress[0].zipcode))
-                address = address + orderList[i].userOrderDetails.deliveryAddress[0].zipcode
+                address = address + orderList[i].userOrderDetails.deliveryAddress[0].zipcode*/
+
+            address=orderList[i].delivery_address
+
         } catch (e: Exception) {
 
         }
@@ -462,69 +466,69 @@ class OrdersProcessFragment : BaseFragment() {
             iv_stage_1.setImageResource(R.drawable.blue_line_unfilled)
             iv_stage_2.setImageResource(R.drawable.blue_line_unfilled)
             iv_stage_3.setImageResource(R.drawable.blue_line_unfilled)
-            tv_stage_1.setBackgroundResource(R.drawable.blue_circle_unfilled)
-            tv_stage_2.setBackgroundResource(R.drawable.blue_circle_unfilled)
-            tv_stage_3.setBackgroundResource(R.drawable.blue_circle_unfilled)
-            tv_stage_1.setTextColor(baseActivity.resources.getColor(R.color.color_0b95c7))
-            tv_stage_1.setTextColor(baseActivity.resources.getColor(R.color.color_0b95c7))
-            tv_stage_1.setTextColor(baseActivity.resources.getColor(R.color.color_0b95c7))
+            tv_stage_1.setBackgroundResource(R.drawable.green_circle_unfilled)
+            tv_stage_2.setBackgroundResource(R.drawable.green_circle_unfilled)
+            tv_stage_3.setBackgroundResource(R.drawable.green_circle_unfilled)
+            tv_stage_1.setTextColor(baseActivity.resources.getColor(R.color.color_0B94C7))
+            tv_stage_1.setTextColor(baseActivity.resources.getColor(R.color.color_0B94C7))
+            tv_stage_1.setTextColor(baseActivity.resources.getColor(R.color.color_0B94C7))
 
-            tv_arrived.setTextColor(baseActivity.resources.getColor(R.color.color_0b95c7))
+            tv_arrived.setTextColor(baseActivity.resources.getColor(R.color.color_0B94C7))
             tv_arrived.background=baseActivity.resources.getDrawable(R.drawable.bg_button_unfilled)
 
-            tv_picked_up.setTextColor(baseActivity.resources.getColor(R.color.color_0b95c7))
+            tv_picked_up.setTextColor(baseActivity.resources.getColor(R.color.color_0B94C7))
             tv_picked_up.background=baseActivity.resources.getDrawable(R.drawable.bg_button_unfilled)
 
-            tv_completed.setTextColor(baseActivity.resources.getColor(R.color.color_0b95c7))
+            tv_completed.setTextColor(baseActivity.resources.getColor(R.color.color_0B94C7))
             tv_completed.background=baseActivity.resources.getDrawable(R.drawable.bg_button_unfilled)
 
         }else if(stage==1){
-            iv_stage_1.setImageResource(R.drawable.blue_line_filled)
+            iv_stage_1.setImageResource(R.drawable.green_line_filled)
             iv_stage_2.setImageResource(R.drawable.blue_line_unfilled)
             iv_stage_3.setImageResource(R.drawable.blue_line_unfilled)
-            tv_stage_1.setBackgroundResource(R.drawable.blue_circle_filled)
-            tv_stage_2.setBackgroundResource(R.drawable.blue_circle_unfilled)
-            tv_stage_3.setBackgroundResource(R.drawable.blue_circle_unfilled)
+            tv_stage_1.setBackgroundResource(R.drawable.green_circle_filled)
+            tv_stage_2.setBackgroundResource(R.drawable.green_circle_unfilled)
+            tv_stage_3.setBackgroundResource(R.drawable.green_circle_unfilled)
             tv_stage_1.setTextColor(baseActivity.resources.getColor(R.color.white))
-            tv_stage_1.setTextColor(baseActivity.resources.getColor(R.color.color_0b95c7))
-            tv_stage_1.setTextColor(baseActivity.resources.getColor(R.color.color_0b95c7))
+            tv_stage_1.setTextColor(baseActivity.resources.getColor(R.color.color_0B94C7))
+            tv_stage_1.setTextColor(baseActivity.resources.getColor(R.color.color_0B94C7))
 
             tv_arrived.setTextColor(baseActivity.resources.getColor(R.color.white))
             tv_stage_1.setTextColor(baseActivity.resources.getColor(R.color.white))
             tv_arrived.background=baseActivity.resources.getDrawable(R.drawable.bg_button_filled)
 
-            tv_picked_up.setTextColor(baseActivity.resources.getColor(R.color.color_0b95c7))
+            tv_picked_up.setTextColor(baseActivity.resources.getColor(R.color.color_0B94C7))
             tv_picked_up.background=baseActivity.resources.getDrawable(R.drawable.bg_button_unfilled)
 
-            tv_completed.setTextColor(baseActivity.resources.getColor(R.color.color_0b95c7))
+            tv_completed.setTextColor(baseActivity.resources.getColor(R.color.color_0B94C7))
             tv_completed.background=baseActivity.resources.getDrawable(R.drawable.bg_button_unfilled)
 
         }else if(stage==2){
-            iv_stage_1.setImageResource(R.drawable.blue_line_filled)
-            iv_stage_2.setImageResource(R.drawable.blue_line_filled)
+            iv_stage_1.setImageResource(R.drawable.green_line_filled)
+            iv_stage_2.setImageResource(R.drawable.green_line_filled)
             iv_stage_3.setImageResource(R.drawable.blue_line_unfilled)
-            tv_stage_1.setBackgroundResource(R.drawable.blue_circle_filled)
-            tv_stage_2.setBackgroundResource(R.drawable.blue_circle_filled)
-            tv_stage_3.setBackgroundResource(R.drawable.blue_circle_unfilled)
+            tv_stage_1.setBackgroundResource(R.drawable.green_circle_filled)
+            tv_stage_2.setBackgroundResource(R.drawable.green_circle_filled)
+            tv_stage_3.setBackgroundResource(R.drawable.green_circle_unfilled)
             tv_stage_1.setTextColor(baseActivity.resources.getColor(R.color.white))
             tv_stage_2.setTextColor(baseActivity.resources.getColor(R.color.white))
-            tv_stage_3.setTextColor(baseActivity.resources.getColor(R.color.color_0b95c7))
+            tv_stage_3.setTextColor(baseActivity.resources.getColor(R.color.color_0B94C7))
 
-            tv_arrived.setTextColor(baseActivity.resources.getColor(R.color.color_0b95c7))
+            tv_arrived.setTextColor(baseActivity.resources.getColor(R.color.color_0B94C7))
             tv_arrived.background=baseActivity.resources.getDrawable(R.drawable.bg_button_unfilled)
 
             tv_picked_up.setTextColor(baseActivity.resources.getColor(R.color.white))
             tv_stage_2.setTextColor(baseActivity.resources.getColor(R.color.white))
             tv_picked_up.background=baseActivity.resources.getDrawable(R.drawable.bg_button_filled)
 
-            tv_completed.setTextColor(baseActivity.resources.getColor(R.color.color_0b95c7))
+            tv_completed.setTextColor(baseActivity.resources.getColor(R.color.color_0B94C7))
             tv_completed.background=baseActivity.resources.getDrawable(R.drawable.bg_button_unfilled)
 
         }else if(stage==3){
-            tv_arrived.setTextColor(baseActivity.resources.getColor(R.color.color_0b95c7))
+            tv_arrived.setTextColor(baseActivity.resources.getColor(R.color.color_0B94C7))
             tv_arrived.background=baseActivity.resources.getDrawable(R.drawable.bg_button_unfilled)
 
-            tv_picked_up.setTextColor(baseActivity.resources.getColor(R.color.color_0b95c7))
+            tv_picked_up.setTextColor(baseActivity.resources.getColor(R.color.color_0B94C7))
             tv_picked_up.background=baseActivity.resources.getDrawable(R.drawable.bg_button_unfilled)
 
             tv_completed.setTextColor(baseActivity.resources.getColor(R.color.white))

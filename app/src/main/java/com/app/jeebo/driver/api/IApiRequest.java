@@ -19,6 +19,7 @@ import com.app.jeebo.driver.modules.home.model.DriverStatsReq;
 import com.app.jeebo.driver.modules.home.model.DriverStatsResponse;
 import com.app.jeebo.driver.modules.home.model.OrderDetailResponse;
 import com.app.jeebo.driver.modules.home.model.OrderListResponse;
+import com.app.jeebo.driver.modules.home.model.UserTokenRequest;
 import com.app.jeebo.driver.modules.profile.model.EditProfileReq;
 import com.app.jeebo.driver.modules.profile.model.UserResultModel;
 
@@ -125,5 +126,8 @@ public interface IApiRequest {
 
     @POST("user/statistics")
     Call<DriverStatsResponse> getDriverStats(@Body DriverStatsReq driverStatsReq);
+
+    @POST("user/save_device_token")
+    Call<AcceptOrderResponse> setUserToken(@Body UserTokenRequest userTokenRequest);
 
 }

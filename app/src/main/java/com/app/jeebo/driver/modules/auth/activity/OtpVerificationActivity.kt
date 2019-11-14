@@ -31,7 +31,7 @@ class OtpVerificationActivity : BaseActivity() {
     private var isTimerEnded:Boolean=false;
     private var isVerifyEnabled:Boolean=false;
     private var phoneNum:String?=null;
-    private var cameFrom:String="SIGNUP";
+    private var cameFrom:String?=null;
     private var token:String?=null;
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,7 +45,7 @@ class OtpVerificationActivity : BaseActivity() {
 
         phoneNum=intent.extras?.getString(AppConstant.INTENT_EXTRAS.PHONE_NUMBER)
         token=intent.extras?.getString(AppConstant.INTENT_EXTRAS.ACCESS_TOKEN)
-        token=intent.extras?.getString(AppConstant.INTENT_EXTRAS.CAME_FROM)
+        cameFrom=intent.extras?.getString(AppConstant.INTENT_EXTRAS.CAME_FROM)
 
         tv_resend_otp.setTextColor(resources.getColor(R.color.color_50292929))
 
@@ -58,10 +58,10 @@ class OtpVerificationActivity : BaseActivity() {
         }
 
         tv_resend_otp.setOnClickListener {
-           /* if(isTimerEnded){
+            if(isTimerEnded){
                 resendOtp()
-            }*/
-            resendOtp()
+            }
+           // resendOtp()
         }
 
         edt_otp1.addTextChangedListener(object: TextWatcher{

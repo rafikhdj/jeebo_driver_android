@@ -12,6 +12,40 @@ public class OrderListResult {
     @SerializedName("phone")
     @Expose
     private String phone;
+    @SerializedName("delivery_address")
+    @Expose
+    private String delivery_address;
+    @SerializedName("longitude")
+    @Expose
+    private String longitude;
+
+    public String getDelivery_address() {
+        return delivery_address;
+    }
+
+    public void setDelivery_address(String delivery_address) {
+        this.delivery_address = delivery_address;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    @SerializedName("latitude")
+    @Expose
+    private String latitude;
     @SerializedName("cancel_subcategory_details")
     @Expose
     private CategoryModel cancel_subcategory_details;
