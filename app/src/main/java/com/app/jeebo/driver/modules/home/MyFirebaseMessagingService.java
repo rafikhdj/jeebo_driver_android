@@ -13,6 +13,7 @@ import android.os.Build;
 import androidx.core.app.NotificationCompat;
 
 import com.app.jeebo.driver.R;
+import com.app.jeebo.driver.modules.auth.activity.LoginActivity;
 import com.app.jeebo.driver.modules.home.activity.HomeActivity;
 import com.app.jeebo.driver.utils.AppConstant;
 import com.app.jeebo.driver.utils.MyIntentService;
@@ -26,22 +27,40 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     public void onNewToken(String s) {
         super.onNewToken(s);
         PreferenceKeeper.getInstance().setDeviceToken(s);
+       /* val request=ApiClient.getRequest()
+        var userTokenReq=UserTokenRequest()
+        userTokenReq.device_token=task.result?.token
+        val call=request.setUserToken(userTokenReq)
+        call.enqueue(object:ApiCallback<AcceptOrderResponse>(){
+            override fun onSuccess(t: AcceptOrderResponse?) {
+                Log.d("DEVICE_TOKEN",PreferenceKeeper.getInstance().deviceToken)
+            }
+
+            override fun onError(error: Error?) {
+                if(error != null && !TextUtils.isEmpty(error.errMsg))
+                    Log.d("DEVICE_TOKEN_ERROR",error.errMsg)
+            }
+        })*/
     }
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
         sendNotification(remoteMessage.getNotification().getBody());
-        Intent localIntent = new Intent(MyIntentService.CUSTOM_ACTION);
-        localIntent.putExtra(AppConstant.INTENT_EXTRAS.NOTIFICATION_TYPE,remoteMessage.getNotification().getBody());
-        this.sendBroadcast(localIntent);
+        if(PreferenceKeeper.getInstance().isLogin()){
+            Intent localIntent = new Intent(MyIntentService.CUSTOM_ACTION);
+            localIntent.putExtra(AppConstant.INTENT_EXTRAS.NOTIFICATION_TYPE,remoteMessage.getNotification().getBody());
+            localIntent.putExtra("type",remoteMessage.getData().get("type"));
+            this.sendBroadcast(localIntent);
+        }
+
     }
 
     private void sendNotification(String msg){
         Intent intent=new Intent(this, HomeActivity.class);
 
-        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        /*intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);*/
 
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
         String CHANNEL_ID = "my_channel_01";// The id of the channel.

@@ -30,17 +30,30 @@ public class AppConstant {
         public static final String USER_ID = "user_id";
         public static final String USER_PHONE = "user_phone";
         public static final String IS_LOGIN = "is_login";
+        public static final String DEVICE_LANG = "device_lang";
     }
 
     public interface INTENT_EXTRAS {
         String SMS_RECEIVED = "sms_received";
         String PHONE_NUMBER = "phone_number";
         String ORDER_ID = "order_id";
+        String FRAGMENT_TYPE = "fragment_type";
         String ACCESS_TOKEN = "access_token";
         String CAME_FROM = "came_from";
+        String PENDING = "pending";
+        String COMPLETED = "completed";
+        String CANCELLED = "cancelled";
+        String IN_PROCESS = "in_process";
         String USER_MODEL = "user_model";
         String USER_ADDRESS = "user_address";
         String NOTIFICATION_TYPE = "notification_type";
+    }
+
+    public interface Languages {
+        String ENGLISH="English";
+        String ENGLISH_CODE="en";
+        String FRENCH="français";
+        String FRENCH_CODE="fr";
     }
 
     public interface REQUEST_CODE {

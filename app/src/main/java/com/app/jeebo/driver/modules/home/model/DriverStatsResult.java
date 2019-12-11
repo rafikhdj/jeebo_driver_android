@@ -7,6 +7,18 @@ public class DriverStatsResult {
     @SerializedName("earnings")
     @Expose
     private Double earnings;
+    @SerializedName("dues")
+    @Expose
+    private Double dues;
+
+    public Double getDues() {
+        return dues;
+    }
+
+    public void setDues(Double dues) {
+        this.dues = dues;
+    }
+
     @SerializedName("return_to_jeebo")
     @Expose
     private Double return_to_jeebo;

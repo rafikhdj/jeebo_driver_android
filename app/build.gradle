@@ -9,7 +9,7 @@ android {
         applicationId "com.app.jeebo.driver" // need to change app package name
         minSdkVersion 16
         targetSdkVersion 29
-        versionCode 2
+        versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         // define hockey app id
@@ -29,8 +29,22 @@ android {
     productFlavors {
         dev {
             buildConfigField 'String', 'URL', '"http://52.20.166.153/"'
+           // buildConfigField 'String', 'URL', '"http://52.20.166.153/"'
 
         }
+        prod {
+//                buildConfigField 'String', 'HOCKEY_ID', '"8416f1194e9542b29921d27aeadb3e31"'
+            //              buildConfigField 'String', 'HOST', '"http://jeebo.dev.algoworks.com/"'
+            buildConfigField 'String', 'HOST', '"https://www.jeeboapp.dz/"'
+//                buildConfigField 'String', 'MEDIA_URL', '"http://34.196.103.211/cijsi/media/api/"'
+//                buildConfigField 'String', 'TNM_URL', '"http://34.196.103.211/terms-condition/cijsi-tc.html"'
+        }
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
     }
 }
 

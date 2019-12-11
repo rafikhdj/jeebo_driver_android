@@ -16,6 +16,30 @@ public class CustomerOrderDetail {
     @SerializedName("quantity")
     @Expose
     private double quantity;
+    @SerializedName("is_cancelled")
+    @Expose
+    private boolean is_cancelled;
+    @SerializedName("status")
+    @Expose
+    private String status;
+
+    public String getStatus() {
+        if(status==null)
+            status=" ";
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public boolean isIs_cancelled() {
+        return is_cancelled;
+    }
+
+    public void setIs_cancelled(boolean is_cancelled) {
+        this.is_cancelled = is_cancelled;
+    }
 
     public double getAmount() {
         return amount;

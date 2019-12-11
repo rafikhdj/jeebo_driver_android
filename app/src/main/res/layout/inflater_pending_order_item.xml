@@ -19,36 +19,44 @@
             android:background="@drawable/rv_background"
             android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/iv_logo"
+            <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dp_32"
-                android:layout_marginTop="@dimen/dp_30"
-                android:src="@drawable/rv_logo" />
+                android:layout_centerVertical="true"
+                android:id="@+id/rl_img"
+                android:layout_height="wrap_content">
 
-            <com.app.jeebo.driver.view.CustomTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/tv_take_incharge"
-                android:layout_below="@id/iv_logo"
-                android:layout_marginLeft="@dimen/dp_7"
-                android:layout_marginTop="@dimen/dp_11"
-                android:gravity="center_horizontal"
-                android:letterSpacing="0.01"
-                android:lineSpacingExtra="4sp"
-                android:text="@string/take_in_charge"
-                android:textColor="@color/color_0B94C7"
-                android:textSize="@dimen/sp_14"
-                app:ctypeface="@string/adineue_pro_regular" />
+                <ImageView
+                    android:id="@+id/iv_logo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp_32"
+                    android:src="@drawable/rv_logo" />
+
+                <com.app.jeebo.driver.view.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_take_incharge"
+                    android:layout_below="@id/iv_logo"
+                    android:layout_marginLeft="@dimen/dp_7"
+                    android:layout_marginTop="@dimen/dp_11"
+                    android:gravity="center_horizontal"
+                    android:letterSpacing="0.01"
+                    android:lineSpacingExtra="4sp"
+                    android:text="@string/take_in_charge"
+                    android:textColor="@color/color_0B94C7"
+                    android:textSize="@dimen/sp_14"
+                    app:ctypeface="@string/adineue_pro_regular" />
+
+            </RelativeLayout>
+
 
             <com.app.jeebo.driver.view.CustomTextView
                 android:id="@+id/tv_orderno_head"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dp_46"
+                android:layout_marginLeft="@dimen/dp_32"
                 android:layout_marginTop="@dimen/dp_13"
-                android:layout_toRightOf="@id/iv_logo"
+                android:layout_toRightOf="@id/rl_img"
                 android:letterSpacing="0.02"
                 android:text="@string/order_no"
                 android:textColor="@color/color_707070"
@@ -61,6 +69,7 @@
                 android:id="@+id/tv_order_no"
                 android:text=""
                 android:layout_marginLeft="@dimen/dp_5"
+                android:layout_marginRight="@dimen/dp_3"
                 android:textSize="@dimen/sp_14"
                 android:layout_marginTop="@dimen/dp_13"
                 android:layout_toRightOf="@id/tv_orderno_head"
@@ -72,28 +81,28 @@
                 android:layout_width="@dimen/_12sdp"
                 android:layout_height="@dimen/_12sdp"
                 android:layout_below="@id/tv_order_no"
-                android:layout_marginLeft="@dimen/dp_46"
+                android:layout_marginLeft="@dimen/dp_32"
                 android:layout_marginTop="@dimen/dp_5"
-                android:layout_toRightOf="@id/iv_logo"
+                android:layout_toRightOf="@id/rl_img"
                 android:src="@drawable/food_icon" />
 
             <com.app.jeebo.driver.view.CustomTextView
                 android:id="@+id/tv_item"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tv_orderno_head"
+                android:layout_below="@id/tv_order_no"
                 android:layout_marginLeft="@dimen/dp_5"
                 android:layout_marginTop="@dimen/dp_3"
                 android:layout_toRightOf="@id/iv_item"
-                android:text="Food"
+                android:text=""
                 app:ctypeface="@string/adineue_pro_regular" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_below="@id/iv_item"
                 android:id="@+id/rl_merchant"
-                android:layout_toRightOf="@id/iv_logo"
-                android:layout_marginLeft="@dimen/dp_46"
+                android:layout_toRightOf="@id/rl_img"
+                android:layout_marginLeft="@dimen/dp_32"
                 android:layout_marginTop="@dimen/dp_5"
                 android:layout_height="wrap_content">
 
@@ -111,6 +120,7 @@
                     android:layout_width="wrap_content"
                     android:text=""
                     android:layout_marginLeft="@dimen/dp_3"
+                    android:layout_marginRight="@dimen/dp_3"
                     android:layout_toRightOf="@+id/tv_merchant"
                     android:id="@+id/tv_merchant_name"
                     android:textSize="@dimen/sp_13"
@@ -122,6 +132,7 @@
                 <com.app.jeebo.driver.view.CustomTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/dp_3"
                     android:id="@+id/tv_merchant_address"
                     android:maxLines="3"
                     android:layout_below="@+id/tv_merchant_name"
@@ -136,8 +147,8 @@
                 android:layout_width="match_parent"
                 android:layout_below="@id/rl_merchant"
                 android:id="@+id/rl_client"
-                android:layout_toRightOf="@id/iv_logo"
-                android:layout_marginLeft="@dimen/dp_46"
+                android:layout_toRightOf="@id/rl_img"
+                android:layout_marginLeft="@dimen/dp_32"
                 android:layout_marginTop="@dimen/dp_5"
                 android:layout_height="wrap_content">
 
@@ -154,6 +165,7 @@
                 <com.app.jeebo.driver.view.CustomTextView
                     android:layout_width="wrap_content"
                     android:text=""
+                    android:layout_marginRight="@dimen/dp_3"
                     android:layout_marginLeft="@dimen/dp_3"
                     android:layout_toRightOf="@+id/tv_client"
                     android:id="@+id/tv_client_name"
@@ -166,14 +178,84 @@
                 <com.app.jeebo.driver.view.CustomTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/dp_3"
                     android:maxLines="3"
                     android:id="@+id/tv_client_address"
                     android:layout_below="@+id/tv_client_name"
                     android:drawablePadding="@dimen/dp_5"
                     android:layout_marginTop="@dimen/dp_3"
-                    android:layout_marginBottom="@dimen/dp_11"
                     android:drawableLeft="@drawable/marker_grey"
                     app:ctypeface="@string/adineue_pro_regular" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="@dimen/dp_3"
+                    android:layout_below="@+id/tv_client_address"
+                    android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content">
+
+                        <com.app.jeebo.driver.view.CustomTextView
+                            android:layout_width="wrap_content"
+                            android:text="@string/price"
+                            android:id="@+id/tv_price"
+                            android:layout_marginLeft="@dimen/dp_3"
+                            android:textSize="@dimen/sp_13"
+                            android:textColor="@color/color_707070"
+                            app:ctypeface="@string/adineue_pro_regular"
+                            android:layout_height="wrap_content" />
+
+
+                        <com.app.jeebo.driver.view.CustomTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dp_3"
+                            android:textColor="@color/color_black"
+                            android:layout_below="@+id/tv_price"
+                            android:id="@+id/tv_price_value"
+                            android:drawablePadding="@dimen/dp_5"
+                            android:layout_marginTop="@dimen/dp_3"
+                            android:layout_marginBottom="@dimen/dp_11"
+                            app:ctypeface="@string/adineue_pro_regular" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content">
+
+                        <com.app.jeebo.driver.view.CustomTextView
+                            android:layout_width="wrap_content"
+                            android:text="@string/delivery_fee"
+                            android:id="@+id/tv_delivery_fee"
+                            android:layout_marginLeft="@dimen/dp_3"
+                            android:textSize="@dimen/sp_13"
+                            android:textColor="@color/color_707070"
+                            app:ctypeface="@string/adineue_pro_regular"
+                            android:layout_height="wrap_content" />
+
+
+                        <com.app.jeebo.driver.view.CustomTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dp_3"
+                            android:textColor="@color/color_black"
+                            android:id="@+id/tv_delivery_fee_value"
+                            android:layout_below="@+id/tv_delivery_fee"
+                            android:drawablePadding="@dimen/dp_5"
+                            android:layout_marginTop="@dimen/dp_3"
+                            android:layout_marginBottom="@dimen/dp_11"
+                            app:ctypeface="@string/adineue_pro_regular" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
 
             </RelativeLayout>
 

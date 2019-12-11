@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -68,6 +69,13 @@ public class AdapterCompletedOrders extends RecyclerView.Adapter<AdapterComplete
         holder.tvClientAddress.setText(getClientAddress(position));
 
         holder.tvTakeIncharge.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                itemClickListener.onItemClickListener(view,position);
+            }
+        });
+
+        holder.rlMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 itemClickListener.onItemClickListener(view,position);
@@ -148,6 +156,7 @@ public class AdapterCompletedOrders extends RecyclerView.Adapter<AdapterComplete
         }
 
 
+
         return address;
     }
 
@@ -172,6 +181,7 @@ public class AdapterCompletedOrders extends RecyclerView.Adapter<AdapterComplete
         CustomTextView tvPhone;
         CustomTextView tvItem;
         ImageView ivItem;
+        RelativeLayout rlMain;
 
         CustomViewHolder(View itemView, int viewType) {
             super(itemView);
@@ -184,7 +194,7 @@ public class AdapterCompletedOrders extends RecyclerView.Adapter<AdapterComplete
             tvTakeIncharge=itemView.findViewById(R.id.tv_take_incharge);
             tvPhone=itemView.findViewById(R.id.tv_phone);
             ivItem=itemView.findViewById(R.id.iv_item);
-            tvItem=itemView.findViewById(R.id.tv_item);
+            rlMain=itemView.findViewById(R.id.rl_main);
         }
 
     }

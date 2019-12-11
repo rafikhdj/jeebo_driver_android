@@ -83,6 +83,9 @@ public class PendingOrderAdapter extends RecyclerView.Adapter<PendingOrderAdapte
 
         }
 
+        holder.tvDeliveryFee.setText("DA "+orderListResult.getDelivery_charge());
+        holder.tvPrice.setText("DA "+orderListResult.getOrder_total());
+
         holder.tvMerchantAddress.setText(getMerchantAddress(position));
 
         holder.tvClientAddress.setText(getClientAddress(position));
@@ -171,6 +174,8 @@ public class PendingOrderAdapter extends RecyclerView.Adapter<PendingOrderAdapte
         CustomTextView tvTakeIncharge;
         RelativeLayout rlMain;
         CustomTextView tvItem;
+        CustomTextView tvDeliveryFee;
+        CustomTextView tvPrice;
         ImageView ivItem;
 
         CustomViewHolder(View itemView, int viewType) {
@@ -185,6 +190,8 @@ public class PendingOrderAdapter extends RecyclerView.Adapter<PendingOrderAdapte
             rlMain=itemView.findViewById(R.id.rl_main);
             ivItem=itemView.findViewById(R.id.iv_item);
             tvItem=itemView.findViewById(R.id.tv_item);
+            tvDeliveryFee=itemView.findViewById(R.id.tv_delivery_fee_value);
+            tvPrice=itemView.findViewById(R.id.tv_price_value);
         }
 
     }

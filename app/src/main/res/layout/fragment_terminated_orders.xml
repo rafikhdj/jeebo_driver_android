@@ -21,7 +21,7 @@
         android:visibility="gone"
         app:ctypeface="@string/adineue_pro_regular"
         android:textColor="@color/color_black"
-        android:text="@string/no_current_order"
+        android:text="@string/no_result_found"
         android:layout_height="match_parent" />
 
 

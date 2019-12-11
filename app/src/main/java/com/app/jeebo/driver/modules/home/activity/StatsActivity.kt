@@ -14,9 +14,11 @@ import com.app.jeebo.driver.model.Error
 import com.app.jeebo.driver.modules.home.model.DriverStatsReq
 import com.app.jeebo.driver.modules.home.model.DriverStatsResponse
 import com.app.jeebo.driver.modules.home.model.DriverStatsResult
+import com.app.jeebo.driver.utils.AppConstant
 import com.app.jeebo.driver.utils.DialogManager
 import com.app.jeebo.driver.utils.PreferenceKeeper
 import kotlinx.android.synthetic.main.activity_stats.*
+import java.util.*
 
 class StatsActivity : BaseActivity() {
 
@@ -32,13 +34,27 @@ class StatsActivity : BaseActivity() {
     }
 
     private fun init(){
+
+        if(PreferenceKeeper.getInstance().language.equals(AppConstant.Languages.ENGLISH_CODE)){
+            spinnerArray = arrayOf("January", "February", "March", "April", "May","June","July","August","September",
+                    "October","November","December")
+        }else{
+            spinnerArray = arrayOf("janvier", "février", "Mars", "avril", "Mai","juin","juillet","août","septembre",
+                    "octobre","novembre","décembre")
+        }
+
         val spinnerArrayAdapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, spinnerArray)
         spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner_months.adapter = spinnerArrayAdapter
 
         tv_driver_name.setText(PreferenceKeeper.getInstance().name)
 
-        iv_back.setOnClickListener { finish() }
+        iv_back.setOnClickListener {
+            finish()
+            val bundle=Bundle()
+            bundle.putString(AppConstant.INTENT_EXTRAS.FRAGMENT_TYPE,AppConstant.PENDING_ORDER)
+            launchActivity(HomeActivity::class.java,bundle)
+        }
 
         /*spinnerSubCat?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -51,6 +67,10 @@ class StatsActivity : BaseActivity() {
 
         }*/
 
+
+        var cal=Calendar.getInstance()
+        month=cal.get(Calendar.MONTH)+1
+        spinner_months.setSelection(month-1)
         spinner_months.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(p0: AdapterView<*>?) {
 
@@ -62,7 +82,6 @@ class StatsActivity : BaseActivity() {
             }
 
         }
-
         getDriverStats()
 
     }
@@ -100,6 +119,18 @@ class StatsActivity : BaseActivity() {
         }else{
             tv_return.setText("DA 0.0")
         }
+        if(statsResut.dues != null){
+            tv_dues.setText("DA "+statsResut.dues)
+        }else{
+            tv_dues.setText("DA 0.0")
+        }
 
+    }
+
+    override fun onBackPressed() {
+        finish()
+        val bundle=Bundle()
+        bundle.putString(AppConstant.INTENT_EXTRAS.FRAGMENT_TYPE, AppConstant.PENDING_ORDER)
+        launchActivity(HomeActivity::class.java,bundle)
     }
 }

@@ -36,18 +36,18 @@ public class FragmentFactory {
         switch (eScreenType) {
 
             case PENDING_ORDERS_SCREEN:
-                if (pendingOrdersFragment == null)
+               // if (pendingOrdersFragment == null)
                     pendingOrdersFragment = new PendingOrdersFragment();
                 baseFragment = pendingOrdersFragment;
                 break;
 
             case ORDERS_PROCESSED_SCREEN:
-                if (ordersProcessFragment == null)
+               // if (ordersProcessFragment == null)
                   ordersProcessFragment = new OrdersProcessFragment();
                 baseFragment = ordersProcessFragment;
                 break;
             case TERMINATED_ORDERS_SCREEN:
-                if (terminatedOrdersFragment== null)
+                //if (terminatedOrdersFragment== null)
                  terminatedOrdersFragment= new TerminatedOrdersFragment();
                 baseFragment = terminatedOrdersFragment;
                 break;

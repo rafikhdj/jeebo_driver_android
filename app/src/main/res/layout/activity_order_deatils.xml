@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".modules.home.fragment.OrdersProcessFragment">
+    tools:context=".modules.home.activity.OrderDeatilsActivity">
 
 
     <androidx.cardview.widget.CardView
@@ -116,7 +116,7 @@
                         android:layout_marginLeft="@dimen/dp_10"
                         android:layout_marginRight="@dimen/dp_10"
                         android:id="@+id/ll_eshop_client"
-                        android:layout_height="@dimen/dp_130">
+                        android:layout_height="@dimen/dp_140">
 
                         <RelativeLayout
                             android:layout_width="0dp"
@@ -310,6 +310,156 @@
                 </androidx.cardview.widget.CardView>
 
 
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:id="@+id/cv_pay_to_merchant"
+                    android:layout_below="@+id/cv_payment_mode"
+                    android:layout_margin="@dimen/dp_5"
+                    android:elevation="@dimen/dp_5"
+                    app:cardElevation="@dimen/dp_5"
+                    android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_below="@+id/ll_steps"
+                        android:background="@color/white"
+                        android:id="@+id/rl_pay"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:layout_marginRight="@dimen/dp_10"
+                        android:paddingTop="@dimen/dp_20"
+                        android:paddingBottom="@dimen/dp_20"
+                        android:paddingLeft="@dimen/dp_10"
+                        android:paddingRight="@dimen/dp_10"
+                        android:layout_height="wrap_content">
+
+                        <com.app.jeebo.driver.view.CustomTextView
+                            android:id="@+id/tv_pay_to_merchant_head"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dp_10"
+                            android:letterSpacing="0.02"
+                            android:text="@string/pay_to_merchant"
+                            android:textColor="@color/color_black"
+                            android:textSize="@dimen/sp_13"
+                            app:ctypeface="@string/adineue_pro_regular" />
+
+                        <com.app.jeebo.driver.view.CustomTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/dp_10"
+                            android:id="@+id/tv_pay_to_merchant"
+                            android:text=""
+                            android:layout_marginLeft="@dimen/dp_5"
+                            android:textSize="@dimen/sp_14"
+                            android:layout_alignParentRight="true"
+                            android:textColor="@color/color_707070"
+                            app:ctypeface="@string/adineue_pro_regular" />
+
+                    </RelativeLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:id="@+id/cv_collect"
+                    android:layout_below="@+id/cv_pay_to_merchant"
+                    android:layout_margin="@dimen/dp_5"
+                    android:elevation="@dimen/dp_5"
+                    app:cardElevation="@dimen/dp_5"
+                    android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_below="@+id/rl_pay"
+                        android:background="@color/white"
+                        android:id="@+id/rl_collect"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:layout_marginRight="@dimen/dp_10"
+                        android:paddingTop="@dimen/dp_20"
+                        android:paddingBottom="@dimen/dp_20"
+                        android:paddingLeft="@dimen/dp_10"
+                        android:paddingRight="@dimen/dp_10"
+                        android:layout_height="wrap_content">
+
+                        <com.app.jeebo.driver.view.CustomTextView
+                            android:id="@+id/tv_collect_from_client_head"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dp_10"
+                            android:letterSpacing="0.02"
+                            android:text="@string/collect_from_client"
+                            android:textColor="@color/color_black"
+                            android:textSize="@dimen/sp_13"
+                            app:ctypeface="@string/adineue_pro_regular" />
+
+                        <com.app.jeebo.driver.view.CustomTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/dp_10"
+                            android:id="@+id/tv_collect_from_client"
+                            android:layout_marginLeft="@dimen/dp_5"
+                            android:textSize="@dimen/sp_14"
+                            android:layout_alignParentRight="true"
+                            android:textColor="@color/color_707070"
+                            app:ctypeface="@string/adineue_pro_regular" />
+
+                    </RelativeLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:id="@+id/cv_delivery_fee"
+                    android:layout_below="@+id/cv_collect"
+                    android:layout_margin="@dimen/dp_5"
+                    android:elevation="@dimen/dp_5"
+                    app:cardElevation="@dimen/dp_5"
+                    android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_below="@+id/rl_collect"
+                        android:background="@color/white"
+                        android:id="@+id/rl_delivery_fee"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:layout_marginRight="@dimen/dp_10"
+                        android:paddingTop="@dimen/dp_20"
+                        android:paddingBottom="@dimen/dp_20"
+                        android:paddingLeft="@dimen/dp_10"
+                        android:paddingRight="@dimen/dp_10"
+                        android:layout_height="wrap_content">
+
+                        <com.app.jeebo.driver.view.CustomTextView
+                            android:id="@+id/tv_delivery_fee"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dp_10"
+                            android:letterSpacing="0.02"
+                            android:text="@string/delivery_fee"
+                            android:textColor="@color/color_black"
+                            android:textSize="@dimen/sp_13"
+                            app:ctypeface="@string/adineue_pro_regular" />
+
+                        <com.app.jeebo.driver.view.CustomTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/dp_10"
+                            android:id="@+id/tv_delivery_fee_value"
+                            android:text=""
+                            android:layout_marginLeft="@dimen/dp_5"
+                            android:textSize="@dimen/sp_14"
+                            android:layout_alignParentRight="true"
+                            android:textColor="@color/color_707070"
+                            app:ctypeface="@string/adineue_pro_regular" />
+
+                    </RelativeLayout>
+
+                </androidx.cardview.widget.CardView>
+
+
                 <com.app.jeebo.driver.view.CustomTextView
                     android:layout_width="@dimen/dp_150"
                     android:text="@string/confirm_caps"
@@ -317,7 +467,7 @@
                     android:id="@+id/tv_confirm"
                     android:layout_marginBottom="@dimen/dp_20"
                     android:layout_centerHorizontal="true"
-                    android:layout_below="@+id/cv_payment_mode"
+                    android:layout_below="@+id/cv_delivery_fee"
                     android:layout_marginTop="@dimen/dp_40"
                     android:textColor="@color/white"
                     app:ctypeface="@string/adineue_pro_regular"

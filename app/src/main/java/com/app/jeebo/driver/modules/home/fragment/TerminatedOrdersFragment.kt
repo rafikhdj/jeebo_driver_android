@@ -1,6 +1,8 @@
 package com.app.jeebo.driver.modules.home.fragment
 
+import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,11 +15,13 @@ import com.app.jeebo.driver.api.ApiCallback
 import com.app.jeebo.driver.api.ApiClient
 import com.app.jeebo.driver.base.BaseFragment
 import com.app.jeebo.driver.model.Error
+import com.app.jeebo.driver.modules.home.activity.OrderDeatilsActivity
 import com.app.jeebo.driver.modules.home.adapter.AdapterCompletedOrders
 import com.app.jeebo.driver.modules.home.adapter.PendingOrderAdapter
 import com.app.jeebo.driver.modules.home.model.OrderListResponse
 import com.app.jeebo.driver.modules.home.model.OrderListResult
 import com.app.jeebo.driver.utils.AppConstant
+import com.app.jeebo.driver.utils.DialogManager
 import com.app.jeebo.driver.utils.EndlessRecyclerViewScrollListener
 import com.app.jeebo.driver.utils.ItemClickListener
 import kotlinx.android.synthetic.main.fragment_terminated_orders.*
@@ -66,6 +70,8 @@ class TerminatedOrdersFragment : BaseFragment(), ItemClickListener {
 
             override fun onError(error: Error?) {
                 baseActivity.dismissProgressBar()
+                if(error != null && !TextUtils.isEmpty(error.errMsg))
+                    DialogManager.showValidationDialog(baseActivity,error.errMsg)
             }
 
         })
@@ -110,8 +116,12 @@ class TerminatedOrdersFragment : BaseFragment(), ItemClickListener {
     override fun onItemClickListener(view: View?, pos: Int) {
         adapterPos=pos
         when(view?.id){
-            R.id.tv_take_incharge->{
-              //  showAcceptDialog()
+            R.id.rl_main->{
+                var intent= Intent(baseActivity, OrderDeatilsActivity::class.java)
+                intent.putExtra(AppConstant.INTENT_EXTRAS.ORDER_ID,orderList.get(pos).id.toString())
+                intent.putExtra(AppConstant.INTENT_EXTRAS.CAME_FROM,AppConstant.INTENT_EXTRAS.COMPLETED)
+
+                startActivity(intent)
             }
         }
     }

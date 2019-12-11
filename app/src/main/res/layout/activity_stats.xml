@@ -53,11 +53,51 @@
            app:ctypeface="@string/adineue_pro_regular"
            android:layout_height="wrap_content" />
 
+       <androidx.cardview.widget.CardView
+           android:layout_width="match_parent"
+           android:id="@+id/cv_dues"
+           android:layout_marginLeft="@dimen/dp_10"
+           android:layout_marginRight="@dimen/dp_10"
+           android:layout_marginTop="@dimen/_20sdp"
+           android:layout_below="@+id/tv_driver_name"
+           android:elevation="@dimen/_5sdp"
+           app:cardElevation="@dimen/_5sdp"
+           android:layout_height="wrap_content">
+
+           <RelativeLayout
+               android:layout_width="match_parent"
+               android:padding="@dimen/dp_10"
+               android:layout_height="wrap_content">
+
+               <com.app.jeebo.driver.view.CustomTextView
+                   android:layout_width="wrap_content"
+                   android:text="@string/current_dues"
+                   android:id="@+id/tv_dues_head"
+                   android:layout_centerVertical="true"
+                   android:textColor="@color/color_black"
+                   android:textSize="@dimen/sp_13"
+                   app:ctypeface="@string/adineue_pro_regular"
+                   android:layout_height="wrap_content" />
+
+               <com.app.jeebo.driver.view.CustomTextView
+                   android:layout_width="wrap_content"
+                   android:text=""
+                   android:id="@+id/tv_dues"
+                   android:layout_alignParentRight="true"
+                   android:textColor="@color/color_707070"
+                   android:textSize="@dimen/sp_14"
+                   app:ctypeface="@string/adineue_pro_regular"
+                   android:layout_height="wrap_content" />
+
+           </RelativeLayout>
+
+       </androidx.cardview.widget.CardView>
+
        <Spinner
            android:layout_width="wrap_content"
            android:id="@+id/spinner_months"
-           android:layout_marginTop="@dimen/_20sdp"
-           android:layout_below="@+id/tv_driver_name"
+           android:layout_marginTop="@dimen/_25sdp"
+           android:layout_below="@+id/cv_dues"
            android:layout_centerHorizontal="true"
            android:layout_height="wrap_content"/>
 

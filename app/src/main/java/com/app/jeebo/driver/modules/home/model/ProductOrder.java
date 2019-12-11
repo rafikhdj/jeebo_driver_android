@@ -19,6 +19,17 @@ public class ProductOrder {
     @SerializedName("parent_category_url")
     @Expose
     private String parent_category_url;
+    @SerializedName("status")
+    @Expose
+    private String status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public Integer getParent_category_id() {
         return parent_category_id;

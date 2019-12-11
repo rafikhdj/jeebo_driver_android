@@ -130,4 +130,8 @@ public interface IApiRequest {
     @POST("user/save_device_token")
     Call<AcceptOrderResponse> setUserToken(@Body UserTokenRequest userTokenRequest);
 
+
+    @POST("user/logout")
+    Call<AcceptOrderResponse> logout(@Body UserTokenRequest userTokenRequest);
+
 }

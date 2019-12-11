@@ -91,7 +91,7 @@ class SignupActivity : BaseActivity(), IDialogUploadListener {
         signUpRequest.email=et_signup_email.text.toString().trim()
         signUpRequest.password=et_signup_password.text.toString().trim()
         if(userModel != null)
-            signUpRequest.user_id= userModel!!.id.toString()
+            signUpRequest.user_id= userModel!!.id
         val request = ApiClient.getRequest()
         val call=request.signup(signUpRequest)
         call.enqueue(object : ApiCallback<BaseResponse<UserModel>>(){

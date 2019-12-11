@@ -20,6 +20,7 @@ public class JeeboApplication extends Application {
         context=this;
         ApiClient.init(IApiRequest.class);
         PreferenceKeeper.setContext(getApplicationContext());
+        PreferenceKeeper.getInstance().setLanguage(Locale.getDefault().getDisplayLanguage());
         AppUtils.getDeviceToken();
        // PreferenceKeeper.getInstance().setLanguage(Locale.getDefault().getDisplayLanguage());
     }

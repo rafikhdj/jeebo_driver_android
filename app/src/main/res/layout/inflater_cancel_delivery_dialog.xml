@@ -3,6 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
+    android:layout_marginTop="@dimen/_10sdp"
+    android:layout_marginBottom="@dimen/_10sdp"
     android:padding="@dimen/dp_10"
     android:background="@drawable/bg_dialog"
     android:layout_height="wrap_content">
@@ -15,6 +17,13 @@
         android:textSize="@dimen/sp_15"
         android:layout_centerHorizontal="true"
         app:ctypeface="@string/adineue_pro_bold"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:src="@drawable/back_icon"
+        android:padding="@dimen/_5sdp"
+        android:id="@+id/iv_back"
         android:layout_height="wrap_content" />
 
     <Spinner
@@ -42,6 +51,19 @@
         android:text="@string/submit"
         android:layout_below="@+id/spinner_sub_cat"
         android:background="@drawable/bg_button_filled"
+        android:layout_height="@dimen/dp_40" />
+
+    <com.app.jeebo.driver.view.CustomTextView
+        android:layout_width="@dimen/dp_140"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/dp_30"
+        android:id="@+id/tv_cancel"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/color_0B94C7"
+        app:ctypeface="@string/adineue_pro_regular"
+        android:text="Back"
+        android:layout_below="@+id/tv_submit"
+        android:background="@drawable/bg_button_unfilled"
         android:layout_height="@dimen/dp_40" />
 
 </RelativeLayout>

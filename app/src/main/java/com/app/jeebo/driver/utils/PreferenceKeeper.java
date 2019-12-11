@@ -119,6 +119,19 @@ public class PreferenceKeeper {
     public void setLogin(boolean islogin) {
         prefs.edit().putBoolean(AppConstant.PrefsName.IS_LOGIN, islogin).commit();
     }
+
+    public void setLanguage(String language) {
+        if(language.equalsIgnoreCase(AppConstant.Languages.ENGLISH))
+            language=AppConstant.Languages.ENGLISH_CODE;
+        else if(language.equalsIgnoreCase(AppConstant.Languages.FRENCH))
+            language=AppConstant.Languages.FRENCH_CODE;
+        prefs.edit().putString(AppConstant.PrefsName.DEVICE_LANG, language).commit();
+    }
+
+    public String  getLanguage() {
+        return prefs.getString(AppConstant.PrefsName.DEVICE_LANG, "en");
+    }
+
 }
 
 

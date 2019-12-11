@@ -66,16 +66,24 @@ class HomeActivity : BaseActivity(), LocationListener {
     private var tvTabSelected:CustomTextView?=null
     private var tvTabUnselected:CustomTextView?=null
     private var tvTabUnselected2:CustomTextView?=null
+    private var loadFragment:String?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-
+        if(!PreferenceKeeper.getInstance().isLogin){
+            PreferenceKeeper.getInstance().clearData()
+            finish()
+            launchActivity(LoginActivity::class.java)
+        }
         init()
     }
 
     private fun init() {
         locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        setUpTabs()
+      //  loadFragment= intent.extras?.getString(AppConstant.INTENT_EXTRAS.FRAGMENT_TYPE,AppConstant.INTENT_EXTRAS.FRAGMENT_TYPE)
+
         setupPermissions()
         slideDrawer()
         setUserToken()
@@ -111,8 +119,15 @@ class HomeActivity : BaseActivity(), LocationListener {
             var browserIntent =  Intent(Intent.ACTION_VIEW, Uri.parse(AppConstant.CONTACT_URL));
             startActivity(browserIntent);
         }
-
+        /*setUpTabs()
+        if(TextUtils.isEmpty(loadFragment) || loadFragment.equals(AppConstant.INTENT_EXTRAS.PENDING))
         setCurrentFragment(EScreenType.PENDING_ORDERS_SCREEN.ordinal)
+        else{
+            tab_layout.getTabAt(1)?.select()
+            setCurrentFragment(EScreenType.ORDERS_PROCESSED_SCREEN.ordinal)
+        }*/
+        setCurrentFragment(EScreenType.PENDING_ORDERS_SCREEN.ordinal)
+
         menu_icon.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 drawerLayout.openDrawer(GravityCompat.START)
@@ -126,10 +141,6 @@ class HomeActivity : BaseActivity(), LocationListener {
             }
         })
 
-
-        setCurrentFragment(EScreenType.PENDING_ORDERS_SCREEN.ordinal)
-
-        setUpTabs()
     }
 
     private fun changeDriverStatus(status:Int){
@@ -156,7 +167,7 @@ class HomeActivity : BaseActivity(), LocationListener {
     }
 
 
-    fun setCurrentFragment(fragmentVal: Int) {
+    public fun setCurrentFragment(fragmentVal: Int) {
         val eScreenType = EScreenType.values()[fragmentVal]
         val currentFragment = FragmentFactory.getInstance().getFragment(eScreenType)
         replaceFragment(R.id.frame_layout, currentFragment, false)
@@ -190,6 +201,19 @@ class HomeActivity : BaseActivity(), LocationListener {
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
             window.statusBarColor = resources.getColor(R.color.color_0B94C7)
         }*/
+        loadFragment=""
+        loadFragment= intent.extras?.getString(AppConstant.INTENT_EXTRAS.FRAGMENT_TYPE,AppConstant.INTENT_EXTRAS.PENDING)
+
+        if(TextUtils.isEmpty(loadFragment) || loadFragment.equals(AppConstant.INTENT_EXTRAS.PENDING)){
+            tab_layout.getTabAt(0)?.select()
+            //setCurrentFragment(EScreenType.PENDING_ORDERS_SCREEN.ordinal)
+        }else if(loadFragment.equals(AppConstant.INTENT_EXTRAS.COMPLETED)){
+            tab_layout.getTabAt(2)?.select()
+        }
+        else{
+            tab_layout.getTabAt(1)?.select()
+           // setCurrentFragment(EScreenType.ORDERS_PROCESSED_SCREEN.ordinal)
+        }
 
         setData()
         registerBroadCastReceiver()
@@ -406,10 +430,14 @@ class HomeActivity : BaseActivity(), LocationListener {
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
+       // super.onBackPressed()
 
-        if(tab_layout.selectedTabPosition!=0)
-        tab_layout.getTabAt(0)?.select()
+        if(tab_layout.selectedTabPosition!=0){
+            setCurrentFragment(EScreenType.PENDING_ORDERS_SCREEN.ordinal)
+            tab_layout.getTabAt(0)?.select()
+
+        }
+
         else{
             showWarningDialog(1)
         }
@@ -419,10 +447,27 @@ class HomeActivity : BaseActivity(), LocationListener {
 
         val broadcastReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context, intent: Intent) {
-                setCurrentFragment(EScreenType.PENDING_ORDERS_SCREEN.ordinal)
-                tab_layout.getTabAt(0)?.select()
+               // setCurrentFragment(EScreenType.PENDING_ORDERS_SCREEN.ordinal)
+              //  tab_layout.getTabAt(0)?.select()
                 if(intent.hasExtra(AppConstant.INTENT_EXTRAS.NOTIFICATION_TYPE))
                 showCustomToast(intent.getStringExtra(AppConstant.INTENT_EXTRAS.NOTIFICATION_TYPE))
+                var type=intent.getStringExtra("type")
+                if(tab_layout != null){
+                    if(tab_layout.selectedTabPosition==0 && !TextUtils.isEmpty(type) && type.equals("order placed"))
+                        setCurrentFragment(EScreenType.PENDING_ORDERS_SCREEN.ordinal)
+                    else if(tab_layout.selectedTabPosition==1 && !TextUtils.isEmpty(type) && type.equals("order cancel"))
+                        setCurrentFragment(EScreenType.ORDERS_PROCESSED_SCREEN.ordinal)
+                    else{
+
+                    }
+                    /*if(tab_layout.selectedTabPosition==0 )
+                        setCurrentFragment(EScreenType.PENDING_ORDERS_SCREEN.ordinal)
+                    else if(tab_layout.selectedTabPosition==1 )
+                        setCurrentFragment(EScreenType.ORDERS_PROCESSED_SCREEN.ordinal)
+                    else{
+
+                    }*/
+                }
             }
         }
         registerReceiver(broadcastReceiver, intentFilter1)
@@ -446,10 +491,9 @@ class HomeActivity : BaseActivity(), LocationListener {
             tvMsg.setText(getString(R.string.exit_warning))
         tvOk.setOnClickListener{view->
             run {
+                dialog.dismiss()
                 if(type==0){
-                    PreferenceKeeper.getInstance().clearData()
-                    finish()
-                    launchActivity(LoginActivity::class.java)
+                    logoutUser()
                 }else{
                     finish()
                 }
@@ -479,6 +523,30 @@ class HomeActivity : BaseActivity(), LocationListener {
                 })
             }
         }
+    }
+
+    private fun logoutUser(){
+        showProgressBar(this@HomeActivity)
+        var userTokenReq=UserTokenRequest()
+        userTokenReq.device_token=PreferenceKeeper.getInstance().deviceToken
+        val req=ApiClient.getRequest()
+        val call=req.logout(userTokenReq)
+        call.enqueue(object : ApiCallback<AcceptOrderResponse>(){
+            override fun onSuccess(t: AcceptOrderResponse?) {
+                PreferenceKeeper.getInstance().clearData()
+                finish()
+                launchActivity(LoginActivity::class.java)
+                dismissProgressBar()
+            }
+
+            override fun onError(error: Error?) {
+                dismissProgressBar()
+                if(error != null && !TextUtils.isEmpty(error.errMsg))
+                    DialogManager.showValidationDialog(this@HomeActivity,error.errMsg)
+            }
+
+        })
+
     }
 
 }

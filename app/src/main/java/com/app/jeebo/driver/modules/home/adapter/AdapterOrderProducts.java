@@ -39,17 +39,19 @@ public class AdapterOrderProducts extends RecyclerView.Adapter<AdapterOrderProdu
     public void onBindViewHolder(@NonNull CustomViewHolder holder, final int position) {
         CustomerOrderDetail orderListResult=orderList.get(position);
 
-        if(!TextUtils.isEmpty(orderListResult.getProductOrder().getProductTitle())){
-            String quantity=String.valueOf(orderListResult.getQuantity());
-            if(quantity.contains(".")){
+        if(orderListResult.getStatus() != null && !orderListResult.getStatus().equalsIgnoreCase("Cancelled")){
+            if(!TextUtils.isEmpty(orderListResult.getProductOrder().getProductTitle())){
+                String quantity=String.valueOf(orderListResult.getQuantity());
+                if(quantity.contains(".")){
                 /*String[] quantityArr=quantity.split(".");
                 quantity=quantityArr[0];*/
-                quantity=quantity.substring(0,quantity.indexOf("."));
+                    quantity=quantity.substring(0,quantity.indexOf("."));
+                }
+                holder.tvProductName.setText(quantity+" "+orderListResult.getProductOrder().getProductTitle());
             }
-            holder.tvProductName.setText(quantity+" "+orderListResult.getProductOrder().getProductTitle());
-        }
 
             holder.tvProductPrice.setText("DA "+orderListResult.getAmount());
+        }
     }
 
     @Override

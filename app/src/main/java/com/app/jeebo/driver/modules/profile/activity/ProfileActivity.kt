@@ -11,6 +11,7 @@ import com.app.jeebo.driver.base.BaseActivity
 import com.app.jeebo.driver.model.Error
 import com.app.jeebo.driver.modules.auth.activity.OtpVerificationActivity
 import com.app.jeebo.driver.modules.auth.model.UserModel
+import com.app.jeebo.driver.modules.home.activity.HomeActivity
 import com.app.jeebo.driver.modules.profile.model.EditProfileReq
 import com.app.jeebo.driver.modules.profile.model.UserResultModel
 import com.app.jeebo.driver.utils.*
@@ -51,7 +52,12 @@ class ProfileActivity : BaseActivity(), IDialogUploadListener {
             DialogManager.openDialogCameraGallary(false,this,this)
         }
 
-        iv_back.setOnClickListener { finish() }
+        iv_back.setOnClickListener {
+            finish()
+            val bundle=Bundle()
+            bundle.putString(AppConstant.INTENT_EXTRAS.FRAGMENT_TYPE,AppConstant.PENDING_ORDER)
+            launchActivity(HomeActivity::class.java,bundle)
+        }
 
         tv_edit.setOnClickListener {
             if(isEditProfile!!){
@@ -259,5 +265,12 @@ class ProfileActivity : BaseActivity(), IDialogUploadListener {
             et_phone.setText(PreferenceKeeper.getInstance().userPhone)
         }
 
+    }
+
+    override fun onBackPressed() {
+        finish()
+        val bundle=Bundle()
+        bundle.putString(AppConstant.INTENT_EXTRAS.FRAGMENT_TYPE,AppConstant.PENDING_ORDER)
+        launchActivity(HomeActivity::class.java,bundle)
     }
 }

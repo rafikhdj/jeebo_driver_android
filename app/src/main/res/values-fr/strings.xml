@@ -1,0 +1,118 @@
+<resources>
+    <!-- Need to change App Name Here -->
+    <string name="facebook_app_id">2236402436650575</string>
+    <string name="fb_login_protocol_scheme">fb2236402436650575</string>
+    <!--font-->
+    <string name="adineue_pro_light">adineuePRO-Light.otf</string>
+    <string name="adineue_pro_regular">adineuePRO-Regular.otf</string>
+    <string name="adineue_pro_bold">adineuePRO-Bold.otf</string>
+    <!--font-->
+
+    <string name="app_name">JeeboDelivery</string>
+    <string name="login">S\'identifier</string>
+    <string name="login_small">S\'identifier</string>
+    <string name="username">Nom d\'utilisateur</string>
+    <string name="password">Mot de passe</string>
+    <string name="phone_number">Numéro de téléphone</string>
+    <string name="forgot_password">Mot de passe oublié?</string>
+    <string name="signup">S\'inscrire</string>
+    <string name="connect">Se connecter</string>
+    <string name="email">Email</string>
+    <string name="confirm_password">Confirmez le mot de passe</string>
+    <string name="subscribe">Souscrire</string>
+    <string name="name">Prénom</string>
+    <string name="surname">Nom</string>
+    <string name="please_enter_your_email">S\'il vous plaît entrez votre e-mail</string>
+    <string name="submit">Soumettre</string>
+    <string name="phone_verification">Vérification du téléphone</string>
+    <string name="otp_sent_msg">Un code de vérification a été envoyé. Entrez ce code.</string>
+    <string name="verify">Vérifier</string>
+    <string name="resend_otp">Renvoyez le code</string>
+    <string name="camera">Caméra</string>
+    <string name="gallery">Galerie</string>
+    <string name="remove">Retirer</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">Annuler</string>
+    <string name="camera_permission_msg">Merci d\'autoriser l\'accès à la caméra </string>
+    <string name="gallery_permission_msg">Merci d\'autoriser l\'accès à la galerie </string>
+    <string name="external_storage">Stockage externe</string>
+    <string name="permission_necessary">Permission nécessaire</string>
+    <string name="permission_is_necessary">L\'autorisation est nécessaire</string>
+    <string name="email_missing_error">S\'il vous plaît entrez un email valide</string>
+    <string name="email_invalid_error">S\'il vous plaît entrez un email valide</string>
+    <string name="password_missing_error">S\'il vous plaît entrez un mot de passe valide</string>
+    <string name="password_invalid_error">Le mot de passe doit comporter entre 6 et 15 caractères.</string>
+    <string name="confirm_password_invalid_error">Confirmez que le mot de passe doit comporter entre 6 et 15 caractères.</string>
+    <string name="password_mismatch_error">La confirmation de mot de passe doit être identique</string>
+    <string name="name_missing_error">S\'il vous plaît entrez le nom</string>
+    <string name="surname_missing_error">S\'il vous plaît entrez le nom de famille</string>
+    <string name="phone_missing_error">S\'il vous plaît entrez le numéro de téléphone</string>
+    <string name="phone_invalid_error">Veuillez entrer le numéro de téléphone correct à 9 ou 10 chiffres</string>
+    <string name="your_email_with_pass_reset_link_send">Un email avec le lien de réinitialisation du mot de passe a été envoyé à votre adresse mail</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+    <string name="profile_parameters">Paramètres du profil</string>
+    <string name="money_and_statistics">Revenus et Statistiques</string>
+    <string name="orders_ends">Commandes annulées</string>
+    <string name="contact_jeebo">Contactez Jeebo</string>
+    <string name="report_a_bug">Signaler un bug</string>
+    <string name="dashboard">Tableau de bord</string>
+    <string name="pending_orders">Commandes en attente</string>
+    <string name="orders_in_process">Commandes en cours</string>
+    <string name="terminated_orders">Commandes terminées</string>
+
+    <string name="location_permission_alert">Autoriser la localisation dans les paramètres</string>
+    <string name="enable_gps">Autoriser le GPS</string>
+    <string name="save">Enregistrer</string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="take_in_charge">Prendre en charge</string>
+    <string name="order_no">Commande No:</string>
+    <string name="confirm">Confirmer</string>
+    <string name="confirm_caps">Confirmer</string>
+    <string name="e_shop_details">Details vendeur</string>
+    <string name="client_details">Details client</string>
+    <string name="delivery_time">Heure de livraison</string>
+    <string name="payment_methods">Mode de paiement</string>
+    <string name="logout">Se déconnecter</string>
+    <string name="i_am_available">Je suis disponible</string>
+    <string name="edit_profile">Editer le profil</string>
+    <string name="merchant">Vendeur:</string>
+    <string name="client">Client:</string>
+    <string name="client_request">Demande du client:</string>
+    <string name="special_instructions">Commentaire:</string>
+    <string name="network_error">On dirait que vous n\'êtes pas connecté à Internet, vérifiez vos paramètres réseau et réessayez</string>
+    <string name="payment_method">Mode de paiement</string>
+    <string name="total_price">Prix ​​total</string>
+    <string name="pay_to_merchant">Payer au vendeur</string>
+    <string name="collect_from_client">Encaisser le client</string>
+    <string name="accept_order_warning">Êtes-vous sûr de vouloir accepter cette commande?</string>
+    <string name="logout_warning">Êtes-vous sûr de vouloir vous déconnecter?</string>
+    <string name="exit_warning">Es tu sûr de vouloir quitter l\'application?</string>
+    <string name="no_current_order">Aucune commande en cours</string>
+    <string name="no_result_found">Changer le statut</string>
+    <string name="change_status">Change Status</string>
+    <string name="view_on_map">Itinéraire</string>
+    <string name="select_cancel_reason">Sélectionnez le motif d\'annulation</string>
+    <string name="select_cat">Sélectionnez une catégorie</string>
+    <string name="select_sub_cat">Sélectionnez une sous-catégorie</string>
+    <string name="order_details">Détails de la commande</string>
+    <string name="order_ends">Commandes Annulées</string>
+    <string name="money_statistics">Revenus et Statistiques</string>
+    <string name="call">Appeler</string>
+    <string name="phone_not_available">Téléphone non disponible</string>
+    <string name="call_permission_msg">S\'il vous plaît donner la permission d\'appeler dans les réglages</string>
+    <string name="reason_for_cancellation">Raison d\'annulation</string>
+    <string name="earnings">Gains</string>
+    <string name="return_to_jeebo">Reverser à Jeebo</string>
+    <string name="profile_updated_successfully">Mise à jour du profil réussie</string>
+    <string name="delivery_fee">Frais de livraison</string>
+    <string name="price">Prix</string>
+    <string name="current_dues">Dettes en cours</string>
+    <string name="arrived_nat_store">Arrivé au magasin</string>
+    <string name="order_npicked_up">Commande ramassée</string>
+    <string name="order_n_completed">Commande terminée</string>
+
+</resources>

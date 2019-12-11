@@ -118,6 +118,28 @@ public class OrderListResult {
     @SerializedName("pay_to_merchant")
     @Expose
     private Double pay_to_merchant;
+    @SerializedName("delivery_charge")
+    @Expose
+    private Double delivery_charge;
+    @SerializedName("order_total")
+    @Expose
+    private Double order_total;
+
+    public Double getOrder_total() {
+        return order_total;
+    }
+
+    public void setOrder_total(Double order_total) {
+        this.order_total = order_total;
+    }
+
+    public Double getDelivery_charge() {
+        return delivery_charge;
+    }
+
+    public void setDelivery_charge(Double delivery_charge) {
+        this.delivery_charge = delivery_charge;
+    }
 
     public Double getPay_to_merchant() {
         return pay_to_merchant;

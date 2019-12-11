@@ -1,16 +1,16 @@
 package com.app.jeebo.driver.modules.home.fragment
 
 import android.Manifest
+import android.app.ActionBar
 import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.Window
+import android.view.*
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.app.jeebo.driver.R
@@ -29,9 +29,11 @@ import retrofit2.Call
 import android.widget.AdapterView
 import net.hockeyapp.android.metrics.model.User
 import android.widget.ArrayAdapter
+import android.widget.ImageView
 import android.widget.Spinner
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.RecyclerView
 import com.app.jeebo.driver.modules.home.adapter.SpinnerAdapter
 import com.app.jeebo.driver.view.CustomTextView
 import kotlinx.android.synthetic.main.inflater_cancel_delivery_dialog.*
@@ -200,10 +202,23 @@ class OrdersProcessFragment : BaseFragment() {
         if (!dialog.isShowing)
             dialog.show()
 
+        val window = dialog.getWindow()
+        val wlp = window!!.getAttributes()
+
+        wlp.flags = wlp.flags and WindowManager.LayoutParams.FLAG_DIM_BEHIND
+        window!!.setAttributes(wlp)
+        window!!.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT)
+
         spinnerCat=dialog.findViewById(R.id.spinner_cat)
         spinnerSubCat=dialog.findViewById(R.id.spinner_sub_cat)
+         var ivBack=dialog.findViewById(R.id.iv_back) as ImageView
 
         var tvSubmit=dialog.findViewById(R.id.tv_submit) as CustomTextView
+        var tvCancel=dialog.findViewById(R.id.tv_cancel) as CustomTextView
+
+        ivBack.setOnClickListener { dialog.dismiss() }
+
+        tvCancel.setOnClickListener { dialog.dismiss() }
 
         tvSubmit.setOnClickListener {
             if(subCatid != 0){
@@ -276,8 +291,8 @@ class OrdersProcessFragment : BaseFragment() {
                 orderList.get(0).delivery_stage=stage
                 baseActivity.dismissProgressBar()
                 setDeliveryStage(stage)
-                if(t != null && !TextUtils.isEmpty(t.result))
-                    DialogManager.showValidationDialog(baseActivity,t.result)
+                /*if(t != null && !TextUtils.isEmpty(t.result))
+                    DialogManager.showValidationDialog(baseActivity,t.result)*/
             }
 
             override fun onError(error: Error?) {
@@ -306,6 +321,8 @@ class OrdersProcessFragment : BaseFragment() {
 
             override fun onError(error: Error?) {
                 baseActivity.dismissProgressBar()
+                if(error != null && !TextUtils.isEmpty(error.errMsg))
+                    DialogManager.showValidationDialog(baseActivity,error.errMsg)
             }
 
         })
@@ -391,24 +408,28 @@ class OrdersProcessFragment : BaseFragment() {
             if(orderListResult.customerOrderDetails != null && orderListResult.customerOrderDetails.size>0){
                 var products:String=""
                 for(i in 0..orderListResult.customerOrderDetails.size-1){
-                    val quantity:Int= orderListResult.customerOrderDetails.get(i).quantity.toInt();
-                    if(i==0){
-                        products=""+quantity +" "+ orderListResult.customerOrderDetails.get(i).productOrder.productTitle+"\n"
-                    }else{
-                        products=products+quantity +" "+ orderListResult.customerOrderDetails.get(i).productOrder.productTitle+"\n"
+                    if(orderListResult.customerOrderDetails != null && !orderListResult.customerOrderDetails.get(i).status.equals("Cancelled")){
+                        val quantity:Int= orderListResult.customerOrderDetails.get(i).quantity.toInt();
+                        if(i==0){
+                            products=""+quantity +" "+ orderListResult.customerOrderDetails.get(i).productOrder.productTitle+"\n"
+                        }else{
+                            products=products+quantity +" "+ orderListResult.customerOrderDetails.get(i).productOrder.productTitle+"\n"
+                        }
                     }
                 }
                 tv_cat_products.text=products
 
                 val adapter=AdapterOrderProducts(baseActivity,orderListResult.customerOrderDetails)
                 rv_item_price.adapter=adapter
-                rv_item_price.layoutManager=LinearLayoutManager(baseActivity)
+                rv_item_price.layoutManager= LinearLayoutManager(baseActivity) as RecyclerView.LayoutManager?
 
             }
 
             tv_pay_to_merchant.text="DA "+orderListResult.pay_to_merchant
 
             tv_collect_from_client.text="DA "+orderListResult.collect_from_client
+
+            tv_delivery_fee_value.text="DA "+orderListResult.delivery_charge
 
             setDeliveryStage(orderListResult.delivery_stage)
 

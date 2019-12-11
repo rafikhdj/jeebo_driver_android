@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,10 +26,12 @@ public class AdapterCancelledOrders extends RecyclerView.Adapter<AdapterCancelle
     private BaseActivity mContext;
     private List<OrderListResult> orderList;
     private String address;
+    private ItemClickListener itemClickListener;
 
-    public AdapterCancelledOrders(BaseActivity context, List<OrderListResult> orderList) {
+    public AdapterCancelledOrders(BaseActivity context, List<OrderListResult> orderList,ItemClickListener itemClickListener) {
         this.mContext = context;
         this.orderList = orderList;
+        this.itemClickListener = itemClickListener;
         address=" ";
     }
 
@@ -92,6 +95,16 @@ public class AdapterCancelledOrders extends RecyclerView.Adapter<AdapterCancelle
         }catch (Exception e){
 
         }
+
+        /*holder.rlMain.setOnClickListener(view->{
+            itemClickListener.onItemClickListener(view,position);
+        });*/
+        holder.rlMain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                itemClickListener.onItemClickListener(view,position);
+            }
+        });
 
 
     }
@@ -169,6 +182,7 @@ public class AdapterCancelledOrders extends RecyclerView.Adapter<AdapterCancelle
         CustomTextView tvCancelReason;
         CustomTextView tvItem;
         ImageView ivItem;
+        RelativeLayout rlMain;
 
         CustomViewHolder(View itemView, int viewType) {
             super(itemView);
@@ -183,6 +197,7 @@ public class AdapterCancelledOrders extends RecyclerView.Adapter<AdapterCancelle
             tvCancelReason=itemView.findViewById(R.id.tv_cancel_reason);
             ivItem=itemView.findViewById(R.id.iv_item);
             tvItem=itemView.findViewById(R.id.tv_item);
+            rlMain=itemView.findViewById(R.id.rl_main);
         }
 
     }

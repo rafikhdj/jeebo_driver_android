@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".modules.home.fragment.PendingOrdersFragment">
 
   <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -18,7 +19,16 @@
 
   </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-
+  <com.app.jeebo.driver.view.CustomTextView
+      android:layout_width="match_parent"
+      android:gravity="center"
+      android:id="@+id/tv_no_record"
+      android:textSize="@dimen/sp_16"
+      android:visibility="gone"
+      app:ctypeface="@string/adineue_pro_regular"
+      android:textColor="@color/color_black"
+      android:text="@string/no_result_found"
+      android:layout_height="match_parent" />
 
     <!--<com.app.jeebo.driver.view.CustomTextView
         android:layout_width="match_parent"

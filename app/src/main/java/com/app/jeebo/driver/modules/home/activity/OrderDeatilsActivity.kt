@@ -22,26 +22,12 @@ import com.app.jeebo.driver.view.CustomTextView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.activity_order_deatils.*
-import kotlinx.android.synthetic.main.fragment_orders_process.*
-import kotlinx.android.synthetic.main.fragment_orders_process.iv_category
-import kotlinx.android.synthetic.main.fragment_orders_process.nested_scroll_view
-import kotlinx.android.synthetic.main.fragment_orders_process.tv_cat_name
-import kotlinx.android.synthetic.main.fragment_orders_process.tv_cat_products
-import kotlinx.android.synthetic.main.fragment_orders_process.tv_client_address
-import kotlinx.android.synthetic.main.fragment_orders_process.tv_client_name
-import kotlinx.android.synthetic.main.fragment_orders_process.tv_client_phone
-import kotlinx.android.synthetic.main.fragment_orders_process.tv_eshop_address
-import kotlinx.android.synthetic.main.fragment_orders_process.tv_eshop_name
-import kotlinx.android.synthetic.main.fragment_orders_process.tv_eshop_phone
-import kotlinx.android.synthetic.main.fragment_orders_process.tv_map_client
-import kotlinx.android.synthetic.main.fragment_orders_process.tv_map_eshop
-import kotlinx.android.synthetic.main.fragment_orders_process.tv_no_record
-import kotlinx.android.synthetic.main.fragment_orders_process.tv_payment_mode
 
 class OrderDeatilsActivity : BaseActivity() {
 
     private var orderList=ArrayList<OrderListResult>()
     private var orderId:String?=null
+    private var cameFrom:String?=null
 
 
     private lateinit var ivBack: ImageView
@@ -59,8 +45,28 @@ class OrderDeatilsActivity : BaseActivity() {
         ivBack=findViewById(R.id.iv_back)
         tvConfirm=findViewById(R.id.tv_confirm)
         orderId= intent.extras?.getString(AppConstant.INTENT_EXTRAS.ORDER_ID,"")
+        cameFrom= intent.extras?.getString(AppConstant.INTENT_EXTRAS.CAME_FROM,"")
 
-        ivBack.setOnClickListener { finish() }
+        if(!TextUtils.isEmpty(cameFrom) && cameFrom.equals(AppConstant.INTENT_EXTRAS.PENDING)){
+            tvConfirm.visibility=View.VISIBLE
+        }else{
+            tvConfirm.visibility=View.GONE
+        }
+
+        ivBack.setOnClickListener {
+            //finish()
+            finish()
+            val bundle=Bundle()
+            if(!TextUtils.isEmpty(cameFrom) && cameFrom.equals(AppConstant.INTENT_EXTRAS.PENDING)){
+                bundle.putString(AppConstant.INTENT_EXTRAS.FRAGMENT_TYPE,AppConstant.PENDING_ORDER)
+                launchActivity(HomeActivity::class.java,bundle)
+            }else if(!TextUtils.isEmpty(cameFrom) && cameFrom.equals(AppConstant.INTENT_EXTRAS.COMPLETED)){
+                bundle.putString(AppConstant.INTENT_EXTRAS.FRAGMENT_TYPE,AppConstant.COMPLETED_ORDER)
+                launchActivity(HomeActivity::class.java,bundle)
+            }else if(!TextUtils.isEmpty(cameFrom) && cameFrom.equals(AppConstant.INTENT_EXTRAS.CANCELLED)){
+               finish()
+            }
+            }
 
         tvConfirm.setOnClickListener { showAcceptDialog() }
 
@@ -127,8 +133,13 @@ class OrderDeatilsActivity : BaseActivity() {
             override fun onSuccess(t: AcceptOrderResponse?) {
                 dismissProgressBar()
                 if(t != null && !TextUtils.isEmpty(t.results))
-                    DialogManager.showValidationDialog(this@OrderDeatilsActivity,t.results)
+                    showToast(t.results)
+                  //  DialogManager.showValidationDialog(this@OrderDeatilsActivity,t.results)
+               // finish()
                 finish()
+                val bundle=Bundle()
+                bundle.putString(AppConstant.INTENT_EXTRAS.FRAGMENT_TYPE,AppConstant.IN_PROCESS_ORDER)
+                launchActivity(HomeActivity::class.java,bundle)
             }
 
             override fun onError(error: Error?) {
@@ -234,6 +245,17 @@ class OrderDeatilsActivity : BaseActivity() {
 
             tv_eshop_address.setText(getMerchantAddress(0))
 
+           /* tv_pay_to_merchant.text="DA "+orderListResult.pay_to_merchant
+
+            tv_collect_from_client.text="DA "+orderListResult.collect_from_client
+
+            tv_delivery_fee_value.text="DA "+orderListResult.delivery_charge*/
+
+            tv_pay_to_merchant.text="DA "+orderListResult.pay_to_merchant
+            tv_collect_from_client.text="DA "+orderListResult.collect_from_client
+            tv_delivery_fee_value.text="DA "+orderListResult.delivery_charge
+
+
             tv_client_address.setText(getClientAddress(0))
 
             if(!TextUtils.isEmpty(orderListResult.payment_type))
@@ -242,12 +264,15 @@ class OrderDeatilsActivity : BaseActivity() {
             if(orderListResult.customerOrderDetails != null && orderListResult.customerOrderDetails.size>0){
                 var products:String=""
                 for(i in 0..orderListResult.customerOrderDetails.size-1){
-                    val quantity:Int= orderListResult.customerOrderDetails.get(i).quantity.toInt();
-                    if(i==0){
-                        products=""+quantity +" "+ orderListResult.customerOrderDetails.get(i).productOrder.productTitle+"\n"
-                    }else{
-                        products=products+quantity +" "+ orderListResult.customerOrderDetails.get(i).productOrder.productTitle+"\n"
+                    if(!orderListResult.customerOrderDetails.get(i).status.equals("Cancelled")){
+                        val quantity:Int= orderListResult.customerOrderDetails.get(i).quantity.toInt();
+                        if(i==0){
+                            products=""+quantity +" "+ orderListResult.customerOrderDetails.get(i).productOrder.productTitle+"\n"
+                        }else{
+                            products=products+quantity +" "+ orderListResult.customerOrderDetails.get(i).productOrder.productTitle+"\n"
+                        }
                     }
+
                 }
                 tv_cat_products.text=products
 
@@ -308,6 +333,24 @@ class OrderDeatilsActivity : BaseActivity() {
 
 
         return address
+    }
+
+    override fun onBackPressed() {
+       // finish()
+        finish()
+        /*val bundle=Bundle()
+        bundle.putString(AppConstant.INTENT_EXTRAS.FRAGMENT_TYPE,AppConstant.PENDING_ORDER)
+        launchActivity(HomeActivity::class.java,bundle)*/
+        val bundle=Bundle()
+        if(!TextUtils.isEmpty(cameFrom) && cameFrom.equals(AppConstant.INTENT_EXTRAS.PENDING)){
+            bundle.putString(AppConstant.INTENT_EXTRAS.FRAGMENT_TYPE,AppConstant.PENDING_ORDER)
+            launchActivity(HomeActivity::class.java,bundle)
+        }else if(!TextUtils.isEmpty(cameFrom) && cameFrom.equals(AppConstant.INTENT_EXTRAS.COMPLETED)){
+            bundle.putString(AppConstant.INTENT_EXTRAS.FRAGMENT_TYPE,AppConstant.COMPLETED_ORDER)
+            launchActivity(HomeActivity::class.java,bundle)
+        }else if(!TextUtils.isEmpty(cameFrom) && cameFrom.equals(AppConstant.INTENT_EXTRAS.CANCELLED)){
+            finish()
+        }
     }
 
 }

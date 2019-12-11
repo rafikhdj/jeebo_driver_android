@@ -7,6 +7,6 @@ class SignupRequest {
      var email:String=""
      var password:String=""
      var driver_image_url:String=""
-     var user_id:String=""
+     var user_id:Int=0
      var device_token:String=""
 }

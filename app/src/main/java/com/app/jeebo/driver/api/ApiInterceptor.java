@@ -21,7 +21,7 @@ private static final String TAG = ApiInterceptor.class.getSimpleName();
     public Response intercept(Chain chain) throws IOException {
         Request originalRequest = chain.request();
         originalRequest = originalRequest.newBuilder().addHeader("app_id",AppConstant.APPID)
-                .addHeader("language", "1")
+                .addHeader("language", PreferenceKeeper.getInstance().getLanguage())
                 .build();
                // .addHeader("deviceId", PreferenceKeeper.getInstance().getFCMToken())
               //  .addHeader("deviceOS", AppConstant.DEVICE_OS).build();
@@ -33,6 +33,7 @@ private static final String TAG = ApiInterceptor.class.getSimpleName();
         }
 
         Request newRequest = originalRequest.newBuilder().addHeader("x-access-token", token).addHeader("deviceId",PreferenceKeeper.getInstance().getFCMToken())
+                .addHeader("language", PreferenceKeeper.getInstance().getLanguage())
                 .addHeader("deviceOS", AppConstant.DEVICE_OS).build();
 
 

@@ -15,7 +15,6 @@ import com.app.jeebo.driver.model.Error
 import com.app.jeebo.driver.modules.home.activity.HomeActivity
 import com.app.jeebo.driver.modules.auth.model.ResendOtpRequest
 import com.app.jeebo.driver.modules.auth.model.ResultModel
-import com.app.jeebo.driver.modules.auth.model.UserModel
 import com.app.jeebo.driver.modules.auth.model.VerifyOtpResponse
 import com.app.jeebo.driver.utils.AppConstant
 import com.app.jeebo.driver.utils.DialogManager

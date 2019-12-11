@@ -2,7 +2,6 @@ package com.app.jeebo.driver.modules.home.fragment
 
 import android.app.Dialog
 import android.content.Intent
-import android.media.Image
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.LayoutInflater
@@ -18,7 +17,10 @@ import com.app.jeebo.driver.R
 import com.app.jeebo.driver.api.ApiCallback
 import com.app.jeebo.driver.api.ApiClient
 import com.app.jeebo.driver.base.BaseFragment
+import com.app.jeebo.driver.enums.EScreenType
 import com.app.jeebo.driver.model.Error
+import com.app.jeebo.driver.modules.auth.activity.OtpVerificationActivity
+import com.app.jeebo.driver.modules.home.activity.HomeActivity
 import com.app.jeebo.driver.modules.home.activity.OrderDeatilsActivity
 import com.app.jeebo.driver.modules.home.adapter.PendingOrderAdapter
 import com.app.jeebo.driver.modules.home.model.AcceptOrderReq
@@ -30,6 +32,8 @@ import com.app.jeebo.driver.utils.DialogManager
 import com.app.jeebo.driver.utils.EndlessRecyclerViewScrollListener
 import com.app.jeebo.driver.utils.ItemClickListener
 import com.app.jeebo.driver.view.CustomTextView
+import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.fragment_pending_orders.*
 
 
 class PendingOrdersFragment : BaseFragment(), ItemClickListener {
@@ -60,12 +64,13 @@ class PendingOrdersFragment : BaseFragment(), ItemClickListener {
 
         swipeRefreshLayout.setOnRefreshListener {
             pageNo=1
-            getPendingOrderList()
+            getPendingOrderList(true)
         }
 
     }
 
-    private fun getPendingOrderList(){
+    private fun getPendingOrderList(isRefresh:Boolean){
+        if(!isRefresh)
         baseActivity.showProgressBar(baseActivity)
         val request= ApiClient.getRequest()
         val call=request.getOrderList(AppConstant.PENDING_ORDER,pageNo.toString(),"10")
@@ -78,11 +83,26 @@ class PendingOrdersFragment : BaseFragment(), ItemClickListener {
                 }
                 if(t != null && t.results.size>0)
                 orderList.addAll(t.results)
-                setAdapter()
+                try{
+                    if(orderList.size>0){
+                        setAdapter()
+                        tv_no_record.visibility=View.GONE
+                    }else{
+                        tv_no_record.visibility=View.VISIBLE
+                    }
+                }catch (e:Exception){
+
+                }
+
             }
 
             override fun onError(error: Error?) {
                 baseActivity.dismissProgressBar()
+                if(pageNo==1){
+                    tv_no_record.visibility=View.VISIBLE
+                }
+                if(error != null && !TextUtils.isEmpty(error.errMsg))
+                    DialogManager.showValidationDialog(baseActivity,error.errMsg)
             }
 
         })
@@ -95,7 +115,7 @@ class PendingOrdersFragment : BaseFragment(), ItemClickListener {
         rvPendingOrder.addOnScrollListener(object : EndlessRecyclerViewScrollListener(mLayoutManager){
             override fun onLoadMore(page: Int, totalItemsCount: Int) {
                 pageNo = page
-                getPendingOrderList()
+                getPendingOrderList(false)
             }
 
         })
@@ -122,7 +142,7 @@ class PendingOrdersFragment : BaseFragment(), ItemClickListener {
         super.onResume()
         pageNo=1
         paginationScrollListner()
-        getPendingOrderList()
+        getPendingOrderList(false)
     }
     override fun onItemClickListener(view: View?, pos: Int) {
         adapterPos=pos
@@ -133,6 +153,8 @@ class PendingOrdersFragment : BaseFragment(), ItemClickListener {
             R.id.rl_main->{
                 var intent= Intent(baseActivity,OrderDeatilsActivity::class.java)
                 intent.putExtra(AppConstant.INTENT_EXTRAS.ORDER_ID,orderList.get(pos).id.toString())
+                intent.putExtra(AppConstant.INTENT_EXTRAS.CAME_FROM,AppConstant.INTENT_EXTRAS.PENDING)
+
                 startActivity(intent)
             }
         }
@@ -171,9 +193,20 @@ class PendingOrdersFragment : BaseFragment(), ItemClickListener {
             override fun onSuccess(t: AcceptOrderResponse?) {
                 baseActivity.dismissProgressBar()
                 if(t != null && !TextUtils.isEmpty(t.results))
-                    DialogManager.showValidationDialog(baseActivity,t.results)
-                pageNo=1
-                getPendingOrderList()
+                    baseActivity.showToast(t.results)
+                    //DialogManager.showValidationDialog(baseActivity,t.results)
+                //pageNo=1
+
+              //  getPendingOrderList()
+               // baseActivity.finish()
+                val bundle=Bundle()
+                bundle.putString(AppConstant.INTENT_EXTRAS.FRAGMENT_TYPE,AppConstant.IN_PROCESS_ORDER)
+                var intent=Intent(baseActivity,HomeActivity::class.java)
+                intent.putExtras(bundle)
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                baseActivity.startActivity(intent)
+
             }
 
             override fun onError(error: Error?) {
@@ -184,5 +217,6 @@ class PendingOrdersFragment : BaseFragment(), ItemClickListener {
 
         })
     }
+
 
 }

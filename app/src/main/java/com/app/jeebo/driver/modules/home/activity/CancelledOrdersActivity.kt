@@ -1,5 +1,6 @@
 package com.app.jeebo.driver.modules.home.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
@@ -16,11 +17,12 @@ import com.app.jeebo.driver.modules.home.model.OrderListResponse
 import com.app.jeebo.driver.modules.home.model.OrderListResult
 import com.app.jeebo.driver.utils.AppConstant
 import com.app.jeebo.driver.utils.EndlessRecyclerViewScrollListener
+import com.app.jeebo.driver.utils.ItemClickListener
 import kotlinx.android.synthetic.main.activity_cancelled_orders.*
 import kotlinx.android.synthetic.main.fragment_terminated_orders.*
 import kotlinx.android.synthetic.main.fragment_terminated_orders.tv_no_record
 
-class CancelledOrdersActivity : BaseActivity() {
+class CancelledOrdersActivity : BaseActivity(), ItemClickListener {
 
     private  var adapterCancelledOrders: AdapterCancelledOrders?=null
     private lateinit var rvOrders: RecyclerView
@@ -37,7 +39,11 @@ class CancelledOrdersActivity : BaseActivity() {
 
     private fun inIt() {
         rvOrders = findViewById(R.id.rv_orders) as RecyclerView
-        iv_back.setOnClickListener { finish() }
+        iv_back.setOnClickListener {
+            finish()
+            val bundle=Bundle()
+            bundle.putString(AppConstant.INTENT_EXTRAS.FRAGMENT_TYPE,AppConstant.PENDING_ORDER)
+            launchActivity(HomeActivity::class.java,bundle)}
     }
 
     private fun getPendingOrderList(){
@@ -86,7 +92,7 @@ class CancelledOrdersActivity : BaseActivity() {
         if(adapterCancelledOrders != null && pageNo>1){
             adapterCancelledOrders!!.notifyDataSetChanged()
         }else{
-            adapterCancelledOrders= AdapterCancelledOrders(this@CancelledOrdersActivity,orderList)
+            adapterCancelledOrders= AdapterCancelledOrders(this@CancelledOrdersActivity,orderList,this)
             rvOrders.adapter=adapterCancelledOrders
         }
     }
@@ -96,6 +102,24 @@ class CancelledOrdersActivity : BaseActivity() {
         pageNo=1
         paginationScrollListner()
         getPendingOrderList()
+    }
+    override fun onItemClickListener(view: View?, pos: Int) {
+        when(view?.id){
+            R.id.rl_main->{
+                var intent= Intent(this, OrderDeatilsActivity::class.java)
+                intent.putExtra(AppConstant.INTENT_EXTRAS.ORDER_ID,orderList.get(pos).id.toString())
+                intent.putExtra(AppConstant.INTENT_EXTRAS.CAME_FROM,AppConstant.INTENT_EXTRAS.CANCELLED)
+
+                startActivity(intent)
+            }
+        }
+    }
+
+    override fun onBackPressed() {
+        finish()
+        val bundle=Bundle()
+        bundle.putString(AppConstant.INTENT_EXTRAS.FRAGMENT_TYPE,AppConstant.PENDING_ORDER)
+        launchActivity(HomeActivity::class.java,bundle)
     }
 
 }
