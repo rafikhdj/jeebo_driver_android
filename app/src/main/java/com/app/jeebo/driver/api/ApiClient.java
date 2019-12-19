@@ -31,11 +31,11 @@ public class ApiClient {
                 .readTimeout(60, TimeUnit.SECONDS).build();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BuildConfig.HOST)
+                .baseUrl(BuildConfig.URL)
                 .addConverterFactory(GsonConverterFactory.create()).client(okHttpClient)
                 .build();
 
-        Log.d("url" , BuildConfig.HOST);
+        Log.d("url" , BuildConfig.URL);
         apiRequest = retrofit.create(requestClass);
 
     }

@@ -120,6 +120,14 @@ public class PreferenceKeeper {
         prefs.edit().putBoolean(AppConstant.PrefsName.IS_LOGIN, islogin).commit();
     }
 
+    public boolean isCurrentOrder() {
+        return prefs.getBoolean(AppConstant.PrefsName.IS_CURRENT_ORDER, false);
+    }
+
+    public void setCurrentOrder(boolean isCurrentOrder) {
+        prefs.edit().putBoolean(AppConstant.PrefsName.IS_CURRENT_ORDER, isCurrentOrder).commit();
+    }
+
     public void setLanguage(String language) {
         if(language.equalsIgnoreCase(AppConstant.Languages.ENGLISH))
             language=AppConstant.Languages.ENGLISH_CODE;

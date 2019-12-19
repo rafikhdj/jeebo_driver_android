@@ -18,6 +18,7 @@ import com.app.jeebo.driver.modules.home.adapter.AdapterOrderProducts
 import com.app.jeebo.driver.modules.home.model.*
 import com.app.jeebo.driver.utils.AppConstant
 import com.app.jeebo.driver.utils.DialogManager
+import com.app.jeebo.driver.utils.PreferenceKeeper
 import com.app.jeebo.driver.view.CustomTextView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -68,7 +69,9 @@ class OrderDeatilsActivity : BaseActivity() {
             }
             }
 
-        tvConfirm.setOnClickListener { showAcceptDialog() }
+        tvConfirm.setOnClickListener {
+            if(PreferenceKeeper.getInstance().driverStatus==1)
+            showAcceptDialog() }
 
         try{
             tv_map_eshop.setOnClickListener {
@@ -132,6 +135,7 @@ class OrderDeatilsActivity : BaseActivity() {
         call.enqueue(object : ApiCallback<AcceptOrderResponse>(){
             override fun onSuccess(t: AcceptOrderResponse?) {
                 dismissProgressBar()
+                PreferenceKeeper.getInstance().isCurrentOrder=true
                 if(t != null && !TextUtils.isEmpty(t.results))
                     showToast(t.results)
                   //  DialogManager.showValidationDialog(this@OrderDeatilsActivity,t.results)

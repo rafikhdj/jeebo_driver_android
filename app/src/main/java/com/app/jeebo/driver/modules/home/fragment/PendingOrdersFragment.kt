@@ -27,10 +27,7 @@ import com.app.jeebo.driver.modules.home.model.AcceptOrderReq
 import com.app.jeebo.driver.modules.home.model.AcceptOrderResponse
 import com.app.jeebo.driver.modules.home.model.OrderListResponse
 import com.app.jeebo.driver.modules.home.model.OrderListResult
-import com.app.jeebo.driver.utils.AppConstant
-import com.app.jeebo.driver.utils.DialogManager
-import com.app.jeebo.driver.utils.EndlessRecyclerViewScrollListener
-import com.app.jeebo.driver.utils.ItemClickListener
+import com.app.jeebo.driver.utils.*
 import com.app.jeebo.driver.view.CustomTextView
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.fragment_pending_orders.*
@@ -63,8 +60,10 @@ class PendingOrdersFragment : BaseFragment(), ItemClickListener {
 
 
         swipeRefreshLayout.setOnRefreshListener {
-            pageNo=1
-            getPendingOrderList(true)
+            if(PreferenceKeeper.getInstance().driverStatus==1){
+                pageNo=1
+                getPendingOrderList(true)
+            }
         }
 
     }
@@ -115,6 +114,7 @@ class PendingOrdersFragment : BaseFragment(), ItemClickListener {
         rvPendingOrder.addOnScrollListener(object : EndlessRecyclerViewScrollListener(mLayoutManager){
             override fun onLoadMore(page: Int, totalItemsCount: Int) {
                 pageNo = page
+                if(PreferenceKeeper.getInstance().driverStatus==1)
                 getPendingOrderList(false)
             }
 
@@ -142,13 +142,20 @@ class PendingOrdersFragment : BaseFragment(), ItemClickListener {
         super.onResume()
         pageNo=1
         paginationScrollListner()
-        getPendingOrderList(false)
+        if(PreferenceKeeper.getInstance().driverStatus==1){
+            tv_no_record.visibility=View.GONE
+            getPendingOrderList(false)
+        }
+        else{
+            tv_no_record.visibility=View.VISIBLE
+        }
     }
     override fun onItemClickListener(view: View?, pos: Int) {
         adapterPos=pos
         when(view?.id){
             R.id.tv_take_incharge->{
-            showAcceptDialog()
+                if(PreferenceKeeper.getInstance().driverStatus==1)
+                showAcceptDialog()
             }
             R.id.rl_main->{
                 var intent= Intent(baseActivity,OrderDeatilsActivity::class.java)
@@ -192,6 +199,7 @@ class PendingOrdersFragment : BaseFragment(), ItemClickListener {
         call.enqueue(object : ApiCallback<AcceptOrderResponse>(){
             override fun onSuccess(t: AcceptOrderResponse?) {
                 baseActivity.dismissProgressBar()
+                PreferenceKeeper.getInstance().isCurrentOrder=true
                 if(t != null && !TextUtils.isEmpty(t.results))
                     baseActivity.showToast(t.results)
                     //DialogManager.showValidationDialog(baseActivity,t.results)

@@ -46,13 +46,16 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
-        sendNotification(remoteMessage.getNotification().getBody());
-        if(PreferenceKeeper.getInstance().isLogin()){
-            Intent localIntent = new Intent(MyIntentService.CUSTOM_ACTION);
-            localIntent.putExtra(AppConstant.INTENT_EXTRAS.NOTIFICATION_TYPE,remoteMessage.getNotification().getBody());
-            localIntent.putExtra("type",remoteMessage.getData().get("type"));
-            this.sendBroadcast(localIntent);
+        if(PreferenceKeeper.getInstance().getDriverStatus()==1){
+            sendNotification(remoteMessage.getNotification().getBody());
+            if(PreferenceKeeper.getInstance().isLogin()){
+                Intent localIntent = new Intent(MyIntentService.CUSTOM_ACTION);
+                localIntent.putExtra(AppConstant.INTENT_EXTRAS.NOTIFICATION_TYPE,remoteMessage.getNotification().getBody());
+                localIntent.putExtra("type",remoteMessage.getData().get("type"));
+                this.sendBroadcast(localIntent);
+            }
         }
+
 
     }
 

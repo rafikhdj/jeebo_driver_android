@@ -35,6 +35,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.app.jeebo.driver.modules.home.adapter.SpinnerAdapter
+import com.app.jeebo.driver.utils.PreferenceKeeper
 import com.app.jeebo.driver.view.CustomTextView
 import kotlinx.android.synthetic.main.inflater_cancel_delivery_dialog.*
 
@@ -233,6 +234,7 @@ class OrdersProcessFragment : BaseFragment() {
                 call.enqueue(object:ApiCallback<AcceptOrderResponse>(){
                     override fun onSuccess(t: AcceptOrderResponse?) {
                         dialog.dismiss()
+                        PreferenceKeeper.getInstance().isCurrentOrder=false
                         if(t != null && !TextUtils.isEmpty(t.results))
                             DialogManager.showValidationDialog(baseActivity,t.results)
                         getOrderDetails()
@@ -291,6 +293,8 @@ class OrdersProcessFragment : BaseFragment() {
                 orderList.get(0).delivery_stage=stage
                 baseActivity.dismissProgressBar()
                 setDeliveryStage(stage)
+                if(stage==3)
+                    PreferenceKeeper.getInstance().isCurrentOrder=false
                 /*if(t != null && !TextUtils.isEmpty(t.result))
                     DialogManager.showValidationDialog(baseActivity,t.result)*/
             }

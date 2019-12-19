@@ -144,26 +144,36 @@ class HomeActivity : BaseActivity(), LocationListener {
     }
 
     private fun changeDriverStatus(status:Int){
-        showProgressBar(this)
-        val request=ApiClient.getRequest()
-        var changeDriverStatusReq=ChangeDriverStatusReq()
-        changeDriverStatusReq.status=status
-        val call=request.changeDriverStatus(changeDriverStatusReq)
-        call.enqueue(object:ApiCallback<AcceptOrderResponse>(){
-            override fun onSuccess(t: AcceptOrderResponse?) {
-                dismissProgressBar()
-                PreferenceKeeper.getInstance().driverStatus=status
-               /*if(t != null && !TextUtils.isEmpty(t.result))
-                   DialogManager.showValidationDialog(this@HomeActivity,t.result)*/
-            }
+        if(PreferenceKeeper.getInstance().isCurrentOrder){
+            showToast(getString(R.string.complete_ur_order))
+            switch_driver.isChecked=true
+        }else{
+            showProgressBar(this)
+            val request=ApiClient.getRequest()
+            var changeDriverStatusReq=ChangeDriverStatusReq()
+            changeDriverStatusReq.status=status
+            val call=request.changeDriverStatus(changeDriverStatusReq)
+            call.enqueue(object:ApiCallback<AcceptOrderResponse>(){
+                override fun onSuccess(t: AcceptOrderResponse?) {
+                    dismissProgressBar()
+                    PreferenceKeeper.getInstance().driverStatus=status
+                    try{
+                        tab_layout.getTabAt(0)?.select()
+                        setCurrentFragment(EScreenType.PENDING_ORDERS_SCREEN.ordinal)
+                    }catch (e:Exception){
 
-            override fun onError(error: Error?) {
-                dismissProgressBar()
-                if(error != null && !TextUtils.isEmpty(error.errMsg))
-                    DialogManager.showValidationDialog(this@HomeActivity,error.errMsg)
-            }
+                    }
+                }
 
-        })
+                override fun onError(error: Error?) {
+                    dismissProgressBar()
+                    if(error != null && !TextUtils.isEmpty(error.errMsg))
+                        DialogManager.showValidationDialog(this@HomeActivity,error.errMsg)
+                }
+
+            })
+        }
+
     }
 
 
@@ -426,6 +436,8 @@ class HomeActivity : BaseActivity(), LocationListener {
         }
         if(PreferenceKeeper.getInstance().driverStatus==1)
         switch_driver.isChecked=true
+        else
+            switch_driver.isChecked=false
 
     }
 

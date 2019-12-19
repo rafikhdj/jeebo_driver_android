@@ -30,6 +30,7 @@ public class AppConstant {
         public static final String USER_ID = "user_id";
         public static final String USER_PHONE = "user_phone";
         public static final String IS_LOGIN = "is_login";
+        public static final String IS_CURRENT_ORDER = "is_current_order";
         public static final String DEVICE_LANG = "device_lang";
     }
 

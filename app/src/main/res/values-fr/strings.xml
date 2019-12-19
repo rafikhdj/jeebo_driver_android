@@ -114,5 +114,6 @@
     <string name="arrived_nat_store">Arrivé au magasin</string>
     <string name="order_npicked_up">Commande ramassée</string>
     <string name="order_n_completed">Commande terminée</string>
+    <string name="complete_ur_order">Veuillez compléter votre commande</string>
 
 </resources>
