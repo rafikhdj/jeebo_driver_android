@@ -53,7 +53,7 @@ public class PreferenceKeeper {
     }
 
     public int getDriverStatus() {
-        return prefs.getInt(AppConstant.PrefsName.DRIVER_STATUS, 3);
+        return prefs.getInt(AppConstant.PrefsName.DRIVER_STATUS, 1);
     }
 
     public void setDriverStatus(int status) {
