@@ -18,7 +18,7 @@ public class JeeboApplication extends Application {
     public void onCreate() {
         super.onCreate();
         context=this;
-        ApiClient.init(IApiRequest.class);
+        ApiClient.init(IApiRequest.class,getApplicationContext());
         PreferenceKeeper.setContext(getApplicationContext());
         PreferenceKeeper.getInstance().setLanguage(Locale.getDefault().getDisplayLanguage());
         AppUtils.getDeviceToken();

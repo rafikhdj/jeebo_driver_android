@@ -98,7 +98,7 @@ class SignupActivity : BaseActivity(), IDialogUploadListener {
             override fun onSuccess(t: BaseResponse<UserModel>?) {
                 dismissProgressBar()
                 var userModel : UserModel=t!!.result
-                showToast(userModel.otp.toString())
+               // showToast(userModel.otp.toString())
                 //PreferenceKeeper.getInstance().accessToken=userModel.token
                 val bundle=Bundle()
                 bundle.putString(AppConstant.INTENT_EXTRAS.PHONE_NUMBER,"+213 "+et_signup_phone.text.toString().trim())
