@@ -31,6 +31,7 @@ public class AppConstant {
         public static final String USER_PHONE = "user_phone";
         public static final String IS_LOGIN = "is_login";
         public static final String IS_CURRENT_ORDER = "is_current_order";
+        public static final String CURRENT_ORDER_COUNT = "current_order_count";
         public static final String DEVICE_LANG = "device_lang";
     }
 
@@ -38,6 +39,7 @@ public class AppConstant {
         String SMS_RECEIVED = "sms_received";
         String PHONE_NUMBER = "phone_number";
         String ORDER_ID = "order_id";
+        String ORDER_POSITION = "order_position";
         String FRAGMENT_TYPE = "fragment_type";
         String ACCESS_TOKEN = "access_token";
         String CAME_FROM = "came_from";

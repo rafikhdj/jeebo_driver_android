@@ -63,7 +63,11 @@ class SignupActivity : BaseActivity(), IDialogUploadListener {
 
     private fun setSocialData(){
         if(!TextUtils.isEmpty(userModel?.name)){
-            if(userModel!!.name.contains(" ")){
+            if(userModel!!.name.contains("-")){
+                var name= userModel!!.name.split("-")
+                et_signup_name.setText(name[0])
+                et_sur_name.setText(name[1])
+            }else if(userModel!!.name.contains(" ")){
                 var name= userModel!!.name.split(" ")
                 et_signup_name.setText(name[0])
                 et_sur_name.setText(name[1])
@@ -83,7 +87,7 @@ class SignupActivity : BaseActivity(), IDialogUploadListener {
     private fun callSignupApi(){
         showProgressBar(this)
         var signUpRequest=SignupRequest()
-        signUpRequest.name=et_signup_name.text.toString().trim()+" "+et_sur_name.text.toString().trim()
+        signUpRequest.name=et_signup_name.text.toString().trim()+"-"+et_sur_name.text.toString().trim()
         signUpRequest.driver_image_url= filePath.toString()
         signUpRequest.platform=3
         signUpRequest.device_token=PreferenceKeeper.getInstance().deviceToken

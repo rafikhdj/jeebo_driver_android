@@ -53,11 +53,26 @@ public class PendingOrderAdapter extends RecyclerView.Adapter<PendingOrderAdapte
         if(orderListResult.getUserOrderDetails() != null && !TextUtils.isEmpty(orderListResult.getUserOrderDetails().getName()))
             holder.tvClientName.setText(orderListResult.getUserOrderDetails().getName());
 
-        try{
-            holder.tvMerchantName.setText(orderListResult.getCustomerOrderDetails().get(0).getMerchantProductOrderDetails().getMerchantProfile().getBusinessDetails().getBusinessName());
-        }catch (Exception e){
+        if(orderListResult.getPharmacy_details() != null){
 
+            holder.tvMerchant.setText(mContext.getResources().getString(R.string.pharmacy));
+
+            holder.tvMerchantAddress.setText(orderListResult.getPharmacy_details().getAddress());
+            try{
+                holder.tvMerchantName.setText(orderListResult.getPharmacy_details().getPharmacyName());
+            }catch (Exception e){
+
+            }
+        }else{
+            holder.tvMerchant.setText(mContext.getResources().getString(R.string.merchant));
+            holder.tvMerchantAddress.setText(getMerchantAddress(position));
+            try{
+                holder.tvMerchantName.setText(orderListResult.getCustomerOrderDetails().get(0).getMerchantProductOrderDetails().getMerchantProfile().getBusinessDetails().getBusinessName());
+            }catch (Exception e){
+
+            }
         }
+
 
         try{
 
@@ -86,7 +101,7 @@ public class PendingOrderAdapter extends RecyclerView.Adapter<PendingOrderAdapte
         holder.tvDeliveryFee.setText("DA "+orderListResult.getDelivery_charge());
         holder.tvPrice.setText("DA "+orderListResult.getOrder_total());
 
-        holder.tvMerchantAddress.setText(getMerchantAddress(position));
+
 
         holder.tvClientAddress.setText(getClientAddress(position));
 
@@ -176,6 +191,7 @@ public class PendingOrderAdapter extends RecyclerView.Adapter<PendingOrderAdapte
         CustomTextView tvItem;
         CustomTextView tvDeliveryFee;
         CustomTextView tvPrice;
+        CustomTextView tvMerchant;
         ImageView ivItem;
 
         CustomViewHolder(View itemView, int viewType) {
@@ -192,6 +208,7 @@ public class PendingOrderAdapter extends RecyclerView.Adapter<PendingOrderAdapte
             tvItem=itemView.findViewById(R.id.tv_item);
             tvDeliveryFee=itemView.findViewById(R.id.tv_delivery_fee_value);
             tvPrice=itemView.findViewById(R.id.tv_price_value);
+            tvMerchant=itemView.findViewById(R.id.tv_merchant);
         }
 
     }

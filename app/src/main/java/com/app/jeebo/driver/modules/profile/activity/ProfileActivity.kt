@@ -101,7 +101,7 @@ class ProfileActivity : BaseActivity(), IDialogUploadListener {
             else
                 editProfileReq.phone="+213 "+et_phone.text.toString().trim()
 
-            editProfileReq.name=et_name.text.toString().trim()+" "+et_sur_name.text.toString().trim()
+            editProfileReq.name=et_name.text.toString().trim()+"-"+et_sur_name.text.toString().trim()
             if(!TextUtils.isEmpty(filePath))
             editProfileReq.image_url=filePath
             val request=ApiClient.getRequest()
@@ -133,6 +133,8 @@ class ProfileActivity : BaseActivity(), IDialogUploadListener {
                 override fun onError(error: Error?) {
                     dismissProgressBar()
                     tv_edit.setText(getString(R.string.edit_profile))
+                    if(error != null && !TextUtils.isEmpty(error.errMsg))
+                    DialogManager.showValidationDialog(this@ProfileActivity,error.errMsg)
                 }
 
             })
@@ -144,18 +146,22 @@ class ProfileActivity : BaseActivity(), IDialogUploadListener {
         if(TextUtils.isEmpty(et_name.text.toString().trim())){
             et_name.requestFocus()
             DialogManager.showValidationDialog(this,getString(R.string.name_missing_error))
+            tv_edit.setText(getString(R.string.edit_profile))
             return false
         }else if(TextUtils.isEmpty(et_sur_name.text.toString().trim())){
             et_sur_name.requestFocus()
             DialogManager.showValidationDialog(this,getString(R.string.surname_missing_error))
+            tv_edit.setText(getString(R.string.edit_profile))
             return false
         }else if(TextUtils.isEmpty(et_email.text.toString().trim())){
             et_email.requestFocus()
             DialogManager.showValidationDialog(this,getString(R.string.email_missing_error))
+            tv_edit.setText(getString(R.string.edit_profile))
             return false
         }else if(!Validator.isValidEmail(et_email.text.toString().trim())){
             et_email.requestFocus()
             DialogManager.showValidationDialog(this,getString(R.string.email_invalid_error))
+            tv_edit.setText(getString(R.string.edit_profile))
             return false
         }else
             return true
@@ -241,8 +247,20 @@ class ProfileActivity : BaseActivity(), IDialogUploadListener {
         }
 
         if(!TextUtils.isEmpty(PreferenceKeeper.getInstance().name)){
+            if(PreferenceKeeper.getInstance().name.contains("-")){
+                var name=PreferenceKeeper.getInstance().name
+                name=name.replace("-"," ")
+                tv_name_head.setText(name)
+            }else
             tv_name_head.setText(PreferenceKeeper.getInstance().name)
-            if(PreferenceKeeper.getInstance().name.contains(" ")){
+
+            if(PreferenceKeeper.getInstance().name.contains("-")){
+                var name=PreferenceKeeper.getInstance().name.split("-")
+                tv_name_value.setText(name[0])
+                et_name.setText(name[0])
+                tv_surname_value.setText(name[1])
+                et_sur_name.setText(name[1])
+            }else if(PreferenceKeeper.getInstance().name.contains(" ")){
                 var name=PreferenceKeeper.getInstance().name.split(" ")
                 tv_name_value.setText(name[0])
                 et_name.setText(name[0])

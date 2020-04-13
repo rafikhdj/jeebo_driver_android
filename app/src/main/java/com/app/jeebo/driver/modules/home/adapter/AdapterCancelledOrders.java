@@ -62,13 +62,27 @@ public class AdapterCancelledOrders extends RecyclerView.Adapter<AdapterCancelle
         if(orderListResult.getUserOrderDetails() != null && !TextUtils.isEmpty(orderListResult.getUserOrderDetails().getName()))
             holder.tvClientName.setText(orderListResult.getUserOrderDetails().getName());
 
-        try{
-            holder.tvMerchantName.setText(orderListResult.getCustomerOrderDetails().get(0).getMerchantProductOrderDetails().getMerchantProfile().getBusinessDetails().getBusinessName());
-        }catch (Exception e){
+        if(orderListResult.getPharmacy_details() != null){
+            holder.tvMerchant.setText(mContext.getResources().getString(R.string.pharmacy));
+            try{
+                holder.tvMerchantName.setText(orderListResult.getPharmacy_details().getPharmacyName());
+            }catch (Exception e){
 
+            }
+
+            holder.tvMerchantAddress.setText(orderListResult.getPharmacy_details().getAddress());
+        }else{
+            holder.tvMerchant.setText(mContext.getResources().getString(R.string.merchant));
+            try{
+                holder.tvMerchantName.setText(orderListResult.getCustomerOrderDetails().get(0).getMerchantProductOrderDetails().getMerchantProfile().getBusinessDetails().getBusinessName());
+            }catch (Exception e){
+
+            }
+
+            holder.tvMerchantAddress.setText(getMerchantAddress(position));
         }
 
-        holder.tvMerchantAddress.setText(getMerchantAddress(position));
+
 
         holder.tvClientAddress.setText(getClientAddress(position));
 
@@ -181,6 +195,7 @@ public class AdapterCancelledOrders extends RecyclerView.Adapter<AdapterCancelle
         CustomTextView tvPhone;
         CustomTextView tvCancelReason;
         CustomTextView tvItem;
+        CustomTextView tvMerchant;
         ImageView ivItem;
         RelativeLayout rlMain;
 
@@ -198,6 +213,7 @@ public class AdapterCancelledOrders extends RecyclerView.Adapter<AdapterCancelle
             ivItem=itemView.findViewById(R.id.iv_item);
             tvItem=itemView.findViewById(R.id.tv_item);
             rlMain=itemView.findViewById(R.id.rl_main);
+            tvMerchant=itemView.findViewById(R.id.tv_merchant);
         }
 
     }

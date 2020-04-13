@@ -53,6 +53,8 @@ import com.google.android.gms.tasks.Task
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.iid.InstanceIdResult
+import kotlinx.android.synthetic.main.activity_home.iv_user
+import kotlinx.android.synthetic.main.activity_profile.*
 import java.io.IOException
 import java.util.*
 
@@ -144,7 +146,7 @@ class HomeActivity : BaseActivity(), LocationListener {
     }
 
     private fun changeDriverStatus(status:Int){
-        if(PreferenceKeeper.getInstance().isCurrentOrder){
+        if(PreferenceKeeper.getInstance().currentOrderCount>0){
             showToast(getString(R.string.complete_ur_order))
             switch_driver.isChecked=true
         }else{
@@ -432,7 +434,13 @@ class HomeActivity : BaseActivity(), LocationListener {
         }
 
         if(!TextUtils.isEmpty(PreferenceKeeper.getInstance().name)){
-            tv_user_name.setText(PreferenceKeeper.getInstance().name)
+            //tv_user_name.setText(PreferenceKeeper.getInstance().name)
+            if(PreferenceKeeper.getInstance().name.contains("-")){
+                var name=PreferenceKeeper.getInstance().name
+                name=name.replace("-"," ")
+                tv_user_name.setText(name)
+            }else
+                tv_user_name.setText(PreferenceKeeper.getInstance().name)
         }
         if(PreferenceKeeper.getInstance().driverStatus==1)
         switch_driver.isChecked=true
@@ -461,25 +469,32 @@ class HomeActivity : BaseActivity(), LocationListener {
             override fun onReceive(context: Context, intent: Intent) {
                // setCurrentFragment(EScreenType.PENDING_ORDERS_SCREEN.ordinal)
               //  tab_layout.getTabAt(0)?.select()
-                if(intent.hasExtra(AppConstant.INTENT_EXTRAS.NOTIFICATION_TYPE))
-                showCustomToast(intent.getStringExtra(AppConstant.INTENT_EXTRAS.NOTIFICATION_TYPE))
-                var type=intent.getStringExtra("type")
-                if(tab_layout != null){
-                    if(tab_layout.selectedTabPosition==0 && !TextUtils.isEmpty(type) && type.equals("order placed"))
-                        setCurrentFragment(EScreenType.PENDING_ORDERS_SCREEN.ordinal)
-                    else if(tab_layout.selectedTabPosition==1 && !TextUtils.isEmpty(type) && type.equals("order cancel"))
-                        setCurrentFragment(EScreenType.ORDERS_PROCESSED_SCREEN.ordinal)
-                    else{
-
+                try{
+                    if(intent.hasExtra(AppConstant.INTENT_EXTRAS.NOTIFICATION_TYPE)){
+                        showCustomToast(intent.getStringExtra(AppConstant.INTENT_EXTRAS.NOTIFICATION_TYPE))
                     }
-                    /*if(tab_layout.selectedTabPosition==0 )
-                        setCurrentFragment(EScreenType.PENDING_ORDERS_SCREEN.ordinal)
-                    else if(tab_layout.selectedTabPosition==1 )
-                        setCurrentFragment(EScreenType.ORDERS_PROCESSED_SCREEN.ordinal)
-                    else{
+                    var type=intent.getStringExtra("type")
+                    if(tab_layout != null){
+                        if(tab_layout.selectedTabPosition==0 && !TextUtils.isEmpty(type) && type.equals("order placed"))
+                            setCurrentFragment(EScreenType.PENDING_ORDERS_SCREEN.ordinal)
+                        else if(tab_layout.selectedTabPosition==1 && !TextUtils.isEmpty(type) && type.equals("order cancel"))
+                            setCurrentFragment(EScreenType.ORDERS_PROCESSED_SCREEN.ordinal)
+                        else{
 
-                    }*/
+                        }
+                        /*if(tab_layout.selectedTabPosition==0 )
+                            setCurrentFragment(EScreenType.PENDING_ORDERS_SCREEN.ordinal)
+                        else if(tab_layout.selectedTabPosition==1 )
+                            setCurrentFragment(EScreenType.ORDERS_PROCESSED_SCREEN.ordinal)
+                        else{
+
+                        }*/
+                    }
+
+                }catch (e : Exception){
+
                 }
+
             }
         }
         registerReceiver(broadcastReceiver, intentFilter1)

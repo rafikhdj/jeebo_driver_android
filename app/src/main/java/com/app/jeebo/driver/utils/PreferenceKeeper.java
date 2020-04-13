@@ -128,6 +128,14 @@ public class PreferenceKeeper {
         prefs.edit().putBoolean(AppConstant.PrefsName.IS_CURRENT_ORDER, isCurrentOrder).commit();
     }
 
+    public int getCurrentOrderCount() {
+        return prefs.getInt(AppConstant.PrefsName.CURRENT_ORDER_COUNT, 0);
+    }
+
+    public void setCurrentOrderCount(int currentOrderCount) {
+        prefs.edit().putInt(AppConstant.PrefsName.CURRENT_ORDER_COUNT, currentOrderCount).commit();
+    }
+
     public void setLanguage(String language) {
         if(language.equalsIgnoreCase(AppConstant.Languages.ENGLISH))
             language=AppConstant.Languages.ENGLISH_CODE;

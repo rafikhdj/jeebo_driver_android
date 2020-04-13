@@ -18,6 +18,17 @@ public class OrderListResult {
     @SerializedName("longitude")
     @Expose
     private String longitude;
+    @SerializedName("pharmacy_details")
+    @Expose
+    private PharmacyDetails pharmacy_details;
+
+    public PharmacyDetails getPharmacy_details() {
+        return pharmacy_details;
+    }
+
+    public void setPharmacy_details(PharmacyDetails pharmacy_details) {
+        this.pharmacy_details = pharmacy_details;
+    }
 
     public String getDelivery_address() {
         return delivery_address;

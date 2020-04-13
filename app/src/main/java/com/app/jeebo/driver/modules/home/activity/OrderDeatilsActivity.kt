@@ -75,12 +75,22 @@ class OrderDeatilsActivity : BaseActivity() {
 
         try{
             tv_map_eshop.setOnClickListener {
-                var destinationLat=orderList[0].customerOrderDetails[0].merchantProductOrderDetails.merchantProfile.businessDetails.merchantAddress[0].lat
-                var destinationLng=orderList[0].customerOrderDetails[0].merchantProductOrderDetails.merchantProfile.businessDetails.merchantAddress[0].lng
-                val uri = "geo:0,0?q=" + destinationLat + "," + destinationLng + " (" + orderList[0].customerOrderDetails[0].merchantProductOrderDetails.merchantProfile.businessDetails.businessName + ")"
+                if(orderList[0].pharmacy_details != null){
+                    var destinationLat=orderList[0].pharmacy_details.lat
+                    var destinationLng=orderList[0].pharmacy_details.lng
+                    val uri = "geo:0,0?q=" + destinationLat + "," + destinationLng + " (" + orderList[0].pharmacy_details.pharmacyName + ")"
 
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
-                startActivity(intent)
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
+                    startActivity(intent)
+                }else{
+                    var destinationLat=orderList[0].customerOrderDetails[0].merchantProductOrderDetails.merchantProfile.businessDetails.merchantAddress[0].lat
+                    var destinationLng=orderList[0].customerOrderDetails[0].merchantProductOrderDetails.merchantProfile.businessDetails.merchantAddress[0].lng
+                    val uri = "geo:0,0?q=" + destinationLat + "," + destinationLng + " (" + orderList[0].customerOrderDetails[0].merchantProductOrderDetails.merchantProfile.businessDetails.businessName + ")"
+
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
+                    startActivity(intent)
+                }
+
             }
         }catch (e:Exception){
 
@@ -136,6 +146,7 @@ class OrderDeatilsActivity : BaseActivity() {
             override fun onSuccess(t: AcceptOrderResponse?) {
                 dismissProgressBar()
                 PreferenceKeeper.getInstance().isCurrentOrder=true
+                PreferenceKeeper.getInstance().currentOrderCount=PreferenceKeeper.getInstance().currentOrderCount+1
                 if(t != null && !TextUtils.isEmpty(t.results))
                     showToast(t.results)
                   //  DialogManager.showValidationDialog(this@OrderDeatilsActivity,t.results)
@@ -224,20 +235,42 @@ class OrderDeatilsActivity : BaseActivity() {
                  tv_instructions_heading.visibility=View.GONE*//*
             }*/
 
+
+            if (orderListResult.pharmacy_details != null) {
+                tv_eshop_details.setText(getString(R.string.pharmacy_details))
+                tv_eshop_address.setText(orderListResult.pharmacy_details.address)
+                try {
+                    tv_eshop_name.setText(orderListResult.pharmacy_details.pharmacyName)
+                } catch (e: Exception) {
+
+                }
+                try{
+                    if(!TextUtils.isEmpty(orderListResult.pharmacy_details.telephone))
+                        tv_eshop_phone.text=orderListResult.pharmacy_details.telephone
+                }catch (e:Exception){
+
+                }
+            } else {
+                tv_eshop_details.setText(getString(R.string.e_shop_details))
+                tv_eshop_address.setText(getMerchantAddress(0))
+                try {
+                    tv_eshop_name.setText(orderListResult.customerOrderDetails[0].merchantProductOrderDetails.merchantProfile.businessDetails.businessName)
+                } catch (e: Exception) {
+
+                }
+                try{
+                    if(!TextUtils.isEmpty(orderListResult.customerOrderDetails.get(0).merchantProductOrderDetails.merchantProfile.businessDetails.phone))
+                        tv_eshop_phone.text=orderListResult.customerOrderDetails.get(0).merchantProductOrderDetails.merchantProfile.businessDetails.phone
+                }catch (e:Exception){
+
+                }
+
+            }
+
             if (orderListResult.userOrderDetails != null && !TextUtils.isEmpty(orderListResult.userOrderDetails.name))
                 tv_client_name.setText(orderListResult.userOrderDetails.name)
 
-            try {
-                tv_eshop_name.setText(orderListResult.customerOrderDetails[0].merchantProductOrderDetails.merchantProfile.businessDetails.businessName)
-            } catch (e: Exception) {
 
-            }
-            try{
-                if(!TextUtils.isEmpty(orderListResult.customerOrderDetails.get(0).merchantProductOrderDetails.merchantProfile.businessDetails.phone))
-                    tv_eshop_phone.text=orderListResult.customerOrderDetails.get(0).merchantProductOrderDetails.merchantProfile.businessDetails.phone
-            }catch (e:Exception){
-
-            }
             try{
                 if(!TextUtils.isEmpty(orderListResult.phone))
                     tv_client_phone.text=orderListResult.phone
@@ -247,7 +280,7 @@ class OrderDeatilsActivity : BaseActivity() {
 
             }
 
-            tv_eshop_address.setText(getMerchantAddress(0))
+
 
            /* tv_pay_to_merchant.text="DA "+orderListResult.pay_to_merchant
 

@@ -19,22 +19,33 @@
         android:allowBackup="true"
         android:icon="@mipmap/jeebo_icon"
         android:label="@string/app_name"
-        android:usesCleartextTraffic="true"
         android:roundIcon="@mipmap/jeebo_icon"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".modules.home.activity.StatsActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".modules.home.activity.CancelledOrdersActivity" />
-        <activity android:name=".modules.profile.activity.ProfileActivity" />
-        <activity android:name=".modules.home.activity.OrderDeatilsActivity" />
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".modules.home.activity.OrderInProcessActivity"></activity>
+        <activity
+            android:name=".modules.home.activity.StatsActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".modules.home.activity.CancelledOrdersActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".modules.profile.activity.ProfileActivity"
+            android:windowSoftInputMode="adjustResize"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".modules.home.activity.OrderDeatilsActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name=".modules.home.activity.HomeActivity"
-            />
-        <activity android:name=".modules.auth.activity.ForgotPasswordActivity" />
-        <activity android:name=".modules.auth.activity.OtpVerificationActivity" />
-        <activity android:name=".modules.auth.activity.SignupActivity" />
-        <activity android:name=".modules.auth.activity.LoginActivity"
-            android:launchMode="singleTop">
+            android:screenOrientation="portrait"/>
+        <activity android:name=".modules.auth.activity.ForgotPasswordActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".modules.auth.activity.OtpVerificationActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".modules.auth.activity.SignupActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".modules.auth.activity.LoginActivity"
+            android:screenOrientation="portrait">
+           <!-- android:launchMode="singleTop">-->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -65,7 +76,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
 
         <service android:name=".modules.home.MyFirebaseMessagingService">
             <intent-filter>

@@ -4,13 +4,21 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.google.gms.google-services'
 
 android {
+    signingConfigs {
+        debug {
+            storeFile file('/home/algoworks/StudioProjects/jeebo-driver/keystore/jeebo_driver_keystore.jks')
+            storePassword 'jeebo_keystore'
+            keyAlias = 'jeebo_keystore'
+            keyPassword 'jeebo_keystore'
+        }
+    }
     compileSdkVersion 29
     defaultConfig {
         applicationId "com.app.jeebo.driver" // need to change app package name
         minSdkVersion 16
         targetSdkVersion 29
-        versionCode 2
-        versionName "2.0"
+        versionCode 9
+        versionName "9.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         // define hockey app id
         manifestPlaceholders = [HOCKEYAPP_APP_ID: ""]
@@ -28,8 +36,8 @@ android {
 
     productFlavors {
         dev {
-            buildConfigField 'String', 'URL', '"http://52.20.166.153/"'
-           // buildConfigField 'String', 'URL', '"http://52.20.166.153/"'
+            buildConfigField 'String', 'HOST', '"http://52.20.166.153/"'
+            // buildConfigField 'String', 'URL', '"http://52.20.166.153/"'
 
         }
         prod {
@@ -69,7 +77,7 @@ dependencies {
     implementation 'com.intuit.ssp:ssp-android:1.0.6'
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'com.facebook.android:facebook-android-sdk:4.42.0'
+    implementation 'com.facebook.android:facebook-android-sdk:5.9.0'
 
     implementation 'com.google.firebase:firebase-analytics:17.2.0'
 

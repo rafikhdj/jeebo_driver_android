@@ -117,5 +117,7 @@
     <string name="order_npicked_up">Order\n  Picked Up</string>
     <string name="order_n_completed">Order\n  Completed</string>
     <string name="complete_ur_order">Please complete your order</string>
+    <string name="pharmacy_details">Pharmacy Details</string>
+    <string name="pharmacy">Pharmacy</string>
 
 </resources>

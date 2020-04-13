@@ -7,6 +7,7 @@ import android.os.Handler
 import com.app.jeebo.driver.R
 import com.app.jeebo.driver.modules.home.activity.HomeActivity
 import com.app.jeebo.driver.modules.profile.activity.ProfileActivity
+import com.app.jeebo.driver.utils.AppUtils
 import com.app.jeebo.driver.utils.PreferenceKeeper
 
 class SplashActivity : Activity() {
@@ -16,9 +17,13 @@ class SplashActivity : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (!isTaskRoot()) {
+            finish()
+            return
+        }
         setContentView(R.layout.activity_splash)
         setHandler()
-        //AppUtils.getKey(this)
+        AppUtils.getKey(this)
     }
 
     private fun setHandler() {
