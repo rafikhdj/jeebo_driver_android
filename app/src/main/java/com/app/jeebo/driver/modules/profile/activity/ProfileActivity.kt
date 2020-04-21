@@ -62,7 +62,7 @@ class ProfileActivity : BaseActivity(), IDialogUploadListener {
         tv_edit.setOnClickListener {
             if(isEditProfile!!){
                 isEditProfile=false
-                iv_cam.visibility=View.GONE
+               /* iv_cam.visibility=View.GONE
                 et_name.visibility=View.GONE
                 et_sur_name.visibility=View.GONE
                 et_email.visibility=View.GONE
@@ -71,10 +71,12 @@ class ProfileActivity : BaseActivity(), IDialogUploadListener {
                 tv_name_value.visibility=View.VISIBLE
                 tv_surname_value.visibility=View.VISIBLE
                 tv_phone_value.visibility=View.VISIBLE
-                tv_email_value.visibility=View.VISIBLE
+                tv_email_value.visibility=View.VISIBLE*/
+                if(validate())
                 callEditProfileApi()
 
             }else{
+                setUserDetails()
                 isEditProfile=true
                 iv_cam.visibility=View.VISIBLE
                 et_name.visibility=View.VISIBLE
@@ -92,7 +94,6 @@ class ProfileActivity : BaseActivity(), IDialogUploadListener {
     }
 
     private fun callEditProfileApi(){
-        if(validate()){
             showProgressBar(this)
             var editProfileReq=EditProfileReq()
             editProfileReq.email=et_email.text.toString().trim()
@@ -116,7 +117,20 @@ class ProfileActivity : BaseActivity(), IDialogUploadListener {
                     dismissProgressBar()
                     if(t!!.isPhoneVerified){
                         showToast(getString(R.string.profile_updated_successfully))
-                        finish()
+                        setUserDetails()
+                        iv_cam.visibility=View.GONE
+                        et_name.visibility=View.GONE
+                        et_sur_name.visibility=View.GONE
+                        et_email.visibility=View.GONE
+                        et_phone.visibility=View.GONE
+
+                        tv_name_value.visibility=View.VISIBLE
+                        tv_surname_value.visibility=View.VISIBLE
+                        tv_phone_value.visibility=View.VISIBLE
+                        tv_email_value.visibility=View.VISIBLE
+
+                        tv_edit.text=getString(R.string.edit_profile)
+                       // finish()
                     }else{
                         if(t.otp != null)
                         showToast(t.otp.toString())
@@ -139,29 +153,28 @@ class ProfileActivity : BaseActivity(), IDialogUploadListener {
 
             })
 
-        }
     }
 
     private fun validate():Boolean{
         if(TextUtils.isEmpty(et_name.text.toString().trim())){
             et_name.requestFocus()
             DialogManager.showValidationDialog(this,getString(R.string.name_missing_error))
-            tv_edit.setText(getString(R.string.edit_profile))
+            //tv_edit.setText(getString(R.string.edit_profile))
             return false
         }else if(TextUtils.isEmpty(et_sur_name.text.toString().trim())){
             et_sur_name.requestFocus()
             DialogManager.showValidationDialog(this,getString(R.string.surname_missing_error))
-            tv_edit.setText(getString(R.string.edit_profile))
+            //tv_edit.setText(getString(R.string.edit_profile))
             return false
         }else if(TextUtils.isEmpty(et_email.text.toString().trim())){
             et_email.requestFocus()
             DialogManager.showValidationDialog(this,getString(R.string.email_missing_error))
-            tv_edit.setText(getString(R.string.edit_profile))
+            //tv_edit.setText(getString(R.string.edit_profile))
             return false
         }else if(!Validator.isValidEmail(et_email.text.toString().trim())){
             et_email.requestFocus()
             DialogManager.showValidationDialog(this,getString(R.string.email_invalid_error))
-            tv_edit.setText(getString(R.string.edit_profile))
+            //tv_edit.setText(getString(R.string.edit_profile))
             return false
         }else
             return true

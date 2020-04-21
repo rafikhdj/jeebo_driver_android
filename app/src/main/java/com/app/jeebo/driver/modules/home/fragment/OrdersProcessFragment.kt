@@ -1,7 +1,5 @@
 package com.app.jeebo.driver.modules.home.fragment
 
-import android.Manifest
-import android.app.ActionBar
 import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -151,10 +149,12 @@ class OrdersProcessFragment : BaseFragment(),ItemClickListener {
         pageNo=1
         paginationScrollListner()
         if(PreferenceKeeper.getInstance().driverStatus==1){
+            if(tv_no_record != null)
             tv_no_record.visibility=View.GONE
             getOrderInProcessList(false)
         }
         else{
+            if(tv_no_record != null)
             tv_no_record.visibility=View.VISIBLE
         }
     }

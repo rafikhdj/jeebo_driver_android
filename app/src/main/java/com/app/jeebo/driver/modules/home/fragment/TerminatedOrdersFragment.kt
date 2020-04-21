@@ -57,11 +57,13 @@ class TerminatedOrdersFragment : BaseFragment(), ItemClickListener {
                     orderList.clear()
                 }
                 if(t != null && t.results.size>0){
+                    if(tv_no_record != null)
                     tv_no_record.visibility=View.GONE
                     orderList.addAll(t.results)
                 }
                 else{
                     if(pageNo==1){
+                        if(tv_no_record != null)
                         tv_no_record.visibility=View.VISIBLE
                     }
                 }

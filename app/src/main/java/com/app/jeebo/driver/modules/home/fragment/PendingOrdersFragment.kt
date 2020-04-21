@@ -71,6 +71,11 @@ class PendingOrdersFragment : BaseFragment(), ItemClickListener {
     private fun getPendingOrderList(isRefresh:Boolean){
         if(!isRefresh)
         baseActivity.showProgressBar(baseActivity)
+
+        if( orderList.size<=10){
+            pageNo=1
+        }
+
         val request= ApiClient.getRequest()
         val call=request.getOrderList(AppConstant.PENDING_ORDER,pageNo.toString(),"10")
         call.enqueue(object : ApiCallback<OrderListResponse>(){
@@ -98,6 +103,7 @@ class PendingOrdersFragment : BaseFragment(), ItemClickListener {
             override fun onError(error: Error?) {
                 baseActivity.dismissProgressBar()
                 if(pageNo==1){
+                    if(tv_no_record != null)
                     tv_no_record.visibility=View.VISIBLE
                 }
                 if(error != null && !TextUtils.isEmpty(error.errMsg))
@@ -209,7 +215,7 @@ class PendingOrdersFragment : BaseFragment(), ItemClickListener {
                // baseActivity.finish()
                 val bundle=Bundle()
                 bundle.putString(AppConstant.INTENT_EXTRAS.FRAGMENT_TYPE,AppConstant.IN_PROCESS_ORDER)
-                var intent=Intent(baseActivity,HomeActivity::class.java)
+                val intent=Intent(baseActivity,HomeActivity::class.java)
                 intent.putExtras(bundle)
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)

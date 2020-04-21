@@ -522,7 +522,7 @@ class HomeActivity : BaseActivity(), LocationListener {
                 if(type==0){
                     logoutUser()
                 }else{
-                    finish()
+                    finishAffinity()
                 }
 
             }
