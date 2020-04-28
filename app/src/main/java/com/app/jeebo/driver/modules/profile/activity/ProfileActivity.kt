@@ -37,7 +37,7 @@ class ProfileActivity : BaseActivity(), IDialogUploadListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
-        setUserDetails()
+
         init()
     }
 
@@ -109,27 +109,27 @@ class ProfileActivity : BaseActivity(), IDialogUploadListener {
             val call=request.editProfile(editProfileReq)
             call.enqueue(object : ApiCallback<UserResultModel>(){
                 override fun onSuccess(userResult: UserResultModel?) {
-                    var t=userResult?.result
+                    val t=userResult?.result
                     PreferenceKeeper.getInstance().email=t?.email
                     PreferenceKeeper.getInstance().image=t?.driver_image_url
                     PreferenceKeeper.getInstance().name=t?.name
                     PreferenceKeeper.getInstance().accessToken=t?.token
                     dismissProgressBar()
+                    setUserDetails()
+                    iv_cam.visibility=View.GONE
+                    et_name.visibility=View.GONE
+                    et_sur_name.visibility=View.GONE
+                    et_email.visibility=View.GONE
+                    et_phone.visibility=View.GONE
+
+                    tv_name_value.visibility=View.VISIBLE
+                    tv_surname_value.visibility=View.VISIBLE
+                    tv_phone_value.visibility=View.VISIBLE
+                    tv_email_value.visibility=View.VISIBLE
+
+                    tv_edit.text=getString(R.string.edit_profile)
                     if(t!!.isPhoneVerified){
                         showToast(getString(R.string.profile_updated_successfully))
-                        setUserDetails()
-                        iv_cam.visibility=View.GONE
-                        et_name.visibility=View.GONE
-                        et_sur_name.visibility=View.GONE
-                        et_email.visibility=View.GONE
-                        et_phone.visibility=View.GONE
-
-                        tv_name_value.visibility=View.VISIBLE
-                        tv_surname_value.visibility=View.VISIBLE
-                        tv_phone_value.visibility=View.VISIBLE
-                        tv_email_value.visibility=View.VISIBLE
-
-                        tv_edit.text=getString(R.string.edit_profile)
                        // finish()
                     }else{
                         if(t.otp != null)
@@ -139,7 +139,7 @@ class ProfileActivity : BaseActivity(), IDialogUploadListener {
                         bundle.putString(AppConstant.INTENT_EXTRAS.CAME_FROM,"PROFILE")
                         bundle.putString(AppConstant.INTENT_EXTRAS.ACCESS_TOKEN,t.token)
                         launchActivity(OtpVerificationActivity::class.java,bundle)
-                        finish()
+                       // finish()
                     }
 
                 }
@@ -304,4 +304,10 @@ class ProfileActivity : BaseActivity(), IDialogUploadListener {
         bundle.putString(AppConstant.INTENT_EXTRAS.FRAGMENT_TYPE,AppConstant.PENDING_ORDER)
         launchActivity(HomeActivity::class.java,bundle)
     }
+
+    override fun onResume() {
+        super.onResume()
+        setUserDetails()
+    }
+
 }

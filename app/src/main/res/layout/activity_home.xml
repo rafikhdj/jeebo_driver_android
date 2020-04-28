@@ -301,6 +301,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/tv_env"
+                        android:visibility="gone"
                         android:layout_marginLeft="@dimen/dp_22"
                         android:layout_marginBottom="@dimen/dp_40"
                         android:drawablePadding="10dp"
